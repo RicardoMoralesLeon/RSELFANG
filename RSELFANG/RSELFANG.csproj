@@ -1,0 +1,448 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RSELFANG</RootNamespace>
+    <AssemblyName>RSELFANG</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Digitalware.Apps.Utilities, Version=19.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Digitalware.Apps.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Midas">
+      <HintPath>..\..\..\..\WPFMPFIN\WPFMPFIN\WPFMPFIN\bin\Interop.Midas.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.SXE4DmrAncestroPrj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.SXE4DmrAncestroPrj.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.4.0\lib\net451\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.4.0\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.4.0\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Ophelia, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.dll</HintPath>
+    </Reference>
+    <Reference Include="Ophelia.Proteccion, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.Proteccion.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.6.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SevenFramework, Version=19.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.4.0\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DwOXml\OBOConfig.xml" />
+    <Content Include="DwOXml\OCEConfig.xml" />
+    <Content Include="DwOXml\ODBConfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\swflup\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web References\swflup\TSalida.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\swflup\WWfRflup.disco" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BO\BoCaCxcob.cs" />
+    <Compile Include="BO\BOCtConsu.cs" />
+    <Compile Include="BO\BOCtPropo.cs" />
+    <Compile Include="BO\BOEcCotiz.cs" />
+    <Compile Include="BO\BoEeReles.cs" />
+    <Compile Include="BO\BOGnArbol.cs" />
+    <Compile Include="BO\BOGnBarri.cs" />
+    <Compile Include="BO\BOGnDepar.cs" />
+    <Compile Include="BO\BOGnDigfl.cs" />
+    <Compile Include="BO\BOGnEmpre.cs" />
+    <Compile Include="BO\BOGnFpass.cs" />
+    <Compile Include="BO\BOGnItems.cs" />
+    <Compile Include="BO\BOGnLocal.cs" />
+    <Compile Include="BO\BOGnLogo.cs" />
+    <Compile Include="BO\BOGnMunic.cs" />
+    <Compile Include="BO\BOGnPaise.cs" />
+    <Compile Include="BO\BOGnRadju.cs" />
+    <Compile Include="BO\BOGnRegio.cs" />
+    <Compile Include="BO\BOGnTerce.cs" />
+    <Compile Include="BO\BOPqDpara.cs" />
+    <Compile Include="BO\BOPqEncue.cs" />
+    <Compile Include="BO\BOPqInpqr.cs" />
+    <Compile Include="BO\BOPqr.cs" />
+    <Compile Include="BO\BoRnRadic.cs" />
+    <Compile Include="BO\BOSoCoxcn.cs" />
+    <Compile Include="BO\BOWfCdocu.cs" />
+    <Compile Include="Controllers\CaCxCobController.cs" />
+    <Compile Include="Controllers\CtConsuController.cs" />
+    <Compile Include="Controllers\CtPropoController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Controllers\EcCotizController.cs" />
+    <Compile Include="Controllers\EeRelesController.cs" />
+    <Compile Include="Controllers\GnArbolController.cs" />
+    <Compile Include="Controllers\GnDeparController.cs" />
+    <Compile Include="Controllers\GnEmpreController.cs" />
+    <Compile Include="Controllers\GnItemsController.cs" />
+    <Compile Include="Controllers\GnLoginController.cs" />
+    <Compile Include="Controllers\GnlogoController.cs" />
+    <Compile Include="Controllers\GnMunicController.cs" />
+    <Compile Include="Controllers\GnPaiseController.cs" />
+    <Compile Include="Controllers\GnRegioController.cs" />
+    <Compile Include="Controllers\GnTerceController.cs" />
+    <Compile Include="Controllers\GnUsuarController.cs" />
+    <Compile Include="Controllers\PaPagosController.cs" />
+    <Compile Include="Controllers\PqEncueController.cs" />
+    <Compile Include="Controllers\PqInpqrController.cs" />
+    <Compile Include="Controllers\PqrTransactionLoadController.cs" />
+    <Compile Include="Controllers\RnRadicController.cs" />
+    <Compile Include="Controllers\SoCoxcnController.cs" />
+    <Compile Include="Controllers\TokenGenerator.cs" />
+    <Compile Include="Controllers\TokenValidationHandler.cs" />
+    <Compile Include="Controllers\uploadController.cs" />
+    <Compile Include="DAO\DAOAeClase.cs" />
+    <Compile Include="DAO\DAOCaCxcob.cs" />
+    <Compile Include="DAO\DAOCtConsu.cs" />
+    <Compile Include="DAO\DAOCtContr.cs" />
+    <Compile Include="DAO\DAOCtPropo.cs" />
+    <Compile Include="DAO\DAOEcDespa.cs" />
+    <Compile Include="DAO\DAOEcDetan.cs" />
+    <Compile Include="DAO\DAOEcDphij.cs" />
+    <Compile Include="DAO\DAOEcLisev.cs" />
+    <Compile Include="DAO\DAOEeReles.cs" />
+    <Compile Include="DAO\DAOFaClien.cs" />
+    <Compile Include="DAO\DAOGnAdjFi.cs" />
+    <Compile Include="DAO\DAOGnAdju.cs" />
+    <Compile Include="DAO\DAOGnArbol.cs" />
+    <Compile Include="DAO\DAOGnBarri.cs" />
+    <Compile Include="DAO\DAOGnConse.cs" />
+    <Compile Include="DAO\DAOGnDepar.cs" />
+    <Compile Include="DAO\DAOGnFlag.cs" />
+    <Compile Include="DAO\DAOGnInsta.cs" />
+    <Compile Include="DAO\DAOGnItems.cs" />
+    <Compile Include="DAO\DAOGnLocal.cs" />
+    <Compile Include="DAO\DAOGnLogo.cs" />
+    <Compile Include="DAO\DAOGnMunic.cs" />
+    <Compile Include="DAO\DAOGnPaise.cs" />
+    <Compile Include="DAO\DAOGnParam.cs" />
+    <Compile Include="DAO\DAOGnRadju.cs" />
+    <Compile Include="DAO\DAOGnRegi.cs" />
+    <Compile Include="DAO\DAOGnTerce.cs" />
+    <Compile Include="DAO\DAOGnTipdo.cs" />
+    <Compile Include="DAO\DAOGPerte.cs" />
+    <Compile Include="DAO\DAOLiqCons.cs" />
+    <Compile Include="DAO\DAOPqDinPq.cs" />
+    <Compile Include="DAO\DAOPqEncue.cs" />
+    <Compile Include="DAO\DAOPqInpqr.cs" />
+    <Compile Include="DAO\DAOPqInpr.cs" />
+    <Compile Include="DAO\DAOPqParam.cs" />
+    <Compile Include="DAO\DAORevPr.cs" />
+    <Compile Include="DAO\DAORnRadic.cs" />
+    <Compile Include="DAO\DAOSeCcotiz.cs" />
+    <Compile Include="DAO\DAOSoConve.cs" />
+    <Compile Include="DAO\DAOSoCoxcn.cs" />
+    <Compile Include="DAO\DAOSoDscfp.cs" />
+    <Compile Include="DAO\DAOSoSbene.cs" />
+    <Compile Include="DAO\DAOTsParam.cs" />
+    <Compile Include="DAO\DAOWfCdocu.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginRequest.cs" />
+    <Compile Include="Models\TOAeClase.cs" />
+    <Compile Include="Models\ToCaCxcob.cs" />
+    <Compile Include="Models\TOEcCotiz.cs" />
+    <Compile Include="Models\TOEcDespa.cs" />
+    <Compile Include="Models\TOEcDetan.cs" />
+    <Compile Include="Models\TOEcDphij.cs" />
+    <Compile Include="Models\TOEcLisev.cs" />
+    <Compile Include="Models\TOLiqCons.cs" />
+    <Compile Include="Models\TOSoCocxn.cs" />
+    <Compile Include="Models\TOSoConve.cs" />
+    <Compile Include="Models\TOSoDscfp.cs" />
+    <Compile Include="Models\TOSoSbene.cs" />
+    <Compile Include="Models\TOTsParam.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="tools\fileHandler.cs" />
+    <Compile Include="tools\General.cs" />
+    <Compile Include="tools\mailHandler.cs" />
+    <Compile Include="TO\ArApovo.cs" />
+    <Compile Include="TO\ArTiapo.cs" />
+    <Compile Include="TO\CtConsu.cs" />
+    <Compile Include="TO\CtContr.cs" />
+    <Compile Include="TO\CtDocpr.cs" />
+    <Compile Include="TO\CtPropo.cs" />
+    <Compile Include="TO\CtPropoLoad.cs" />
+    <Compile Include="TO\CtRevdo.cs" />
+    <Compile Include="TO\CtRevDoSalida.cs" />
+    <Compile Include="TO\CtRevPrSalida.cs" />
+    <Compile Include="TO\CtRevtd.cs" />
+    <Compile Include="TO\EeDdprc.cs" />
+    <Compile Include="TO\EeDrele.cs" />
+    <Compile Include="TO\EeDrsee.cs" />
+    <Compile Include="TO\EeReles.cs" />
+    <Compile Include="TO\EeResem.cs" />
+    <Compile Include="TO\EeResen.cs" />
+    <Compile Include="TO\FaClien.cs" />
+    <Compile Include="TO\FilePQR.cs" />
+    <Compile Include="TO\GnArbol.cs" />
+    <Compile Include="TO\GnBarri.cs" />
+    <Compile Include="TO\GnDepar.cs" />
+    <Compile Include="TO\GnFlag.cs" />
+    <Compile Include="TO\GnInsta.cs" />
+    <Compile Include="TO\GnItem.cs" />
+    <Compile Include="TO\GnLocal.cs" />
+    <Compile Include="TO\Gnlogo.cs" />
+    <Compile Include="TO\GnMunic.cs" />
+    <Compile Include="TO\GnPaise.cs" />
+    <Compile Include="TO\GnParam.cs" />
+    <Compile Include="TO\GnRegio.cs" />
+    <Compile Include="TO\GnTipdo.cs" />
+    <Compile Include="TO\Gn_Terce.cs" />
+    <Compile Include="TO\Mail.cs" />
+    <Compile Include="TO\PqDinPq.cs" />
+    <Compile Include="TO\PQEncue.cs" />
+    <Compile Include="TO\PqInpqr.cs" />
+    <Compile Include="TO\PqInpqrSalida.cs" />
+    <Compile Include="TO\PqrTransactionLoad.cs" />
+    <Compile Include="TO\RnCraco.cs" />
+    <Compile Include="TO\RnDdocu.cs" />
+    <Compile Include="TO\RnDperc.cs" />
+    <Compile Include="TO\RnGrura.cs" />
+    <Compile Include="TO\RnRadic.cs" />
+    <Compile Include="TO\Rnradtd.cs" />
+    <Compile Include="TO\TORnRadic.cs" />
+    <Compile Include="TO\SuAfili.cs" />
+    <Compile Include="TO\SuMpare.cs" />
+    <Compile Include="TO\TOCtCamar.cs" />
+    <Compile Include="TO\TOFile.cs" />
+    <Compile Include="TO\TOFtp.cs" />
+    <Compile Include="TO\TOGnAdjFi.cs" />
+    <Compile Include="TO\TOGnAdjun.cs" />
+    <Compile Include="TO\TOGnConse.cs" />
+    <Compile Include="TO\TOGnRadju.cs" />
+    <Compile Include="TO\TOGPerte.cs" />
+    <Compile Include="TO\TOPqParam.cs" />
+    <Compile Include="TO\TORevPr.cs" />
+    <Compile Include="TO\TOTransacion.cs" />
+    <Compile Include="TO\TOWfCdocu.cs" />
+    <Compile Include="TO\Xb_Auliq.cs" />
+    <Compile Include="Web References\swflup\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Web References\swflup\WWfRflup.wsdl" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="download\" />
+    <Folder Include="Upload\shared\pqr\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://cerezo/seven/webservices40/WWfRflup.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\swflup\</RelPath>
+      <UpdateFromURL>http://cerezo/seven/webservices40/WWfRflup.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>RSELFANG_swflup_SWFRFLUP</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SCtPropo">
+      <Guid>{EDE71941-47D2-11D6-8EB7-00302111D27B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SPoPvdor">
+      <Guid>{35E38F71-9128-11D3-A8CE-00C0DFE78BF0}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SRnRadic">
+      <Guid>{46A2F06C-0992-41F2-BF3E-E73F62360C98}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62126</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/RSELFANG</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:62126/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

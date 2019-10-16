@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
+using System.Xml;
+using RSELFANG.TO;
+using RSELFANG.DAO;
+using System.Configuration;
+using System.Net;
+using System.IO;
+using System.Drawing;
+
+namespace RSELFANG.BO
+{
+    public class BOPqr
+    {
+       
+
+        public string emp_codi = ConfigurationManager.AppSettings["emp_codi"].ToString();
+
+       
+
+
+
+    }
+}

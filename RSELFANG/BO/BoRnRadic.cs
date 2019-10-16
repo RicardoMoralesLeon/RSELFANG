@@ -1,0 +1,197 @@
+﻿using RSELFANG.TO;
+using System;
+using RSELFANG.DAO;
+using System.Collections.Generic;
+using System.Configuration;
+using Ophelia.Seven;
+
+namespace RSELFANG.BO
+{
+    public class BoRnRadic
+    {
+        string usuario = ConfigurationManager.AppSettings["usuario"].ToString();
+        string password = ConfigurationManager.AppSettings["password"].ToString();
+        string alias = ConfigurationManager.AppSettings["alias"].ToString();
+
+        public TOTransaction<TORnRadic> GetInitialDataRnRadic(int emp_codi, string usu_codi = "")
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+            BOGnPaise boPaise = new BOGnPaise();
+            DAOGnTipdo daoGnTipDo = new DAOGnTipdo();
+            List<string> GN_DIGFL = new List<string>();
+
+            try
+            {
+                TORnRadic result = new TORnRadic();                
+                List<ArTiapo> ArTiapo = daoRadic.getListArTiapo();
+                List<GnPaise> GnPaise = boPaise.GetGnPaise();
+                List<GnTipdo> GnTipdo = daoGnTipDo.getListGnTipdo();
+                List<ArApovo> ArApovo = daoRadic.getListArApovo();
+                List<RnGrura> RnGrura = daoRadic.getListRnGrura(emp_codi);
+                List<SuMpare> SuMpare = daoRadic.getListSumPare(emp_codi);
+                List<SuAfili> SuAfili = daoRadic.getListSuAfili(emp_codi);
+
+                result.artiapo = ArTiapo;
+                result.GnPaise = GnPaise;
+                result.GnTipdo = GnTipdo;
+                result.arapovo = ArApovo;
+                result.rngrura = RnGrura;
+                result.SuMpare = SuMpare;
+                result.SuAfili = SuAfili;
+                result.SRN000001 = daoRadic.getDigflag("SRN000001");
+                result.SRN000002 = daoRadic.getDigflag("SRN000002");
+                result.cen_codi = daoRadic.getInfoFudCe(emp_codi, usu_codi);
+                return new TOTransaction<TORnRadic>() { objTransaction = result, retorno = 0, txtRetorno = ""};
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<TORnRadic>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<RnCraco>> GetClasificacion(int gru_cont, int emp_codi)
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+            
+            try
+            {
+                List<RnCraco> RnCraco = daoRadic.getListRnCraco(gru_cont, emp_codi);             
+                return new TOTransaction<List<RnCraco>>() { objTransaction = RnCraco, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<RnCraco>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction InsertRnRadic(RnRadic rnradic)
+        {
+            try
+            {
+                DAORnRadic daoradic = new DAORnRadic();
+                SRnRadic.SRnRadicDMR ws = new SRnRadic.SRnRadicDMR();
+                
+                object varSali;
+                string txtError;
+                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SRNRADIC", "", "", "", "", "", "N" };
+                int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
+
+                int rad_cont = 0;
+                List<object> lentrada = new List<object>();
+                object p_salida = new object();
+
+                lentrada.Add("InsertarRnRadic");
+                lentrada.Add(rnradic.emp_codi); // emp_codi
+                lentrada.Add(0); // lrad_nfol
+                lentrada.Add(rnradic.cen_codi); // lcen_codi
+                lentrada.Add(rnradic.gru_codi); // lgru_codi
+                lentrada.Add(rnradic.cra_codi); // lcra_codi
+                lentrada.Add("0");              // lter_coda
+                lentrada.Add(rnradic.rad_obse); // lrad_obse
+                lentrada.Add(rnradic.tip_coda); // ltip_coda
+                lentrada.Add(rnradic.apo_coda); // lapo_coda
+                lentrada.Add(rnradic.apo_razs); // lapo_razs
+                lentrada.Add(rnradic.tia_codi); // ltia_codi
+                lentrada.Add(rnradic.dsu_tele); // lapo_tele
+                lentrada.Add(rnradic.tip_codi); // ltip_codi
+                lentrada.Add(rnradic.afi_docu); // lafi_docu
+                lentrada.Add(rnradic.afi_nom1); // lafi_nom1
+                lentrada.Add(rnradic.afi_nom2); // lafi_nom2
+                lentrada.Add(rnradic.afi_ape1); // lafi_ape1
+                lentrada.Add(rnradic.afi_ape2); // lafi_ape2
+                lentrada.Add(rnradic.afi_fecn); // lafi_fecn
+                lentrada.Add(rnradic.afi_tele); // lafi_tele
+                lentrada.Add(rnradic.rad_dire); // lrad_dire
+                lentrada.Add(rnradic.rad_emai); // lrad_emai
+                lentrada.Add(rnradic.rad_pais); // lpai_codi
+                lentrada.Add(rnradic.rad_regi); // lreg_codi
+                lentrada.Add(rnradic.rad_depa); // ldep_codi
+                lentrada.Add(rnradic.rad_muni); // lmun_codi
+                lentrada.Add(rnradic.rad_loca); // lloc_codi
+                lentrada.Add(rnradic.rad_barr); // lbar_codi
+                lentrada.Add(rnradic.rad_tdat); // lrad_tdat
+
+                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                    throw new Exception("Error Insertando Radicación :" + txtError);
+                var lsalida = (object[])p_salida;
+                rad_cont = int.Parse(lsalida[0].ToString());
+
+                if (txtError == null)
+                {
+                    foreach (RnDperc perc in rnradic.rndperc)
+                    {
+                        lentrada = new List<object>();
+                        p_salida = new object();
+
+                        string ddo_esis = perc.ddo_esis ? "S" : "N";
+                        string ddo_recb = perc.ddo_recb ? "S" : "N";
+
+                        lentrada.Add("InsertarRnDperc");
+                        lentrada.Add(rnradic.emp_codi); // emp_codi
+                        lentrada.Add(rad_cont);         // rad_cont
+                        lentrada.Add(perc.ite_codi);    // ite_codi
+                        lentrada.Add(ddo_esis);         // ddo_esis
+                        lentrada.Add(ddo_recb);         // ddo_recb
+                        lentrada.Add(perc.ddo_obse);    // ddo_obse
+                        lentrada.Add(perc.dpe_docu);    // dpe_docu
+                        lentrada.Add(perc.dpe_nom1);    // dpe_nom1
+                        lentrada.Add(perc.dpe_nom2);    // dpe_nom2
+                        lentrada.Add(perc.dpe_ape1);    // dpe_ape1
+                        lentrada.Add(perc.dpe_ape2);    // dpe_ape2
+                        lentrada.Add(perc.mpa_codi);    // mpa_codi
+
+                        if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                            throw new Exception("Error Insertando grupo familiar :" + txtError);                     
+                    }
+
+                    if (txtError == null)
+                    {
+                        if (rnradic.radtdat != null)
+                        {
+                            foreach (Rnradtd radtd in rnradic.radtdat)
+                            {
+                                daoradic.updateTratamiento(radtd, rnradic.emp_codi, rad_cont);
+                            }
+                        }
+                    }
+                }
+
+                return new TOTransaction() { retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<Rnradtd>> getInfoTratamiento()
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+
+            try
+            {
+                List<Rnradtd> revtd = daoRadic.getInforevtd();
+                return new TOTransaction<List<Rnradtd>>() { objTransaction = revtd, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<Rnradtd>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+                
+        public TOTransaction<List<RnDdocu>> getInfoDocumentos(int cra_codi)
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+
+            try
+            {
+                List<RnDdocu> ddocu = daoRadic.getInfoDocumentos(cra_codi);
+                return new TOTransaction<List<RnDdocu>>() { objTransaction = ddocu, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<RnDdocu>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+    }
+}
