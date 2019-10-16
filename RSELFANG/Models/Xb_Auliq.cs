@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RSELFANG.TO
+namespace RSELFANG.Models
 {
     public class Xb_Auliq
     {

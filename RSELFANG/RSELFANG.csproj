@@ -55,7 +55,7 @@
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
-      <HintPath>..\..\..\..\WPFMPFIN\WPFMPFIN\WPFMPFIN\bin\Interop.Midas.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Interop.Midas.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.SXE4DmrAncestroPrj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -184,6 +184,7 @@
     <Compile Include="BO\BoRnRadic.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
+    <Compile Include="BO\BOXbAuliq.cs" />
     <Compile Include="Controllers\CaCxCobController.cs" />
     <Compile Include="Controllers\CtConsuController.cs" />
     <Compile Include="Controllers\CtPropoController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\uploadController.cs" />
+    <Compile Include="Controllers\XbBauliqController.cs" />
     <Compile Include="DAO\DAOAeClase.cs" />
     <Compile Include="DAO\DAOCaCxcob.cs" />
     <Compile Include="DAO\DAOCtConsu.cs" />

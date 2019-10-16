@@ -1,5 +1,6 @@
 ﻿using RSELFANG.DAO;
-using RSELFANG.TO;
+using RSELFANG.Models;
+using SevenFramework.TO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,13 @@ namespace RSELFANG.BO
             try
             {
                 var result = new DAOCaCxcob().GetAuliquidacion(emp_codi, cli_coda);
-                return new TOTransaction<List<Xb_Auliq>>() { objTransaction = result, retorno = 0, txtRetorno = "" };
+                return new TOTransaction<List<Xb_Auliq>>() { ObjTransaction = result, Retorno = 0, TxtError = "" };
 
             }
             catch (Exception ex)
             {
 
-                return new TOTransaction<List<Xb_Auliq>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+                return new TOTransaction<List<Xb_Auliq>>() { ObjTransaction = null, Retorno = 1, TxtError = ex.Message };
             }
         }
     }

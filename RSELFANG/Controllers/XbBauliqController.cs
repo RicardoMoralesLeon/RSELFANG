@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RSELFANG.BO;
+using RSELFANG.Models;
+using SevenFramework.TO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,9 +13,9 @@ namespace RSELFANG.Controllers
     public class XbBauliqController : ApiController
     {
         // GET: api/XbBauliq
-        public IEnumerable<string> Get()
+        public TOTransaction<List<Xb_Auliq>> Get(short emp_codi, string cli_coda)
         {
-            return new string[] { "value1", "value2" };
+            return new BOXbAuliq().GetAutLiq(emp_codi, cli_coda);
         }
 
         // GET: api/XbBauliq/5
