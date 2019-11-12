@@ -15,5 +15,6 @@ namespace RSELFANG.TO
         public Boolean ite_chkd { get; set; }
         public string rad_llav { get; set; }
         public byte[] adj_file { get; set; }
+        public int rad_cont { get; set; }
     }
 }

@@ -46,9 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.9.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -85,9 +85,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SevenFramework, Version=19.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SevenFramework, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\SevenFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.4.0\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -179,6 +179,7 @@
     <Compile Include="BO\BOGnTerce.cs" />
     <Compile Include="BO\BOPqDpara.cs" />
     <Compile Include="BO\BOPqEncue.cs" />
+    <Compile Include="BO\BoPqEstadisticas.cs" />
     <Compile Include="BO\BOPqInpqr.cs" />
     <Compile Include="BO\BOPqr.cs" />
     <Compile Include="BO\BoRnRadic.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Controllers\GnUsuarController.cs" />
     <Compile Include="Controllers\PaPagosController.cs" />
     <Compile Include="Controllers\PqEncueController.cs" />
+    <Compile Include="Controllers\PqEstadisticasController.cs" />
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="DAO\DAOLiqCons.cs" />
     <Compile Include="DAO\DAOPqDinPq.cs" />
     <Compile Include="DAO\DAOPqEncue.cs" />
+    <Compile Include="DAO\DAOPqEstadisticas.cs" />
     <Compile Include="DAO\DAOPqInpqr.cs" />
     <Compile Include="DAO\DAOPqInpr.cs" />
     <Compile Include="DAO\DAOPqParam.cs" />
@@ -261,6 +264,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginRequest.cs" />
+    <Compile Include="Models\InfoPqEstad.cs" />
     <Compile Include="Models\TOAeClase.cs" />
     <Compile Include="Models\ToCaCxcob.cs" />
     <Compile Include="Models\TOEcCotiz.cs" />
@@ -274,6 +278,7 @@
     <Compile Include="Models\TOSoDscfp.cs" />
     <Compile Include="Models\TOSoSbene.cs" />
     <Compile Include="Models\TOTsParam.cs" />
+    <Compile Include="Models\Xb_Auliq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -319,6 +324,7 @@
     <Compile Include="TO\Mail.cs" />
     <Compile Include="TO\PqDinPq.cs" />
     <Compile Include="TO\PQEncue.cs" />
+    <Compile Include="TO\PqEstad.cs" />
     <Compile Include="TO\PqInpqr.cs" />
     <Compile Include="TO\PqInpqrSalida.cs" />
     <Compile Include="TO\PqrTransactionLoad.cs" />
@@ -343,7 +349,6 @@
     <Compile Include="TO\TORevPr.cs" />
     <Compile Include="TO\TOTransacion.cs" />
     <Compile Include="TO\TOWfCdocu.cs" />
-    <Compile Include="TO\Xb_Auliq.cs" />
     <Compile Include="Web References\swflup\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,0 +1,2 @@
+﻿1>------ Operación Limpiar iniciada: proyecto: RSELFANG, configuración: Debug Any CPU ------
+========== Limpiar: 1 correctos, 0 incorrectos, 0 omitidos ==========

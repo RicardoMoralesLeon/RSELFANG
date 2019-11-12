@@ -21,7 +21,8 @@ namespace RSELFANG.Controllers
         [Route("api/CtPropo/LoadRegiones")]
         public TOTransaction<CtPropoLoad> Get(int emp_codi ,int pai_codi)
         {
-            BOCtPropo bo = new BOCtPropo();          
+            BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetRegiones(emp_codi, pai_codi);
         }
 
@@ -29,6 +30,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtPropoLoad> Get(int emp_codi, int pai_codi, int reg_codi)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetDepartamentos(emp_codi, pai_codi, reg_codi);
         }
 
@@ -36,6 +38,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtPropoLoad> Get(int emp_codi, int pai_codi, int reg_codi, int dep_codi)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetMunicipios(emp_codi, pai_codi, reg_codi, dep_codi);
         }
 
@@ -43,6 +46,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtPropoLoad> Get(int emp_codi, int pai_codi, int reg_codi, int dep_codi, int mun_codi)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetLocalidades(emp_codi, pai_codi, reg_codi, dep_codi,mun_codi);
         }
 
@@ -50,6 +54,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtPropoLoad> Get(int emp_codi, int pai_codi, int reg_codi, int dep_codi, int mun_codi, int loc_codi)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetBarrios(emp_codi, pai_codi, reg_codi, dep_codi, mun_codi, loc_codi);
         }
 
@@ -57,6 +62,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtRevPrSalida> Post(CtPropo propo)
         {
             BOCtPropo bo = new BOCtPropo();
+            propo.emp_codi = new tools.General().GetEmpCodi(propo.emp_codi);
             return bo.PostPropo(propo);
         }
 
@@ -64,6 +70,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtRevPrSalida> Post(myObject revtd)
         {
             BOCtPropo bo = new BOCtPropo();
+            revtd.emp_codi = new tools.General().GetEmpCodi(revtd.emp_codi);
             return bo.InsertTratDatos(revtd);
         }
                 
@@ -71,6 +78,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtRevPrSalida> Post(int emp_codi, int rev_cont, List<GnArbol> ctacxpr)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.InsertActividades(emp_codi, rev_cont, ctacxpr);
         }
 
@@ -78,6 +86,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtRevDoSalida> Post(int emp_codi, int rev_cont, List<CtDocpr> ctdocpr)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.InsertDocumentos(emp_codi, rev_cont, ctdocpr);
         }
 
@@ -85,6 +94,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtRevDoSalida> Post(int emp_codi, int rev_cont)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.deletePropo(emp_codi, rev_cont);
         }
 
@@ -92,6 +102,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<CtRevPrSalida> Get(string mailPropo, int emp_codi= 0)
         {
             BOCtPropo bo = new BOCtPropo();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.sendMailPropo(mailPropo);
         }
 

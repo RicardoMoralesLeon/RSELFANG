@@ -247,7 +247,7 @@ namespace RSELFANG.tools
         public Mail generateMailCtPropo(string mailTo, string subject, string body)
         {            
             Mail mail = new Mail();            
-            mail.subject = string.Format(subject);
+            mail.subject = string.Format(subject);            
             mail.body = body;
             mail.mailTo = mailTo;
             return mail;

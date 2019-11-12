@@ -38,7 +38,7 @@ namespace RSELFANG.BO
             email = daoCtConsu.getSendMailTo(emp_codi, rev_cont);
         }
 
-        public TOTransaction<List<TORevPr>> GetInfoDataCtConsu(int emp_codi, string rev_esta, string pro_codi = "", string pro_nomb = "")
+        public TOTransaction<List<TORevPr>> GetInfoDataCtConsu(int emp_codi, string rev_esta, string pro_codi, string pro_nomb)
         {
             DAOCtConsu daoCtConsu = new DAOCtConsu();
 
@@ -126,12 +126,11 @@ namespace RSELFANG.BO
             {
                 List<CtRevdo> result = new List<CtRevdo>();
                 GnInsta insta = daoInsta.GetGnInsta();
-                                            
                 
-                if (insta.par_adju == "B")
-                {
-                    result = daoCtConsu.GetCtRevDoBD(emp_codi, rev_cont);
+                result = daoCtConsu.GetCtRevDoBD(emp_codi, rev_cont);
 
+                if (result != null)
+                {
                     foreach (CtRevdo file in result)
                     {
                         downLoadFileFromDb(file.rad_llav, "SCTREVDO", "CT_REVDO", emp_codi, file.adj_nomb, file.adj_file);
@@ -145,8 +144,8 @@ namespace RSELFANG.BO
                     {
                         downLoadFile(file.rad_llav, "SCTREVDO", "CT_REVDO", emp_codi, file.adj_nomb);
                     }
-                }                
-
+                }
+               
                 return new TOTransaction<List<CtRevdo>>() { objTransaction = result, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
@@ -161,12 +160,9 @@ namespace RSELFANG.BO
             DAOGnAdju daoAdju = new DAOGnAdju();
             List<Digitalware.Apps.Utilities.TO.TOGnAdjun> adjun = new List<Digitalware.Apps.Utilities.TO.TOGnAdjun>();
 
-            string download = HttpContext.Current.Server.MapPath("~/download/");
-            string alias = ConfigurationManager.AppSettings["alias"];
+            string download = HttpContext.Current.Server.MapPath("~/download/");            
             string ftp = ConfigurationManager.AppSettings["servidorFTP"];
-
-            List<Digitalware.Apps.Utilities.TO.TOGnAdjun> ficherosDescargados = new List<Digitalware.Apps.Utilities.TO.TOGnAdjun>();
-
+            
             try
             {
                 List<Digitalware.Apps.Utilities.TO.Gn_Adju.TOGnRadju> radju = daoRadju.GetRadju(emp_codi, pro_codi,  consecutivo);
@@ -182,17 +178,20 @@ namespace RSELFANG.BO
 
                 foreach (Digitalware.Apps.Utilities.TO.TOGnAdjun adjunto in adjun)
                 {
-                    string directoryDefault = string.Format("ftp://{0}/Seven/docs/{1}/{1}_{2}_{3}_{4}", ftp.ToString(), tableName, emp_codi.ToString(), rad_cont, adjunto.Adj_Cont);
-                    List<DirectoryItem> filesExist = FTPManager.GetDirectoryInformation(directoryDefault);
-                    if (filesExist != null && filesExist.Count > 0)
+                    if (adjunto.Adj_Nomb == adj_nomb)
                     {
-                        DownloadFile(directoryDefault, download + adj_nomb);
-
-                        string data = System.IO.File.ReadAllText(download + adj_nomb);
-                        using (FileStream stream = System.IO.File.Create(download + adj_nomb))
+                        string directoryDefault = string.Format("ftp://{0}/Seven/docs/{1}/{1}_{2}_{3}_{4}", ftp.ToString(), tableName, emp_codi.ToString(), rad_cont, adjunto.Adj_Cont);
+                        List<DirectoryItem> filesExist = FTPManager.GetDirectoryInformation(directoryDefault);
+                        if (filesExist != null && filesExist.Count > 0)
                         {
-                            byte[] todecode_byte = Convert.FromBase64String(data);
-                            stream.Write(todecode_byte, 0, todecode_byte.Length);
+                            DownloadFile(directoryDefault, download + adj_nomb);
+
+                            string data = System.IO.File.ReadAllText(download + adj_nomb);
+                            using (FileStream stream = System.IO.File.Create(download + adj_nomb))
+                            {
+                                byte[] todecode_byte = Convert.FromBase64String(data);
+                                stream.Write(todecode_byte, 0, todecode_byte.Length);
+                            }
                         }
                     }
                 }
@@ -284,6 +283,7 @@ namespace RSELFANG.BO
 
                 string subject = ConfigurationManager.AppSettings["asuntoRechazo"].ToString();
                 string body = ConfigurationManager.AppSettings["cuerpoRechazo"].ToString();
+                body = string.Format("{0}{1}{2}", "<p style = 'text-align: justify; '>", body, "</p>");
                 Mail mail = mailHandler.generateMailCtPropo(email, subject, body);
                 GnInsta insta = daoInsta.GetGnInsta();
                 mailHandler.sendMail(mail, insta);
@@ -295,7 +295,7 @@ namespace RSELFANG.BO
             }
         }
         
-        public TOTransaction setInfoCtPropo(int emp_codi, int rev_cont)
+        public TOTransaction setInfoCtPropo(int emp_codi, int rev_cont, List<CtRevdo> ctrevdo)
         {
             SCtPropo.SCtPropoDMR ws = new SCtPropo.SCtPropoDMR();            
             ws.loginAlias(usuario, password, alias);
@@ -311,7 +311,8 @@ namespace RSELFANG.BO
                 ws.GenerarProCont();
 
                 string subject = ConfigurationManager.AppSettings["asuntoAprobacion"].ToString();
-                string body = ConfigurationManager.AppSettings["cuerpoAprobacion"].ToString();                
+                string body = ConfigurationManager.AppSettings["cuerpoAprobacion"].ToString();
+                body = string.Format("{0}{1}{2}", "<p style = 'text - align: justify; '>", body, "</p>");
 
                 if (ws.txtError != null)
                     throw new Exception(ws.txtError);
@@ -321,12 +322,12 @@ namespace RSELFANG.BO
                 daoCtConsu.insertCtPropo(rev_cont, procont, emp_codi);
                 daoCtConsu.insertCtDtrda(rev_cont, procont, emp_codi);
                 daoCtConsu.insertCtAcxpr(rev_cont, procont, emp_codi);
-                daoCtConsu.insertCtDocpr(rev_cont, procont, emp_codi);
+                daoCtConsu.insertCtDocpr(rev_cont, procont, emp_codi, ctrevdo);
                 daoCtConsu.setCtpropo(emp_codi, rev_cont, "A");
                 propo = daoCtConsu.getctpropo(emp_codi, rev_cont);
 
                 Mail mail = mailHandler.generateMailCtPropo(propo.pro_mail,subject,body);
-                GnInsta insta = daoInsta.GetGnInsta();
+                GnInsta insta = daoInsta.GetGnInsta();                
                 mailHandler.sendMail(mail, insta);
 
                 ws.loginAlias(usuario, password, alias);              
@@ -341,7 +342,7 @@ namespace RSELFANG.BO
                 ws.pro_fesc = propo.pro_fesc;
                 ws.pro_nomr = propo.pro_nomr;
                 ws.pro_nror = propo.pro_nror;
-                ws.pvr_clad = propo.pro_clad; //clasificacion DIAN
+                ws.pvr_clad = propo.pro_clad; // clasificacion DIAN
                 ws.pvr_riva = propo.pro_riva; // Regimen IVA
                 ws.pvd_clad = propo.pro_claf; // clasificacion                
                 ws.pro_ntel = propo.pro_ntel;
@@ -353,7 +354,6 @@ namespace RSELFANG.BO
                 ws.pro_muni = propo.pro_muni;
                 ws.InsertarProveedor();
 
-
                 return new TOTransaction() { retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
@@ -361,5 +361,7 @@ namespace RSELFANG.BO
                 return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
             }
         }
+
+
     }
 }

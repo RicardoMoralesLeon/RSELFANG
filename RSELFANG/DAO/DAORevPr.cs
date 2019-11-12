@@ -211,7 +211,7 @@ namespace RSELFANG.DAO
                 var conection = DBFactory.GetDB(pTOContext);
                 conection.Insert(pTOContext, sql.ToString(), parametros.ToArray());
 
-                GuardarArchivo(doc_cont, emp_codi, doc.pro_adju, doc.fil_name);
+                GuardarArchivo(rev_cont, emp_codi, doc.pro_adju, doc.fil_name);
             }
 
             return 0;
@@ -237,13 +237,13 @@ namespace RSELFANG.DAO
             conection.Delete(pTOContext, sql.ToString(), parametros.ToArray());
         }
 
-        private void GuardarArchivo(int doc_cont, int emp_codi,string pro_adju, string fil_name)
+        private void GuardarArchivo(int rev_cont, int emp_codi,string pro_adju, string fil_name)
         {
             BOGnRadju boRadju = new BOGnRadju();
-            string key = string.Concat(emp_codi, doc_cont);
+            string key = string.Concat(emp_codi, rev_cont);
             string[] file = pro_adju.Split(',');
             byte[] pro_adjun = file[1].Select(Convert.ToByte).ToArray();
-            var saveAttchment = boRadju.insertGnRadju((short)emp_codi, key, "CT_REVDO", "SCTREVDO", doc_cont, pro_adjun, fil_name , "S");
+            var saveAttchment = boRadju.insertGnRadju((short)emp_codi, key, "CT_REVDO", "SCTREVDO", rev_cont, pro_adjun, fil_name , "S");
             if (!saveAttchment.Item1)
                 throw new Exception(string.Format("Error insertando adjunto en documentos {0}", saveAttchment.Item2));
         }

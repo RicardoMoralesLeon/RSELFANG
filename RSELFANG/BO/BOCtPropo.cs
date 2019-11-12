@@ -38,6 +38,7 @@ namespace RSELFANG.BO
             {              
                 string subject = ConfigurationManager.AppSettings["asuntoCreacion"].ToString();
                 string body = ConfigurationManager.AppSettings["cuerpoCreacion"].ToString();
+                body = string.Format("{0}{1}{2}", "<p style = 'text-align: justify; '>", body, "</p>");
                 Mail mail = mailHandler.generateMailCtPropo(mailTo, subject, body);
                 GnInsta insta = daoInsta.GetGnInsta();
                 mailHandler.sendMail(mail, insta);

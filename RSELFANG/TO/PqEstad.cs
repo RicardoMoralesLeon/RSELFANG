@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace RSELFANG.TO
+{
+    public class Pqestad
+    {
+        /// <summary>
+        /// Seccional
+        /// </summary>
+        public List<GnArbol> seccional { get; set; }
+        /// <summary>
+        /// Forma de Recibido
+        /// </summary>
+        public List<GnItem> formRecib { get; set; }
+        /// <summary>
+        /// Tipo PQR
+        /// </summary>
+        public List<GnItem> tipoDePqr { get; set; }
+        /// <summary>
+        /// Area responsable
+        /// </summary>
+        public List<GnArbol> areaRespo { get; set; }
+        /// <summary>
+        /// Tipipificación
+        /// </summary>
+        public List<GnItem> tipificac { get; set; }
+        /// <summary>
+        /// Subtipipificación
+        /// </summary>
+        public List<GnItem> subtipifi { get; set; }
+    }
+}

@@ -22,10 +22,11 @@ namespace RSELFANG.BO
 
             try
             {
-                TORnRadic result = new TORnRadic();                
+                TORnRadic result = new TORnRadic();
                 List<ArTiapo> ArTiapo = daoRadic.getListArTiapo();
                 List<GnPaise> GnPaise = boPaise.GetGnPaise();
                 List<GnTipdo> GnTipdo = daoGnTipDo.getListGnTipdo();
+                List<GnTipdo> GnTipdE = daoGnTipDo.getListGnTipdo();
                 List<ArApovo> ArApovo = daoRadic.getListArApovo();
                 List<RnGrura> RnGrura = daoRadic.getListRnGrura(emp_codi);
                 List<SuMpare> SuMpare = daoRadic.getListSumPare(emp_codi);
@@ -41,7 +42,7 @@ namespace RSELFANG.BO
                 result.SRN000001 = daoRadic.getDigflag("SRN000001");
                 result.SRN000002 = daoRadic.getDigflag("SRN000002");
                 result.cen_codi = daoRadic.getInfoFudCe(emp_codi, usu_codi);
-                return new TOTransaction<TORnRadic>() { objTransaction = result, retorno = 0, txtRetorno = ""};
+                return new TOTransaction<TORnRadic>() { objTransaction = result, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
             {
@@ -52,10 +53,10 @@ namespace RSELFANG.BO
         public TOTransaction<List<RnCraco>> GetClasificacion(int gru_cont, int emp_codi)
         {
             DAORnRadic daoRadic = new DAORnRadic();
-            
+
             try
             {
-                List<RnCraco> RnCraco = daoRadic.getListRnCraco(gru_cont, emp_codi);             
+                List<RnCraco> RnCraco = daoRadic.getListRnCraco(gru_cont, emp_codi);
                 return new TOTransaction<List<RnCraco>>() { objTransaction = RnCraco, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
@@ -70,7 +71,7 @@ namespace RSELFANG.BO
             {
                 DAORnRadic daoradic = new DAORnRadic();
                 SRnRadic.SRnRadicDMR ws = new SRnRadic.SRnRadicDMR();
-                
+
                 object varSali;
                 string txtError;
                 object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SRNRADIC", "", "", "", "", "", "N" };
@@ -82,11 +83,11 @@ namespace RSELFANG.BO
 
                 lentrada.Add("InsertarRnRadic");
                 lentrada.Add(rnradic.emp_codi); // emp_codi
-                lentrada.Add(0); // lrad_nfol
+                lentrada.Add(rnradic.rad_nfol); // lrad_nfol
                 lentrada.Add(rnradic.cen_codi); // lcen_codi
                 lentrada.Add(rnradic.gru_codi); // lgru_codi
                 lentrada.Add(rnradic.cra_codi); // lcra_codi
-                lentrada.Add("0");              // lter_coda
+                lentrada.Add("0");       // lter_coda
                 lentrada.Add(rnradic.rad_obse); // lrad_obse
                 lentrada.Add(rnradic.tip_coda); // ltip_coda
                 lentrada.Add(rnradic.apo_coda); // lapo_coda
@@ -94,15 +95,17 @@ namespace RSELFANG.BO
                 lentrada.Add(rnradic.tia_codi); // ltia_codi
                 lentrada.Add(rnradic.dsu_tele); // lapo_tele
                 lentrada.Add(rnradic.tip_codi); // ltip_codi
-                lentrada.Add(rnradic.afi_docu); // lafi_docu
-                lentrada.Add(rnradic.afi_nom1); // lafi_nom1
-                lentrada.Add(rnradic.afi_nom2); // lafi_nom2
-                lentrada.Add(rnradic.afi_ape1); // lafi_ape1
-                lentrada.Add(rnradic.afi_ape2); // lafi_ape2
-                lentrada.Add(rnradic.afi_fecn); // lafi_fecn
-                lentrada.Add(rnradic.afi_tele); // lafi_tele
+
+                lentrada.Add(rnradic.afi_docu == null ? "." : rnradic.afi_docu); // lafi_docu
+                lentrada.Add(rnradic.afi_nom1 == null ? "." : rnradic.afi_nom1); // lafi_nom1
+                lentrada.Add(rnradic.afi_nom2 == null ? "." : rnradic.afi_nom2); // lafi_nom2
+                lentrada.Add(rnradic.afi_ape1 == null ? "." : rnradic.afi_ape1); // lafi_ape1
+                lentrada.Add(rnradic.afi_ape2 == null ? "." : rnradic.afi_ape2); // lafi_ape2
+                lentrada.Add(rnradic.afi_fecn.ToShortDateString() == "1/01/0001" ? DateTime.Now : rnradic.afi_fecn); // lafi_fecn
+                lentrada.Add(rnradic.afi_tele == null ? "." : rnradic.afi_tele); // lafi_tele
+
                 lentrada.Add(rnradic.rad_dire); // lrad_dire
-                lentrada.Add(rnradic.rad_emai); // lrad_emai
+                lentrada.Add(rnradic.rad_emai == null ? "." : rnradic.rad_emai); // lrad_emai
                 lentrada.Add(rnradic.rad_pais); // lpai_codi
                 lentrada.Add(rnradic.rad_regi); // lreg_codi
                 lentrada.Add(rnradic.rad_depa); // ldep_codi
@@ -141,7 +144,7 @@ namespace RSELFANG.BO
                         lentrada.Add(perc.mpa_codi);    // mpa_codi
 
                         if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
-                            throw new Exception("Error Insertando grupo familiar :" + txtError);                     
+                            throw new Exception("Error Insertando grupo familiar :" + txtError);
                     }
 
                     if (txtError == null)
@@ -178,7 +181,7 @@ namespace RSELFANG.BO
                 return new TOTransaction<List<Rnradtd>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
-                
+
         public TOTransaction<List<RnDdocu>> getInfoDocumentos(int cra_codi)
         {
             DAORnRadic daoRadic = new DAORnRadic();
@@ -193,5 +196,21 @@ namespace RSELFANG.BO
                 return new TOTransaction<List<RnDdocu>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
+
+        public TOTransaction<List<SuAfili>> GetInfoAfiliados(int emp_codi)
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+
+            try
+            {               
+                List<SuAfili> SuAfili = daoRadic.getListSuAfili(emp_codi);                           
+                return new TOTransaction<List<SuAfili>>() { objTransaction = SuAfili, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<SuAfili>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
     }
+        
 }

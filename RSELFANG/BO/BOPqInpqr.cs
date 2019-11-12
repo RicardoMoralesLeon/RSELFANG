@@ -63,7 +63,7 @@ namespace RSELFANG.BO
                 result.pqrGroup = pqrGrpups;
                 result.digiflag = flag;
                 result.pqrImage = daoLogo.GetGnLogo(emp_codi).emp_logs;
-                if (emp_codi > 0 && cli_coda!= "undefined")
+                if (emp_codi > 0 &&  cli_coda != null && cli_coda != "undefined")
                 {
                     FaClien client = DAOFaClien.GetFaClien(emp_codi, cli_coda);
                     if (client == null)
