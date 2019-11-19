@@ -85,9 +85,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SevenFramework, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SevenFramework, Version=19.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\SevenFramework.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.4.0\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -182,6 +182,7 @@
     <Compile Include="BO\BoPqEstadisticas.cs" />
     <Compile Include="BO\BOPqInpqr.cs" />
     <Compile Include="BO\BOPqr.cs" />
+    <Compile Include="BO\BoPqTrazabilidad.cs" />
     <Compile Include="BO\BoRnRadic.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
+    <Compile Include="Controllers\TrazabilidadPQRController.cs" />
     <Compile Include="Controllers\uploadController.cs" />
     <Compile Include="Controllers\XbBauliqController.cs" />
     <Compile Include="DAO\DAOAeClase.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="DAO\DAOSoCoxcn.cs" />
     <Compile Include="DAO\DAOSoDscfp.cs" />
     <Compile Include="DAO\DAOSoSbene.cs" />
+    <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
     <Compile Include="Global.asax.cs">
@@ -328,6 +331,9 @@
     <Compile Include="TO\PqInpqr.cs" />
     <Compile Include="TO\PqInpqrSalida.cs" />
     <Compile Include="TO\PqrTransactionLoad.cs" />
+    <Compile Include="TO\PqTrazab.cs" />
+    <Compile Include="TO\PqTrazabilidad.cs" />
+    <Compile Include="TO\PqTrazabilidadPqr.cs" />
     <Compile Include="TO\RnCraco.cs" />
     <Compile Include="TO\RnDdocu.cs" />
     <Compile Include="TO\RnDperc.cs" />

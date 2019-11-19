@@ -312,7 +312,7 @@ namespace RSELFANG.BO
 
                 string subject = ConfigurationManager.AppSettings["asuntoAprobacion"].ToString();
                 string body = ConfigurationManager.AppSettings["cuerpoAprobacion"].ToString();
-                body = string.Format("{0}{1}{2}", "<p style = 'text - align: justify; '>", body, "</p>");
+                body = string.Format("{0}{1}{2}", "<p style = 'text-align: justify;'>", body, "</p>");
 
                 if (ws.txtError != null)
                     throw new Exception(ws.txtError);
