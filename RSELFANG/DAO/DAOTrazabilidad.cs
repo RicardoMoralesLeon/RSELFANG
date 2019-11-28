@@ -74,7 +74,8 @@ namespace RSELFANG.DAO
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
-            sql.Append(" SELECT INP_NOMB, INP_APEL, INP_NIDE, INP_MAIL, GN_ITEMS.ITE_NOMB, GN_ARBOL.ARB_NOMB, PQ_DPARA.DPA_GRUP, INP_ESTA, INP_MPQR");
+            sql.Append(" SELECT INP_NOMB, INP_APEL, INP_NIDE, INP_MAIL, GN_ITEMS.ITE_NOMB, GN_ARBOL.ARB_NOMB, PQ_DPARA.DPA_GRUP, INP_MPQR, ");
+            sql.Append(" CASE WHEN INP_ESTA = 'A' THEN 'Abierta' WHEN INP_ESTA = 'E' THEN 'En trámite' ELSE 'Cerrada' END INP_ESTA");
             sql.Append(" FROM PQ_INPQR");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_TPQR");
             sql.Append(" INNER JOIN GN_ARBOL ON GN_ARBOL.ARB_CONT = PQ_INPQR.ARB_CECR");

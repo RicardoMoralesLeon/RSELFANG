@@ -122,7 +122,7 @@ namespace RSELFANG.BO
                 }
                 else
                 {
-                    throw new Exception("Debe configurar la forma de recepción con el código 3 en GnItems");
+                    pqr.ite_frec = "0";
                 }
                 
                 pqr.arb_cecr = daoArbol.GetGnArbol("3", "0", int.Parse(emp_codi))[0].arb_cont.ToString();

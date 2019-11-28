@@ -50,7 +50,7 @@ namespace RSELFANG.DAO
             sql.Append(" 		   ON  PRC.EMP_CODI = RCS.EMP_CODI ");
             sql.Append(" 		   AND PRC.DRP_CONT = RCS.DRP_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT ");
-            sql.Append(" ) A ");
+            sql.Append(" ) A WHERE A.DRS_CLAS IN ('A','M','P')");
             sql.Append(" ORDER BY A.DRE_SECC, DRS_ORDE ");
             sqlparams.Add(new SQLParams("REL_CONT", rel_cont));
             return new DbConnection().GetDataSet(sql.ToString(), sqlparams);

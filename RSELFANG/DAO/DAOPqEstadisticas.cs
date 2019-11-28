@@ -14,7 +14,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
 
             sql.Append(" SELECT GN_ARBOL.ARB_NOMB DAT_NOMB, COUNT(ITE_CONT) CANTIDAD,  ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER()))) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_TPQR ");
             sql.Append(" INNER JOIN GN_ARBOL ON GN_ARBOL.ARB_CONT = PQ_INPQR.ARB_SUCU ");
@@ -45,7 +45,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
 
             sql.Append(" SELECT UPPER(GN_ITEMS.ITE_NOMB) DAT_NOMB, COUNT(ITE_CONT) CANTIDAD, ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_FREC ");
             sql.Append(" WHERE PQ_INPQR.EMP_CODI = @EMP_CODI ");
@@ -74,7 +74,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
 
             sql.Append(" SELECT UPPER(GN_ITEMS.ITE_NOMB) DAT_NOMB, COUNT(ITE_CONT) CANTIDAD, ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_TPQR ");
             sql.Append(" WHERE PQ_INPQR.EMP_CODI = @EMP_CODI ");
@@ -103,7 +103,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
 
             sql.Append(" SELECT UPPER(GN_ARBOL.ARB_NOMB) DAT_NOMB, COUNT(ITE_CONT) CANTIDAD,   ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_TPQR ");
             sql.Append(" INNER JOIN GN_ARBOL ON GN_ARBOL.ARB_CONT = PQ_INPQR.ARB_CECR ");
@@ -135,7 +135,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
 
             sql.Append(" SELECT UPPER(GN_ITEMS.ITE_NOMB) DAT_NOMB, COUNT(ITE_CONT) CANTIDAD, ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_TIPI ");
             sql.Append(" WHERE PQ_INPQR.EMP_CODI = @EMP_CODI ");
@@ -164,7 +164,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
 
             sql.Append(" SELECT UPPER(GN_ITEMS.ITE_NOMB) DAT_NOMB, COUNT(ITE_CONT) CANTIDAD, ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(ITE_CONT) * 100.0) / (SUM(COUNT(ITE_CONT)) OVER())) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = PQ_INPQR.ITE_STIP ");
             sql.Append(" WHERE PQ_INPQR.EMP_CODI = @EMP_CODI ");
@@ -193,7 +193,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
             
             sql.Append(" SELECT UPPER(PQ_DPARA.DPA_GRUP) DAT_NOMB, COUNT(PQ_INPQR.DPA_CODI) CANTIDAD,  ");
-            sql.Append(" CONVERT(DECIMAL(10, 1), (COUNT(PQ_INPQR.DPA_CODI) * 100.0) / (SUM(COUNT(PQ_INPQR.DPA_CODI)) OVER())) PORCENTAJE ");
+            sql.Append(" CONVERT(DECIMAL(10, 2), (COUNT(PQ_INPQR.DPA_CODI) * 100.0) / (SUM(COUNT(PQ_INPQR.DPA_CODI)) OVER())) PORCENTAJE ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" INNER JOIN PQ_DPARA ON PQ_DPARA.DPA_CODI = PQ_INPQR.DPA_CODI ");
             sql.Append(" WHERE PQ_INPQR.EMP_CODI = @EMP_CODI ");

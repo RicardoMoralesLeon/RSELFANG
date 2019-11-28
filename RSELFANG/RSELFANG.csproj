@@ -46,11 +46,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
     </Reference>
@@ -85,7 +85,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SevenFramework, Version=19.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SevenFramework, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
