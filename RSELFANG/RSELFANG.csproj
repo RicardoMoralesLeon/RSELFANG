@@ -46,12 +46,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Desktop\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Fa, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+    </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Xb">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Xb.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Interop.Midas.dll</HintPath>
@@ -473,18 +484,6 @@
     <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\proyects\Elisa.DataBase\SevenFramework.csproj">
       <Project>{367c7437-7814-41db-be95-f32974e8f5c6}</Project>
       <Name>SevenFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\source\repos\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb.csproj">
-      <Project>{8050504B-681D-4643-8A59-C897ADD7A9C2}</Project>
-      <Name>DigitalWare.Apps.Utilities.Xb</Name>
-    </ProjectReference>
-    <ProjectReference Include="\\DW-A1373\Users\omarp\Desktop\OMAR\Datos\omar\Fuentes\DLlDauFA%28fuente pendiente de entrreg%29\DLlDauFA\Digitalware.Apps.Utilities.Fa\Digitalware.Apps.Utilities.Fa.csproj">
-      <Project>{b00efb19-df1c-4165-9d82-e2506fed536c}</Project>
-      <Name>Digitalware.Apps.Utilities.Fa</Name>
-    </ProjectReference>
-    <ProjectReference Include="\\DW-A1373\Users\omarp\Desktop\OMAR\Datos\omar\Fuentes\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn.csproj">
-      <Project>{46d82d84-75fc-4508-994a-5cfe3b81436a}</Project>
-      <Name>DigitalWare.Apps.Utilities.Gn</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
