@@ -10,13 +10,15 @@ namespace RSELFANG.BO
         public TOTransaction<SfFovis> GetInitialDataSf(int emp_codi)
         {            
             BOGnArbol boArbol = new BOGnArbol();
-            DAOSfForpo sfparam = new DAOSfForpo();
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
             
             try
             {
-                SfFovis result = new SfFovis();
-                result.par_feab = sfparam.GetSfParam(emp_codi);
-                return new TOTransaction<SfFovis>() { objTransaction = result, txtRetorno = "", retorno = 0 };
+                SfFovis fovis = new SfFovis();
+                fovis.par_feab = daoSfForpo.GetSfParam(emp_codi);
+                fovis.sfmodvi = daoSfForpo.GetModVi(emp_codi);
+                
+                return new TOTransaction<SfFovis>() { objTransaction = fovis, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
             {

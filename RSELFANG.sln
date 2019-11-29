@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSELFANG", "RSELFANG\RSELFANG.csproj", "{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenFramework", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\proyects\Elisa.DataBase\SevenFramework.csproj", "{367C7437-7814-41DB-BE95-F32974E8F5C6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{367C7437-7814-41DB-BE95-F32974E8F5C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{367C7437-7814-41DB-BE95-F32974E8F5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{367C7437-7814-41DB-BE95-F32974E8F5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{367C7437-7814-41DB-BE95-F32974E8F5C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
