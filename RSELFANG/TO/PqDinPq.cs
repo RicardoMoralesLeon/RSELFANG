@@ -10,5 +10,6 @@ namespace RSELFANG.TO
         public string din_segt { get; set; }
         public int din_cont { get; set; }
         public DateTime din_fese { get; set; }
+        public string aud_usua { get; set; }
     }
 }

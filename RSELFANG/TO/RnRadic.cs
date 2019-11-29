@@ -42,6 +42,7 @@ namespace RSELFANG.TO
         public string rad_muni;
         public string rad_loca;
         public string rad_barr;
+        public int rad_nfol;
         public List<RnDperc> rndperc;
         public List<Rnradtd> radtdat;
     }

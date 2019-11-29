@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Para obtener más información sobre cómo configurar la aplicación ASP.NET, visite
+  https://go.microsoft.com/fwlink/?LinkId=301879
+  -->
+<configuration>
+  <configSections>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="RSELFANG.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <appSettings>
+    <!-- Ubicación de los archivos de base de datos -->
+
+    <add key="sourceDB" value="DwOXml/ODBConfig.xml"/>
+    <add key="sourceBO" value="DwOXml/OBOConfig.xml"/>
+    <add key="sourceCE" value="DwOXml/OCEConfig.xml"/>
+    <!-- Llaves de configuración para acceso a seven -->
+    <add key="emp_codi" value="1"/>
+    <add key="usu_codi" value="NIDIAH"/>
+    <add key="servidorFTP" value="testings"/>
+    <add key="alias" value="testing"/>
+    <add key="usuario" value="seven12" />
+    <add key="password" value="sistemas12" />
+
+
+    <!-- Corresponde al la palabra clave DIGITALWARE2019 encriptada en base 64, esta es la llave de encriptación que se utiliza para generar los tokens-->
+    <add key="JWT_SECRET_KEY" value="RElHSVRBTFdBUkUyMDE5" />
+    <!--Utilizada para generar y comprobar validez del token, debe contener la url en la que está alojado este servicio ej http://localhost/RGNLOGIN-->
+    <add key="JWT_AUDIENCE_TOKEN" value="http://testings/REST/SQL/rgnlogin/" />
+    <!--Utilizada para generar y comprobar validez del token, debe contener la url en la que está alojado este servicio ej http://localhost/RGNLOGIN-->
+    <add key="JWT_ISSUER_TOKEN" value="http://testings/REST/SQL/rgnlogin/" />
+    <!-- Corresponde al la url donde se aloja el formulario de contraseña olvidada-->
+    <add key="JWT_TRANSACT_SITE" value="http://testings/dwapps/wgnfpass" />
+    <!--Tiempo de validez de cada token generado en minutos, por defecto 15-->
+    <add key="JWT_EXPIRE_MINUTES" value="15" />
+    <!-- Envio de correo modulo proponentes-->
+    <add key="asuntoCreacion" value="Prueba creación proponentes" />
+    <add key="cuerpoCreacion" value="Útil para tus comentarios en Twitter, Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuit en línea que cuenta el número de caracteres o letras de un texto. eriodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes,  vestigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar  sta herramienta para contar el número de, Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de etras o caracteres en WWWW Wutilizar esta herramienta para contar el número de Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que scriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, nvestigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de, Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el úmero de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que rabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que reparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el úmero de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores dependientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWW Wutilizar esta herramienta para contar el número de Útil para tus comentarios en witter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, studiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor" />
+    <add key="asuntoAprobacion" value="Aprobación proponente" />
+    <add key="cuerpoAprobacion" value="Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de, Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, Wutilizar esta herramienta para contar el número de " />
+    <add key="asuntoRechazo" value="Rechazo proponente " />
+    <add key="cuerpoRechazo" value="Cuerpo mensaje rechazo proponente  Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de, Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de, Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, siéntete libre de utilizar esta herramienta para contar el número de letras o caracteres en WWWW Wutilizar esta herramienta para contar el número de Útil para tus comentarios en Twitter, así como para muchas otras aplicaciones, esta es una calculadora gratuita en línea que cuenta el número de caracteres o letras de un texto. Periodistas que escriben un artículo, estudiantes que trabajan en su tarea, escritores independientes, investigadores, solicitantes de empleo que preparan su currículum: por favor, " />
+  </appSettings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.6" />
+    <httpRuntime targetFramework="4.6" />
+  </system.web>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" />
+        <bindingRedirect oldVersion="0.0.0.0-11.0.0.0" newVersion="11.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.4.0" newVersion="5.2.4.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.7.0" newVersion="5.2.7.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Http.Formatting" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.7.0" newVersion="5.2.7.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="RestSharp" publicKeyToken="598062e77f915f75" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-106.6.7.0" newVersion="106.6.7.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <system.webServer>
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
+  <applicationSettings>
+    <RSELFANG.Properties.Settings>
+      <setting name="RSELFANG_swflup_SWFRFLUP" serializeAs="String">
+        <value>http://testings/WebServicesSQL40/WWfRflup.asmx</value>
+      </setting>
+    </RSELFANG.Properties.Settings>
+  </applicationSettings>
+</configuration>
+<!--ProjectGuid: 35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B-->

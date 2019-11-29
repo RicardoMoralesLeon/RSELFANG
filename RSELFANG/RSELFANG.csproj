@@ -47,6 +47,9 @@
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Wf">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
@@ -187,8 +190,10 @@
     <Compile Include="BO\BOGnTerce.cs" />
     <Compile Include="BO\BOPqDpara.cs" />
     <Compile Include="BO\BOPqEncue.cs" />
+    <Compile Include="BO\BoPqEstadisticas.cs" />
     <Compile Include="BO\BOPqInpqr.cs" />
     <Compile Include="BO\BOPqr.cs" />
+    <Compile Include="BO\BoPqTrazabilidad.cs" />
     <Compile Include="BO\BoRnRadic.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
@@ -216,12 +221,14 @@
     <Compile Include="Controllers\GnUsuarController.cs" />
     <Compile Include="Controllers\PaPagosController.cs" />
     <Compile Include="Controllers\PqEncueController.cs" />
+    <Compile Include="Controllers\PqEstadisticasController.cs" />
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
+    <Compile Include="Controllers\TrazabilidadPQRController.cs" />
     <Compile Include="Controllers\uploadController.cs" />
     <Compile Include="Controllers\XbBauliqController.cs" />
     <Compile Include="Controllers\XbPcecaController.cs" />
@@ -263,6 +270,7 @@
     <Compile Include="DAO\DAOLiqCons.cs" />
     <Compile Include="DAO\DAOPqDinPq.cs" />
     <Compile Include="DAO\DAOPqEncue.cs" />
+    <Compile Include="DAO\DAOPqEstadisticas.cs" />
     <Compile Include="DAO\DAOPqInpqr.cs" />
     <Compile Include="DAO\DAOPqInpr.cs" />
     <Compile Include="DAO\DAOPqParam.cs" />
@@ -273,6 +281,7 @@
     <Compile Include="DAO\DAOSoCoxcn.cs" />
     <Compile Include="DAO\DAOSoDscfp.cs" />
     <Compile Include="DAO\DAOSoSbene.cs" />
+    <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
     <Compile Include="Global.asax.cs">
@@ -281,6 +290,7 @@
     <Compile Include="Models\Ca_Rcxcv.cs" />
     <Compile Include="Models\Gn_Diasn.cs" />
     <Compile Include="Models\LoginRequest.cs" />
+    <Compile Include="Models\InfoPqEstad.cs" />
     <Compile Include="Models\TOAeClase.cs" />
     <Compile Include="Models\TOCaCpcob.cs" />
     <Compile Include="Models\ToCaCxcob.cs" />
@@ -298,6 +308,7 @@
     <Compile Include="Models\TOSoDscfp.cs" />
     <Compile Include="Models\TOSoSbene.cs" />
     <Compile Include="Models\TOTsParam.cs" />
+    <Compile Include="Models\Xb_Auliq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -343,9 +354,13 @@
     <Compile Include="TO\Mail.cs" />
     <Compile Include="TO\PqDinPq.cs" />
     <Compile Include="TO\PQEncue.cs" />
+    <Compile Include="TO\PqEstad.cs" />
     <Compile Include="TO\PqInpqr.cs" />
     <Compile Include="TO\PqInpqrSalida.cs" />
     <Compile Include="TO\PqrTransactionLoad.cs" />
+    <Compile Include="TO\PqTrazab.cs" />
+    <Compile Include="TO\PqTrazabilidad.cs" />
+    <Compile Include="TO\PqTrazabilidadPqr.cs" />
     <Compile Include="TO\RnCraco.cs" />
     <Compile Include="TO\RnDdocu.cs" />
     <Compile Include="TO\RnDperc.cs" />

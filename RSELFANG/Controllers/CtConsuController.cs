@@ -8,7 +8,7 @@ namespace RSELFANG.Controllers
     public class CtConsuController : ApiController
     {
         [Route("api/CtConsu/CtConsuLoad")]
-        public TOTransaction<List<TORevPr>> Get(int emp_codi, string rev_esta, string pro_codi  = "", string pro_nomb = "")
+        public TOTransaction<List<TORevPr>> Get(int emp_codi, string rev_esta, string pro_codi , string pro_nomb)
         {
             BOCtConsu bo = new BOCtConsu();
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
@@ -65,11 +65,11 @@ namespace RSELFANG.Controllers
 
 
         [Route("api/CtConsu/aprobarProponente")]
-        public TOTransaction Post(int emp_codi, int rev_cont)
+        public TOTransaction Post(int emp_codi, int rev_cont, List<CtRevdo> ctrevdo)
         {
             BOCtConsu bo = new BOCtConsu();
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
-            return bo.setInfoCtPropo(emp_codi, rev_cont);
+            return bo.setInfoCtPropo(emp_codi, rev_cont, ctrevdo);
         }
     }
 }

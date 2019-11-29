@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Text;
+using Digitalware.Apps.Utilities;
 using Ophelia;
 using Ophelia.Comun;
 using Ophelia.DataBase;
+using RSELFANG.BO;
 using RSELFANG.TO;
 using SevenFramework.DataBase;
 
@@ -12,7 +18,7 @@ namespace RSELFANG.DAO
 {
     public class DAOCtConsu
     {
-        public List<TORevPr> getctconsu(int emp_codi, string rev_esta, string pro_codi = "", string pro_nomb = "")
+        public List<TORevPr> getctconsu(int emp_codi, string rev_esta, string pro_codi, string pro_nomb)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
@@ -24,13 +30,13 @@ namespace RSELFANG.DAO
             if(pro_codi != null)
             {
                 sql.Append(" AND PRO_CODI = @PRO_CODI ");
-                sqlparams.Add(new SQLParams("PRO_CODI", pro_codi));
+                sqlparams.Add(new SQLParams("PRO_CODI", pro_codi.Trim()));
             }
 
             if (pro_nomb != null)
             {
                 sql.Append(" AND PRO_NOMB = @PRO_NOMB ");
-                sqlparams.Add(new SQLParams("PRO_NOMB", pro_nomb));
+                sqlparams.Add(new SQLParams("PRO_NOMB", pro_nomb.Trim()));
             }
 
             sql.Append("ORDER BY REV_CONT ");
@@ -84,14 +90,14 @@ namespace RSELFANG.DAO
         public List<CtRevdo> GetCtRevDo(int emp_codi, int rev_cont)
         {            
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT DISTINCT RAD_LLAV,DOC_CONT,PRO_NREG, PRO_DDOC, PRO_FENT, PRO_FVEN, PRO_OBSE, ADJ_NOMB,");
-            sql.Append(" CASE WHEN REV_APRO = 'S' THEN 1 ELSE 0 END ITE_CHKD ");        
+            sql.Append(" SELECT DISTINCT RAD_LLAV,DOC_CONT,PRO_NREG, PRO_DDOC, PRO_FENT, PRO_FVEN, PRO_OBSE, ADJ_NOMB, CASE WHEN REV_APRO = 'S' THEN 1 ELSE 0 END ITE_CHKD, GN_RADJU.RAD_CONT ");
             sql.Append(" FROM CT_REVDO ");
-            sql.Append(" INNER JOIN GN_RADJU ON GN_RADJU.RAD_LLAV = CONCAT(CT_REVDO.EMP_CODI, CT_REVDO.DOC_CONT) ");
-            sql.Append(" INNER JOIN GN_ADJUN ON GN_ADJUN.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJUN.EMP_CODI = GN_RADJU.EMP_CODI ");
+            sql.Append(" INNER JOIN GN_RADJU ON GN_RADJU.RAD_LLAV = CONCAT(CT_REVDO.EMP_CODI, CT_REVDO.REV_CONT) ");
+            sql.Append(" INNER JOIN GN_ADJUN ON GN_ADJUN.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJUN.EMP_CODI = GN_RADJU.EMP_CODI AND GN_ADJUN.ADJ_CONT = CT_REVDO.PRO_NREG ");
             sql.Append(" WHERE GN_RADJU.RAD_TABL = 'CT_REVDO' ");
             sql.Append(" AND CT_REVDO.REV_CONT = @REV_CONT ");
-            sql.Append(" AND CT_REVDO.EMP_CODI = @EMP_CODI ");            
+            sql.Append(" AND CT_REVDO.EMP_CODI = @EMP_CODI ");
+            sql.Append(" ORDER BY PRO_NREG ");
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("REV_CONT", rev_cont));
@@ -101,16 +107,16 @@ namespace RSELFANG.DAO
         public List<CtRevdo> GetCtRevDoBD(int emp_codi, int rev_cont)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT RAD_LLAV,DOC_CONT,PRO_NREG, PRO_DDOC, PRO_FENT, PRO_FVEN, PRO_OBSE, ADJ_NOMB,");
+            sql.Append(" SELECT RAD_LLAV, DOC_CONT, PRO_NREG, PRO_DDOC, PRO_FENT, PRO_FVEN, PRO_OBSE, ADJ_NOMB, ");
             sql.Append(" CASE WHEN REV_APRO = 'S' THEN 1 ELSE 0 END ITE_CHKD, ADJ_FILE ");
-            sql.Append(" FROM CT_REVDO ");
-            sql.Append(" INNER JOIN GN_RADJU ON GN_RADJU.RAD_LLAV = CONCAT(CT_REVDO.EMP_CODI, CT_REVDO.DOC_CONT) ");
+            sql.Append(" FROM GN_RADJU ");
             sql.Append(" INNER JOIN GN_ADJUN ON GN_ADJUN.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJUN.EMP_CODI = GN_RADJU.EMP_CODI ");
-            sql.Append(" INNER JOIN GN_ADJFI ON GN_ADJFI.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJFI.EMP_CODI = GN_RADJU.EMP_CODI ");
+            sql.Append(" INNER JOIN GN_ADJFI ON GN_ADJFI.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJFI.ADJ_CONT = GN_ADJUN.ADJ_CONT ");
+            sql.Append(" INNER JOIN CT_REVDO ON CONCAT(CT_REVDO.EMP_CODI, CT_REVDO.REV_CONT) = GN_RADJU.RAD_LLAV AND CT_REVDO.PRO_NREG = GN_ADJFI.ADJ_CONT ");
             sql.Append(" WHERE GN_RADJU.RAD_TABL = 'CT_REVDO' ");
             sql.Append(" AND CT_REVDO.REV_CONT = @REV_CONT ");
             sql.Append(" AND CT_REVDO.EMP_CODI = @EMP_CODI ");
-            sql.Append(" ORDER BY PRO_NREG  ");
+            sql.Append(" ORDER BY PRO_NREG ");
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("REV_CONT", rev_cont));
@@ -253,7 +259,7 @@ namespace RSELFANG.DAO
             return conection.Insert(pTOContext, sql.ToString(), parametros.ToArray());
         }
 
-        public int insertCtDocpr(int rev_cont, int pro_cont, int emp_codi)
+        public int insertCtDocpr(int rev_cont, int pro_cont, int emp_codi, List<CtRevdo> ctrevdo)
         {
             DataSet ds = new DataSet();
             StringBuilder sql = new StringBuilder();
@@ -283,21 +289,76 @@ namespace RSELFANG.DAO
                 foreach (DataRow rw in ds.Tables[0].Rows)
                 {
                     int doc_cont = GetCont(emp_codi);
-                    
+                    int doc_cont_rev = int.Parse(rw["DOC_CONT"].ToString());
+
                     sql = new StringBuilder();
                     sql.Append(" INSERT INTO CT_DOCPR(AUD_ESTA, AUD_USUA, AUD_UFAC, EMP_CODI, DOC_CONT, PRO_CONT, PRO_NREG, PRO_DDOC, PRO_FENT, PRO_FVEN, PRO_OBSE) ");
                     sql.Append(" SELECT @AUD_ESTA, @AUD_USUA, @AUD_UFAC, EMP_CODI," + doc_cont + " , @PRO_CONT, PRO_NREG, PRO_DDOC, PRO_FENT, PRO_FVEN, PRO_OBSE ");
                     sql.Append(" FROM CT_REVDO ");
                     sql.Append(" WHERE EMP_CODI = @EMP_CODI ");
                     sql.Append(" AND REV_CONT = @REV_CONT ");
-                    sql.Append(" AND DOC_CONT = " + rw["DOC_CONT"].ToString());
+                    sql.Append(" AND DOC_CONT = " + doc_cont_rev);
 
                     pTOContext = new OTOContext();
                     var connection = DBFactory.GetDB(pTOContext);
                     connection.Insert(pTOContext, sql.ToString(), parametros.ToArray());
+
+                    CtRevdo revdo = ctrevdo.FirstOrDefault(p => p.doc_cont == doc_cont_rev);
+
+                    if (revdo != null)
+                    {
+                        string adj_nomb = revdo.adj_nomb.ToString();
+
+                        if (revdo.adj_file != null)
+                        {
+                            byte[] pro_adju = revdo.adj_file;
+                            GuardarArchivo(pro_cont, emp_codi, pro_adju, adj_nomb);
+                        }
+                        else
+                        {
+                            string ftp = ConfigurationManager.AppSettings["servidorFTP"];
+                            string directoryDefault = string.Format("ftp://{0}/Seven/docs/{1}/{1}_{2}_{3}_{4}", ftp.ToString(), "CT_REVDO", emp_codi.ToString(), revdo.rad_cont, revdo.pro_nreg);
+                            byte[] pro_adju = getFileFromFtp(directoryDefault);
+                            GuardarArchivo(pro_cont, emp_codi, pro_adju, adj_nomb);
+                        }                                    
+                    }                    
                 }
             }
+
             return 0;
+        }
+
+        private byte[] getFileFromFtp(string fileName)
+        {
+            WebClient request = new WebClient();
+            string ftp = ConfigurationManager.AppSettings["servidorFTP"];
+            string userftp = FTPManager.UserFtp;
+            string passFtp = FTPManager.PassFtp;            
+            request.Credentials = new NetworkCredential(userftp, passFtp);
+
+            try
+            {
+                byte[] newFileData = request.DownloadData(new Uri(fileName));
+                return newFileData;
+                //string fileString = System.Text.Encoding.UTF8.GetString(newFileData);
+            }
+            catch (WebException e)
+            {
+                return null;
+            }            
+        }
+
+        private void GuardarArchivo(int pro_cont, int emp_codi, byte[] pro_adju, string fil_name)
+        {
+            BOGnRadju boRadju = new BOGnRadju();
+            string key = string.Concat(emp_codi, pro_cont);
+
+            string utfString = Encoding.UTF8.GetString(pro_adju, 0, pro_adju.Length);
+            byte[] arrbyte = Convert.FromBase64String(utfString);
+           
+            var saveAttchment = boRadju.insertGnRadju((short)emp_codi, key, "CT_PROPO", "SCTPROPO", pro_cont, arrbyte, fil_name, "S");
+            if (!saveAttchment.Item1)
+                throw new Exception(string.Format("Error insertando adjunto en documentos {0}", saveAttchment.Item2));
         }
 
         public int GetCont(int emp_codi)
@@ -329,5 +390,7 @@ namespace RSELFANG.DAO
             var result = conection.GetScalar(pTOContext, sql.ToString(), parametros.ToArray());
             return result.ToString();
         }
+
+       
     }
 }

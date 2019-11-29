@@ -49,7 +49,7 @@ namespace RSELFANG.DAO
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT RN_CRACO.CRA_CONT, RN_CRACO.CRA_CODI, RN_CRACO.CRA_NOMB, ");
-            sql.Append(" GN_ITEMS.ITE_CODI, GN_ITEMS.ITE_NOMB,RN_CRACO.CRA_ESTP, RN_CRACO.CRA_CLAR, RN_CRACO.CRA_PRIM ");
+            sql.Append(" GN_ITEMS.ITE_CODI, GN_ITEMS.ITE_NOMB,RN_CRACO.CRA_DEST, RN_CRACO.CRA_CLAR, RN_CRACO.CRA_PRIM ");
             sql.Append(" FROM RN_DGRUR, RN_CRACO, RN_GRURA, GN_ITEMS ");
             sql.Append(" WHERE RN_DGRUR.EMP_CODI = RN_CRACO.EMP_CODI ");
             sql.Append(" AND RN_DGRUR.CRA_CONT = RN_CRACO.CRA_CONT ");

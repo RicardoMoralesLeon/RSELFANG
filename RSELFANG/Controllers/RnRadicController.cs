@@ -46,5 +46,13 @@ namespace RSELFANG.Controllers
             BoRnRadic bo = new BoRnRadic();
             return bo.getInfoDocumentos(cra_codi);
         }
+
+        [Route("api/RnRadic/SuAfiliInfo")]
+        public TOTransaction<List<SuAfili>> get(int emp_codi, bool opcion = false, bool opcion2 = false)
+        {
+            BoRnRadic bo = new BoRnRadic();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
+            return bo.GetInfoAfiliados(emp_codi);
+        }
     }
 }

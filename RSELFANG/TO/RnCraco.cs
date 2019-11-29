@@ -12,7 +12,7 @@ namespace RSELFANG.TO
         public string CRA_NOMB { get; set; }
         public int ITE_CODI { get; set; }
         public string ITE_NOMB { get; set; }
-        public string CRA_ESTP { get; set; }
+        public string CRA_DEST { get; set; }
         public string CRA_CLAR { get; set; }
         public string CRA_PRIM { get; set; }
     }
