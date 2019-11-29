@@ -23,5 +23,9 @@ namespace RSELFANG.TO
         public int mun_codi { get; set; }
         public int reg_codi { get; set; }
         public string tip_abre { get; set; }
+        public long cli_codi { get; set; }
+        public string mun_nomb { get; set; }
+        public string dep_nomb { get; set; }
+        public string cli_noco{ get; set; }
     }
 }

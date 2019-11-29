@@ -43,7 +43,7 @@ namespace RSELFANG.Controllers
                 if (login == null)
                     throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-                //TODO: validar las credenciales aquí
+                
                 bool isCredentialValid = new BOGnUsuar().GnUsuarAutenticate(login.Username, login.Password).Retorno == 0;
                 if (isCredentialValid)
                 {
@@ -68,7 +68,7 @@ namespace RSELFANG.Controllers
                     BOGnUsuar bo = new BOGnUsuar();
                     if (login == null)
                         throw new HttpResponseException(HttpStatusCode.BadRequest);
-                    //TODO: validar las credenciales genéricas aquí
+                   
                     bool isCredentialValid = bo.GnUsuarAutenticate(login.Username, login.Password).Retorno == 0;
                     if (isCredentialValid)
                     {

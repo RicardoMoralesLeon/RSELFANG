@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-
 namespace RSELFANG.DAO
 {
     public class DAOCaCxcob
@@ -44,39 +43,75 @@ namespace RSELFANG.DAO
 
         }
 
-        public List<Xb_Auliq> GetAuliquidacion(short emp_codi, string cli_coda)
+        public List<TOXbAuliq> GetAuliquidacion(short emp_codi, long cli_codi)
         {
             OException exception = new OException();
             try
             {
                 StringBuilder sql = new StringBuilder();
 
-                sql.Append("    SELECT DDI.ITE_CTSE, ITE.ITE_NOMB, DDI.DDI_VIGE, TOPE.TOP_CODI, TOPE.TOP_NOMB, CXC.CXC_DESC, CXC.CXC_TOTA,CXC.CXC_SALD  ");
-                sql.Append("    FROM   CA_CXCOB CXC                                                                                                     ");
-                sql.Append("    INNER JOIN FA_DDINA DDI                                                                                                 ");
-                sql.Append("    ON CXC.EMP_CODI = DDI.EMP_CODI                                                                                          ");
-                sql.Append("    AND CXC.CLI_CODI = DDI.CLI_CODI                                                                                         ");
-                sql.Append("    AND CXC.CXC_ANOP = DDI.DDI_VIGE                                                                                         ");
-                sql.Append("    INNER JOIN GN_TOPER TOPE                                                                                                ");
-                sql.Append("    ON CXC.EMP_CODI = TOPE.EMP_CODI                                                                                         ");
-                sql.Append("    AND CXC.TOP_CODI = TOPE.TOP_CODI                                                                                        ");
-                sql.Append("    INNER JOIN GN_ITEMS ITE                                                                                                 ");
-                sql.Append("    ON DDI.ITE_CTSE = ITE.ITE_CONT                                                                                          ");
-                sql.Append("                                                                                                                            ");
-                sql.Append("                                                                                                                            ");
-                sql.Append("    --AND CXC.DCL_CODD = DDI.DCL_CODD                                                                                       ");
-                sql.Append("    WHERE CXC.EMP_CODI =                                                                                                 ");
-                sql.Append("    AND CXC.CLI_CODI = 88284896                                                                                             ");
-                sql.Append("    AND CXC.TOP_CODI = (                                                                                                    ");
-                sql.Append("    SELECT PCE.TOP_COCO                                                                                                     ");
-                sql.Append("    FROM   XB_PCECA PCE                                                                                                     ");
-                sql.Append("    WHERE PCE.EMP_CODI = 102                                                                                                ");
-                sql.Append("    )                                                                                                                       ");
-                sql.Append("    AND CXC.CXC_SALD > 0                                                                                                    ");
+                sql.Append("SELECT RCX.ITE_CTSE,    CXC.EMP_CODI,                            ");
+                sql.Append("ITE.ITE_CODI,                                       ");
+                sql.Append("ITE.ITE_NOMB CTS_NOMB,                              ");
+                sql.Append("RCX.RCX_VIGE,                                       ");
+                sql.Append("TOPE.TOP_CODI,                                      ");
+                sql.Append("TOPE.TOP_NOMB,                                      ");
+                sql.Append("CXC.CXC_DESC,                                       ");
+                sql.Append("CXC.CXC_TOTA,                                       ");
+                sql.Append("CXC.CXC_SALD,                                       ");            
+                sql.Append("CXC.CXC_CONT,                                       ");
+                sql.Append("CXC.CXC_FEVE,                                         ");
+                sql.Append("CXC.DCL_CODD                                       ");
+                sql.Append("FROM   CA_CXCOB CXC                                 ");
+                sql.Append("INNER JOIN CA_RCXCV RCX                             ");
+                sql.Append("ON CXC.EMP_CODI = RCX.EMP_CODI                      ");
+                sql.Append("AND CXC.CXC_CONT = RCX.CXC_CONT                     ");
+                sql.Append("INNER JOIN GN_TOPER TOPE                            ");
+                sql.Append("ON CXC.EMP_CODI = TOPE.EMP_CODI                     ");
+                sql.Append("AND CXC.TOP_CODI = TOPE.TOP_CODI                    ");
+                sql.Append("INNER JOIN GN_ITEMS ITE                             ");
+                sql.Append("ON RCX.ITE_CTSE = ITE.ITE_CONT                      ");
+                sql.Append("WHERE CXC.EMP_CODI = @EMP_CODI                            ");
+                sql.Append("AND CXC.CLI_CODI = @CLI_CODI                        ");
+                sql.Append("AND CXC.TOP_CODI = (SELECT PCE.TOP_COCO             ");
+                sql.Append("                FROM   XB_PCECA PCE                 ");
+                sql.Append("                WHERE PCE.EMP_CODI = @EMP_CODI)     ");
+                sql.Append("AND CXC.CXC_SALD > 0                                ");
+                sql.Append("UNION                                               ");
+                sql.Append("SELECT                                              ");
+                sql.Append("CPC.ITE_CTSE,  CXC.EMP_CODI,                                         ");
+                sql.Append("ITE.ITE_CODI,                                       ");
+                sql.Append("ITE.ITE_NOMB CTS_NOMB,                              ");
+                sql.Append("CPC.RVM_VIGE,                                       ");
+                sql.Append("TOPE.TOP_CODI,                                      ");
+                sql.Append("TOPE.TOP_NOMB,                                      ");
+                sql.Append("CXC.CXC_DESC,                                       ");
+                sql.Append("CXC.CXC_TOTA,                                       ");
+                sql.Append("CXC.CXC_SALD,                                       ");            
+                sql.Append("CXC.CXC_CONT,                                       ");
+                sql.Append("CXC.CXC_FEVE,                                       ");
+                sql.Append("CXC.DCL_CODD                                        ");
+                sql.Append("FROM   CA_CXCOB CXC                                 ");
+                sql.Append("INNER JOIN CA_RVMSA CPC                             ");
+                sql.Append("ON CXC.EMP_CODI = CPC.EMP_CODI                      ");
+                sql.Append("AND CXC.CXC_CONT = CPC.CXC_CONT                     ");
+                sql.Append("INNER JOIN GN_TOPER TOPE                            ");
+                sql.Append("ON CXC.EMP_CODI = TOPE.EMP_CODI                     ");
+                sql.Append("AND CXC.TOP_CODI = TOPE.TOP_CODI                    ");
+                sql.Append("INNER JOIN GN_ITEMS ITE                             ");
+                sql.Append("ON CPC.ITE_CTSE = ITE.ITE_CONT                      ");
+                sql.Append("WHERE CXC.EMP_CODI = @EMP_CODI                      ");
+                sql.Append("AND CXC.CLI_CODI = @CLI_CODI                        ");
+                sql.Append("AND CXC.TOP_CODI = (SELECT PCE.TOP_CORE             ");
+                sql.Append("                FROM   XB_PCECA PCE                 ");
+                sql.Append("                WHERE PCE.EMP_CODI = @EMP_CODI)     ");
+                sql.Append("AND CXC.CXC_SALD > 0                                ");
+
+
                 List<SQLParams> sQLParams = new List<SQLParams>();
                 sQLParams.Add(new SQLParams("EMP_CODI", emp_codi));
-                sQLParams.Add(new SQLParams("CLI_CODA", cli_coda));
-                return new DbConnection().GetList<Xb_Auliq>(sql.ToString(), sQLParams);
+                sQLParams.Add(new SQLParams("CLI_CODI", cli_codi));
+                return new DbConnection().GetList<TOXbAuliq>(sql.ToString(), sQLParams);
             }
             catch (Exception ex)
             {
@@ -85,6 +120,24 @@ namespace RSELFANG.DAO
                 return null;
             }
 
+        }
+
+
+        public int? AnularCaCxcob(int emp_codi, int cxc_cont)
+        {
+            try
+            {
+                List<SQLParams> sqlPrms = new List<SQLParams>();
+                sqlPrms.Add(new SQLParams("EMP_CODI", emp_codi));
+                sqlPrms.Add(new SQLParams("CXC_CONT", cxc_cont));
+                string sql = "UPDATE CA_CXCOB SET CXC_ESTA = 'N' WHERE EMP_CODI = @EMP_CODI AND CXC_CONT = @CXC_CONT";
+                return new DbConnection().Update(sql.ToString(), sqlPrms);
+            }
+            catch (Exception ex)
+            {
+                SevenFramework.Exceptions.ExceptionManager.Throw(this.GetType().ToString(), System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                return null;
+            }
         }
     }
 }

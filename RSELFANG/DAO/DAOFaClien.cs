@@ -29,7 +29,11 @@ namespace RSELFANG.DAO
             sql.Append("  fd.DEP_CODI,                                         ");
             sql.Append("  gd.REG_CODI,                                         ");
             sql.Append("  fd.MUN_CODI ,                                         ");
-            sql.Append("  gi.TIP_ABRE                                            ");
+            sql.Append("  gi.TIP_ABRE  ,                                          ");
+            sql.Append("  fc.CLI_NOCO  ,                                          ");
+            sql.Append("  fc.CLI_CODI,                                            ");
+            sql.Append("  gm.MUN_NOMB ,");
+            sql.Append("  gd.DEP_NOMB ");
             sql.Append("  FROM   FA_CLIEN fc                                   ");
             sql.Append("  INNER JOIN FA_DCLIE fd                               ");
             sql.Append("       ON fc.EMP_CODI = fd.EMP_CODI                    ");
