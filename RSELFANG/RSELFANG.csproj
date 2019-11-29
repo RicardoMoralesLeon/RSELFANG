@@ -42,26 +42,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Digitalware.Apps.Utilities, Version=19.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Digitalware.Apps.Utilities.dll</HintPath>
+    <Reference Include="Digitalware.Apps.Utilities">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.9.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+    <Reference Include="Digitalware.Apps.Utilities.In">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DigitalWare.Apps.Utilities.Wf">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Interop.Midas.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Interop.S07DmrAncestroPrj">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.S07DmrAncestroPrj.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.S07DmrDocumentoPrj">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.S07DmrDocumentoPrj.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Interop.SXE4DmrAncestroPrj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.SXE4DmrAncestroPrj.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SXE4DmrDocumentoPrj">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.SXE4DmrDocumentoPrj.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -84,10 +93,6 @@
     <Reference Include="RestSharp, Version=106.6.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="SevenFramework, Version=19.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.4.0\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -163,6 +168,9 @@
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
     <Compile Include="BO\BoEeReles.cs" />
+    <Compile Include="BO\BOFaclien.cs" />
+    <Compile Include="BO\BOFaDdina.cs" />
+    <Compile Include="BO\BOFaInacl.cs" />
     <Compile Include="BO\BOGnArbol.cs" />
     <Compile Include="BO\BOGnBarri.cs" />
     <Compile Include="BO\BOGnDepar.cs" />
@@ -185,12 +193,16 @@
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
     <Compile Include="BO\BOXbAuliq.cs" />
+    <Compile Include="BO\BOXbPceca.cs" />
     <Compile Include="Controllers\CaCxCobController.cs" />
     <Compile Include="Controllers\CtConsuController.cs" />
     <Compile Include="Controllers\CtPropoController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EcCotizController.cs" />
     <Compile Include="Controllers\EeRelesController.cs" />
+    <Compile Include="Controllers\FaClienController.cs" />
+    <Compile Include="Controllers\FaDdinaController.cs" />
+    <Compile Include="Controllers\FaInaclController.cs" />
     <Compile Include="Controllers\GnArbolController.cs" />
     <Compile Include="Controllers\GnDeparController.cs" />
     <Compile Include="Controllers\GnEmpreController.cs" />
@@ -212,8 +224,11 @@
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\uploadController.cs" />
     <Compile Include="Controllers\XbBauliqController.cs" />
+    <Compile Include="Controllers\XbPcecaController.cs" />
     <Compile Include="DAO\DAOAeClase.cs" />
+    <Compile Include="DAO\DAOCaCpcob.cs" />
     <Compile Include="DAO\DAOCaCxcob.cs" />
+    <Compile Include="DAO\DAOCaRcxcv.cs" />
     <Compile Include="DAO\DAOCtConsu.cs" />
     <Compile Include="DAO\DAOCtContr.cs" />
     <Compile Include="DAO\DAOCtPropo.cs" />
@@ -228,7 +243,9 @@
     <Compile Include="DAO\DAOGnArbol.cs" />
     <Compile Include="DAO\DAOGnBarri.cs" />
     <Compile Include="DAO\DAOGnConse.cs" />
+    <Compile Include="DAO\DAOGnCtope.cs" />
     <Compile Include="DAO\DAOGnDepar.cs" />
+    <Compile Include="DAO\DAOGnDiasn.cs" />
     <Compile Include="DAO\DAOGnFlag.cs" />
     <Compile Include="DAO\DAOGnInsta.cs" />
     <Compile Include="DAO\DAOGnItems.cs" />
@@ -241,6 +258,7 @@
     <Compile Include="DAO\DAOGnRegi.cs" />
     <Compile Include="DAO\DAOGnTerce.cs" />
     <Compile Include="DAO\DAOGnTipdo.cs" />
+    <Compile Include="DAO\DAOGnToper.cs" />
     <Compile Include="DAO\DAOGPerte.cs" />
     <Compile Include="DAO\DAOLiqCons.cs" />
     <Compile Include="DAO\DAOPqDinPq.cs" />
@@ -260,15 +278,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Ca_Rcxcv.cs" />
+    <Compile Include="Models\Gn_Diasn.cs" />
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Models\TOAeClase.cs" />
+    <Compile Include="Models\TOCaCpcob.cs" />
     <Compile Include="Models\ToCaCxcob.cs" />
     <Compile Include="Models\TOEcCotiz.cs" />
     <Compile Include="Models\TOEcDespa.cs" />
     <Compile Include="Models\TOEcDetan.cs" />
     <Compile Include="Models\TOEcDphij.cs" />
     <Compile Include="Models\TOEcLisev.cs" />
+    <Compile Include="Models\TOGnCtope.cs" />
+    <Compile Include="Models\ToGnToper.cs" />
     <Compile Include="Models\TOLiqCons.cs" />
+    <Compile Include="Models\ToPrintLiq.cs" />
     <Compile Include="Models\TOSoCocxn.cs" />
     <Compile Include="Models\TOSoConve.cs" />
     <Compile Include="Models\TOSoDscfp.cs" />
@@ -343,7 +367,7 @@
     <Compile Include="TO\TORevPr.cs" />
     <Compile Include="TO\TOTransacion.cs" />
     <Compile Include="TO\TOWfCdocu.cs" />
-    <Compile Include="TO\Xb_Auliq.cs" />
+    <Compile Include="Models\TOXbAuliq.cs" />
     <Compile Include="Web References\swflup\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -385,6 +409,15 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="SCaCxCob">
+      <Guid>{CCF4FF80-901E-11D6-BAF6-00302111E511}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="SCtPropo">
       <Guid>{EDE71941-47D2-11D6-8EB7-00302111D27B}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -412,6 +445,24 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\proyects\Elisa.DataBase\SevenFramework.csproj">
+      <Project>{367c7437-7814-41db-be95-f32974e8f5c6}</Project>
+      <Name>SevenFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\source\repos\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb.csproj">
+      <Project>{8050504B-681D-4643-8A59-C897ADD7A9C2}</Project>
+      <Name>DigitalWare.Apps.Utilities.Xb</Name>
+    </ProjectReference>
+    <ProjectReference Include="\\DW-A1373\Users\omarp\Desktop\OMAR\Datos\omar\Fuentes\DLlDauFA%28fuente pendiente de entrreg%29\DLlDauFA\Digitalware.Apps.Utilities.Fa\Digitalware.Apps.Utilities.Fa.csproj">
+      <Project>{b00efb19-df1c-4165-9d82-e2506fed536c}</Project>
+      <Name>Digitalware.Apps.Utilities.Fa</Name>
+    </ProjectReference>
+    <ProjectReference Include="\\DW-A1373\Users\omarp\Desktop\OMAR\Datos\omar\Fuentes\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn.csproj">
+      <Project>{46d82d84-75fc-4508-994a-5cfe3b81436a}</Project>
+      <Name>DigitalWare.Apps.Utilities.Gn</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

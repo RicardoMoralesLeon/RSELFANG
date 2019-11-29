@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace RSELFANG.Models
+{
+    [SevenFramework.DataBase.TableName("GN_TOPER")]
+    public class ToGnToper
+    {
+        public string top_gefp { get; set; }
+        public string top_rcbc { get; set; }
+        public string top_rpfp { get; set; }
+        public string top_pcdp { get; set; }
+        public string top_peap { get; set; }
+        public string top_expo { get; set; }
+        public string top_mapc { get; set; }
+        public string top_rpse { get; set; }
+        public long ite_cosa { get; set; }
+        public long ite_cosm { get; set; }
+        public short top_cosa { get; set; }
+        public short top_cosm { get; set; }
+        public string top_obco { get; set; }
+        public string cfl_codi { get; set; }
+        public string top_enti { get; set; }
+        public string top_salm { get; set; }
+        public string top_dore { get; set; }
+        public string top_afre { get; set; }
+        public string top_gdod { get; set; }
+        public string top_mdcb { get; set; }
+        public string top_aics { get; set; }
+        public string top_fscc { get; set; }
+        public string top_acop { get; set; }
+        public string top_afac { get; set; }
+        public string top_clpr { get; set; }
+        public string top_iaxi { get; set; }
+        public string top_acpd { get; set; }
+        public string top_tica { get; set; }
+        public string top_nmag { get; set; }
+        public string top_salf { get; set; }
+        public string top_rcot { get; set; }
+        public string top_vccc { get; set; }
+        public string top_giio { get; set; }
+        public string top_pcni { get; set; }
+        public string top_mdim { get; set; }
+        public string top_gerc { get; set; }
+        public string top_cdnf { get; set; }
+        public string top_tdis { get; set; }
+        public string top_mabi { get; set; }
+        public string top_ccfm { get; set; }
+        public string top_exrs { get; set; }
+        public short top_codd { get; set; }
+        public string top_ajvb { get; set; }
+        public string top_mtfa { get; set; }
+        public string top_rfed { get; set; }
+        public string top_geif { get; set; }
+        public string top_ndca { get; set; }
+        public string top_rdcd { get; set; }
+        public string top_fcap { get; set; }
+        public string top_ocde { get; set; }
+        public string top_nota { get; set; }
+        public string top_reca { get; set; }
+        public string top_afcp { get; set; }
+        public string top_prov { get; set; }
+        public string top_rpex { get; set; }
+        public string top_ipvp { get; set; }
+        public string top_plco { get; set; }
+        public string top_afct { get; set; }
+        public string top_aopr { get; set; }
+        public string top_main { get; set; }
+        public string top_gsal { get; set; }
+        public string top_prfi { get; set; }
+        public short mon_codi { get; set; }
+        public string top_cdoc { get; set; }
+        public string top_csuc { get; set; }
+        public string top_auto { get; set; }
+        public string top_cosu { get; set; }
+        public DateTime aud_ufac { get; set; }
+        public string aud_usua { get; set; }
+        public string aud_esta { get; set; }
+        public string top_acti { get; set; }
+        public int cue_insd { get; set; }
+        public string top_imli { get; set; }
+        public string top_prgo { get; set; }
+        public string top_inve { get; set; }
+        public string top_base { get; set; }
+        public short top_coco { get; set; }
+        public string top_cont { get; set; }
+        public string top_feau { get; set; }
+        public string top_abre { get; set; }
+        public string top_nomb { get; set; }
+        public short mod_codi { get; set; }
+        public short con_codi { get; set; }
+        public short top_codi { get; set; }
+        public short emp_codi { get; set; }
+        public string top_infi { get; set; }
+        public string ite_conp { get; set; }
+        public int cue_insc { get; set; }
+        public string top_prod { get; set; }
+        public string top_valo { get; set; }
+        public string top_tadm { get; set; }
+        public string top_nkar { get; set; }
+        public string top_caus { get; set; }
+        public string top_lote { get; set; }
+        public string top_hitr { get; set; }
+        public string top_acap { get; set; }
+        public string top_aaju { get; set; }
+        public string top_acoc { get; set; }
+        public string top_aorm { get; set; }
+        public string top_aunv { get; set; }
+        public string top_aent { get; set; }
+        public string top_cuid { get; set; }
+        public string top_ains { get; set; }
+        public string top_avav { get; set; }
+        public string top_asal { get; set; }
+        public string top_asai { get; set; }
+        public string top_refe { get; set; }
+        public string top_come { get; set; }
+        public string top_unme { get; set; }
+        public string top_orma { get; set; }
+        public string top_comp { get; set; }
+        public string top_cant { get; set; }
+        public string top_ubic { get; set; }
+        public string top_bode { get; set; }
+        public string top_inst { get; set; }
+        public string top_aorc { get; set; }
+        public string top_spor { get; set; }
+    }
+}
