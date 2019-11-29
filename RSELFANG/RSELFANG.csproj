@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
+    </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
