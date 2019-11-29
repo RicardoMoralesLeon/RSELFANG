@@ -50,11 +50,7 @@
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
-    </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
-    </Reference>
+    </Reference>    
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
@@ -398,8 +394,8 @@
     <Compile Include="TO\TOPqParam.cs" />
     <Compile Include="TO\TORevPr.cs" />
     <Compile Include="TO\TOTransacion.cs" />
-    <Compile Include="TO\TOWfCdocu.cs" />
-    <Compile Include="Models\TOXbAuliq.cs" />
+    <Compile Include="TO\TOWfCdocu.cs" />    
+    <Compile Include="Models\TOXbAuliq.cs" />  
     <Compile Include="Web References\swflup\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
