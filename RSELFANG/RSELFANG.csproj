@@ -13,7 +13,7 @@
     <RootNamespace>RSELFANG</RootNamespace>
     <AssemblyName>RSELFANG</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -42,12 +42,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Digitalware.Apps.Utilities">
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
+    <Reference Include="Digitalware.Apps.Utilities, Version=19.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
-    </Reference>    
+    </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
@@ -388,8 +389,8 @@
     <Compile Include="TO\TOPqParam.cs" />
     <Compile Include="TO\TORevPr.cs" />
     <Compile Include="TO\TOTransacion.cs" />
-    <Compile Include="TO\TOWfCdocu.cs" />    
-    <Compile Include="Models\TOXbAuliq.cs" />  
+    <Compile Include="TO\TOWfCdocu.cs" />
+    <Compile Include="Models\TOXbAuliq.cs" />
     <Compile Include="Web References\swflup\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -501,7 +502,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/RSELFANG</IISUrl>
+          <IISUrl>http://localhost:62126/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://localhost:62126/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
