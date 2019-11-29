@@ -184,6 +184,7 @@
     <Compile Include="BO\BOPqr.cs" />
     <Compile Include="BO\BoPqTrazabilidad.cs" />
     <Compile Include="BO\BoRnRadic.cs" />
+    <Compile Include="BO\BOSfForpo.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
     <Compile Include="BO\BOXbAuliq.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
+    <Compile Include="Controllers\SfForpoController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
@@ -256,6 +258,7 @@
     <Compile Include="DAO\DAORevPr.cs" />
     <Compile Include="DAO\DAORnRadic.cs" />
     <Compile Include="DAO\DAOSeCcotiz.cs" />
+    <Compile Include="DAO\DAOSfForpo.cs" />
     <Compile Include="DAO\DAOSoConve.cs" />
     <Compile Include="DAO\DAOSoCoxcn.cs" />
     <Compile Include="DAO\DAOSoDscfp.cs" />
@@ -340,6 +343,8 @@
     <Compile Include="TO\RnGrura.cs" />
     <Compile Include="TO\RnRadic.cs" />
     <Compile Include="TO\Rnradtd.cs" />
+    <Compile Include="TO\SfForpo.cs" />
+    <Compile Include="TO\SfFovis.cs" />
     <Compile Include="TO\TORnRadic.cs" />
     <Compile Include="TO\SuAfili.cs" />
     <Compile Include="TO\SuMpare.cs" />

@@ -23,8 +23,8 @@
     <!--<connectionString>Server=dwbases\pruebaseven;User ID=darl;Password=Digital6581;Database=Nogal;App=NogalApp;</connectionString>-->
     <!-- <connectionString>Server=SQL2014\sevendc;User ID=consultoria;Password=Sistemas15;Database=Replicas;App=NogalApp;</connectionString>  -->
     
-    <!--<connectionString>Server=cerezo;User ID=desarrollo;Password=Desarrollo2018;Database=sevenDesarrollo;App=wpqinpqr2;</connectionString>
-    <providerName>SQL</providerName>-->
+    <connectionString>Server=cerezo;User ID=desarrollo;Password=Desarrollo2018;Database=sevenDesarrollo;App=wpqinpqr2;</connectionString>
+    <providerName>SQL</providerName>
 
     <!--<connectionString>Server=138.121.202.173;User ID=SevenERP;Password=S3v3nERP2019;Database=sevenpruebas;App=wpqinpqr2;</connectionString>
     <providerName>SQL</providerName>-->
@@ -34,8 +34,8 @@
     
     <!--<connectionString>Server=sql2014\sevendc;User ID=consultoria;Password=Sistemas15;Database=replicas;App=WPQINPQR;</connectionString>-->
   
-  <connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>
-    <providerName>SQL</providerName>
+  <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>
+    <providerName>SQL</providerName>-->
   
   </Parametro>
 </Parametros>
