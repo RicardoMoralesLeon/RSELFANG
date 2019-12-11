@@ -13,7 +13,7 @@
     <RootNamespace>RSELFANG</RootNamespace>
     <AssemblyName>RSELFANG</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -46,11 +46,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Desktop\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Digitalware.Apps.Utilities.Fa, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Digitalware.Apps.Utilities.Fa, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
@@ -60,9 +60,6 @@
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
-    </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Xb">
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Xb.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Interop.Midas.dll</HintPath>
@@ -107,7 +104,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SevenFramework, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SevenFramework, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
@@ -481,9 +478,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\proyects\Elisa.DataBase\SevenFramework.csproj">
-      <Project>{367c7437-7814-41db-be95-f32974e8f5c6}</Project>
-      <Name>SevenFramework</Name>
+    <ProjectReference Include="..\..\..\..\source\repos\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb.csproj">
+      <Project>{8050504b-681d-4643-8a59-c897add7a9c2}</Project>
+      <Name>DigitalWare.Apps.Utilities.Xb</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -501,7 +498,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62126/</IISUrl>
+          <IISUrl>http://localhost/RSELFANG</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://localhost:62126/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

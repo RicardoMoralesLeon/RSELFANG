@@ -7,6 +7,12 @@ namespace RSELFANG.Models
 {
     public class TOXbAuliq
     {
+       public TOXbAuliq()
+        {
+            error = "";
+            cxc_bgrav = 0;
+        }
+
         public int cxc_cont { get; set; }
         public long ite_ctse { get; set; }      
         public string cts_nomb { get; set; }
@@ -27,7 +33,9 @@ namespace RSELFANG.Models
         public bool liq_lock { get; set; }
         public int dcl_codd { get; set; }
         public int emp_codi { get; set; }
-       
+        public decimal cxc_bgrav { get; set; }
+
+
 
 
     }

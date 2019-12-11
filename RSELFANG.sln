@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSELFANG", "RSELFANG\RSELFANG.csproj", "{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.Apps.Utilities.Xb", "..\..\..\source\repos\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb.csproj", "{8050504B-681D-4643-8A59-C897ADD7A9C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8050504B-681D-4643-8A59-C897ADD7A9C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8050504B-681D-4643-8A59-C897ADD7A9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8050504B-681D-4643-8A59-C897ADD7A9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8050504B-681D-4643-8A59-C897ADD7A9C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
