@@ -336,7 +336,6 @@
     <Compile Include="tools\mailHandler.cs" />
     <Compile Include="TO\ArApovo.cs" />
     <Compile Include="TO\ArTiapo.cs" />
-    <Compile Include="TO\CtConsu.cs" />
     <Compile Include="TO\CtContr.cs" />
     <Compile Include="TO\CtDocpr.cs" />
     <Compile Include="TO\CtPropo.cs" />
@@ -367,6 +366,7 @@
     <Compile Include="TO\GnRegio.cs" />
     <Compile Include="TO\GnTipdo.cs" />
     <Compile Include="TO\Gn_Terce.cs" />
+    <Compile Include="TO\InfoAportante.cs" />
     <Compile Include="TO\Mail.cs" />
     <Compile Include="TO\PqDinPq.cs" />
     <Compile Include="TO\PQEncue.cs" />
@@ -383,8 +383,8 @@
     <Compile Include="TO\RnGrura.cs" />
     <Compile Include="TO\RnRadic.cs" />
     <Compile Include="TO\Rnradtd.cs" />
-    <Compile Include="TO\SfForpo.cs" />
     <Compile Include="TO\SfFovis.cs" />
+    <Compile Include="TO\SfForpo.cs" />
     <Compile Include="TO\TORnRadic.cs" />
     <Compile Include="TO\SuAfili.cs" />
     <Compile Include="TO\SuMpare.cs" />

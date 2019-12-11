@@ -60,5 +60,30 @@ namespace RSELFANG.DAO
             ite_nomb = reader["ITE_NOMB"].AsString(),
             ite_cont = reader["ITE_CONT"].AsInt()
         };
+
+        public List<GnItems> GetGnItemsLupa(int tit_cont, string ite_codi)
+        {
+            List<Parameter> parametros = new List<Parameter>();
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM GN_ITEMS WHERE TIT_CONT=@tit_cont AND ITE_ACTI='S' ");
+            OTOContext pTOContext = new OTOContext();
+            List<Parameter> paramters = new List<Parameter>();
+            paramters.Add(new Parameter("@tit_cont", tit_cont));
+            if (ite_codi != "")
+            {
+                sql.Append(" and ITE_CODI = @ITE_CODI");
+                paramters.Add(new Parameter("@ITE_CODI", ite_codi));
+            }
+            var conection = DBFactory.GetDB(pTOContext);
+            List<GnItems> data = conection.ReadList(pTOContext, sql.ToString(), myMake, paramters.ToArray());
+            return data;
+
+        }
+        public Func<IDataReader, GnItems> myMake = reader => new GnItems
+        {
+            ITE_CODI = reader["ITE_CODI"].AsString(),
+            ITE_NOMB = reader["ITE_NOMB"].AsString(),
+            ITE_CONT = reader["ITE_CONT"].AsInt()
+        };
     }
 }
