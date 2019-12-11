@@ -61,7 +61,8 @@ namespace RSELFANG.DAO
                 sql.Append("CXC.CXC_SALD,                                       ");            
                 sql.Append("CXC.CXC_CONT,                                       ");
                 sql.Append("CXC.CXC_FEVE,                                         ");
-                sql.Append("CXC.DCL_CODD                                       ");
+                sql.Append("CXC.DCL_CODD,                                       ");
+                sql.Append("CXC.CXC_FUPA                                       ");
                 sql.Append("FROM   CA_CXCOB CXC                                 ");
                 sql.Append("INNER JOIN CA_RCXCV RCX                             ");
                 sql.Append("ON CXC.EMP_CODI = RCX.EMP_CODI                      ");
@@ -90,7 +91,8 @@ namespace RSELFANG.DAO
                 sql.Append("CXC.CXC_SALD,                                       ");            
                 sql.Append("CXC.CXC_CONT,                                       ");
                 sql.Append("CXC.CXC_FEVE,                                       ");
-                sql.Append("CXC.DCL_CODD                                        ");
+                sql.Append("CXC.DCL_CODD,                                        ");
+                sql.Append("CXC.CXC_FUPA                                       ");
                 sql.Append("FROM   CA_CXCOB CXC                                 ");
                 sql.Append("INNER JOIN CA_RVMSA CPC                             ");
                 sql.Append("ON CXC.EMP_CODI = CPC.EMP_CODI                      ");

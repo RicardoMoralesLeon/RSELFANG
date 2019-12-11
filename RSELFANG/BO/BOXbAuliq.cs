@@ -27,15 +27,14 @@ namespace RSELFANG.BO
         {
             try
             {
+                //obtengo cliente
                 var cliente = DAOFaClien.GetFaClien(emp_codi, cli_coda);
-                //TODO:Validar todos los exbrl , rifinc regads, validar cuales tienen ya cxc asociados a esa vigencia, si no tiene cxc generar los calculos
+                //consulto todos los históricos RIFINC, REGADS, XBRL
                 var historicos = new DAO_Xb_Exbrl().GetHistoricoInformacion(emp_codi, cliente.cli_codi);
-                //if(historicos!=null && historicos.Any())
-                //{
-                //    historicos.ForEach(h => h.exb_anop = h.exb_anop + 1);
-                //}
+               //consulto parámetos de cartera
                 var ParametrosCartera = new DAO_Xb_Pceca().GetXbPeca(emp_codi);
                 List<TOXbAuliq> liquidacionLista = new List<TOXbAuliq>();
+                //Consulto todas las cuentas por cobrar del cliente asociadas a los tipos de operacion (contribución, intereses, o multas y sanciones
                 var cuentasExistentes = new DAOCaCxcob().GetAuliquidacion(emp_codi, cliente.cli_codi);
                 //Obtengo el grupo de información financiera al que pertenece el cliente
                 var GrupoInformacionFinanciera = new DAO_Fa_Inacl().GetFaInacl(emp_codi, cliente.cli_codi);
@@ -94,77 +93,79 @@ namespace RSELFANG.BO
                                     else
                                         autliq.par_fech = ParametrosContribucion.par_fec1;
 
-                                  
-                                    string BaseGravType = string.Empty;
-                                    if (DetalleParametrosContribucion.FirstOrDefault().par_rega.ToUpper() == "S")
-                                        BaseGravType = "REGADS";
-                                    if (DetalleParametrosContribucion.FirstOrDefault().par_rifi.ToUpper() == "S")
-                                        BaseGravType = "RIFINC";
-                                    if (string.IsNullOrEmpty(BaseGravType))
-                                        BaseGravType = "FORM";
-
-                                    switch (BaseGravType)
+                                    if (autliq.rcx_vige > 2016)
                                     {
-                                        case "REGADS":
-                                            int regCont = new DAO_Xb_Regad().getRegCont(emp_codi, (int)ParametrosContribucion.par_anop, decimal.Parse(cliente.cli_codi.ToString()), (int)ParametrosContribucion.par_anop);
-                                            if (regCont == 0)
-                                                throw new Exception(string.Format("No se encontró informe regads cargado para el cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
-                                            autliq.cxc_bgrav = new DAO_Xb_Dgape().getTotalReportado(emp_codi, regCont);
-                                            //TODO:Se valida la fecha de vencimiento de la cxc que se va a generar
+                                        string BaseGravType = string.Empty;
+                                        if (DetalleParametrosContribucion.FirstOrDefault().par_rega.ToUpper() == "S")
+                                            BaseGravType = "REGADS";
+                                        if (DetalleParametrosContribucion.FirstOrDefault().par_rifi.ToUpper() == "S")
+                                            BaseGravType = "RIFINC";
+                                        if (string.IsNullOrEmpty(BaseGravType))
+                                            BaseGravType = "FORM";
 
-                                            //Tomar base de SXBREGAD
-                                            break;
-                                        case "RIFINC":
-                                            int rinCont = new DAO_Xb_Rinif().GetRintCont(emp_codi, cliente.cli_coda, "A", (int)ParametrosContribucion.par_anop);
-                                            if (rinCont == 0)
-                                                throw new Exception(string.Format("No se encontró informe rifinc cargado para el cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
-                                            autliq.cxc_bgrav = new DAO_Xb_Rinif().getTotalReportado(emp_codi, rinCont);
-                                            // Tomar base de SXBRIFINC
-                                            break;
-                                        case "FORM":
-                                            var exbrl = new DAO_Xb_Exbrl().ConsultarXbEXbrlPorEstado(emp_codi, long.Parse(cliente.cli_codi.ToString()), (int)ParametrosContribucion.par_anop, new string[] { "A" });
-                                            if (exbrl == null)
-                                                throw new Exception(string.Format("No se encontró un formulario XBRL aprobado para cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
-                                            if (string.IsNullOrEmpty(DetalleParametrosContribucion.FirstOrDefault().dde_codi))
-                                                throw new Exception("El grupo de información financiera no tiene detalles asociados en parámetros de contribución");
+                                        switch (BaseGravType)
+                                        {
+                                            case "REGADS":
+                                                int regCont = new DAO_Xb_Regad().getRegCont(emp_codi, (int)ParametrosContribucion.par_anop, decimal.Parse(cliente.cli_codi.ToString()), (int)ParametrosContribucion.par_anop);
+                                                if (regCont == 0)
+                                                    throw new Exception(string.Format("No se encontró informe regads cargado para el cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
+                                                autliq.cxc_bgrav = new DAO_Xb_Dgape().getTotalReportado(emp_codi, regCont);
+                                                //TODO:Se valida la fecha de vencimiento de la cxc que se va a generar
 
-                                            var xbConce = new DAO_Xb_Conce().ConsultarXbConce(emp_codi, exbrl.hxb_cont, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi);
-                                            if (xbConce == null)
-                                                throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
+                                                //Tomar base de SXBREGAD
+                                                break;
+                                            case "RIFINC":
+                                                int rinCont = new DAO_Xb_Rinif().GetRintCont(emp_codi, cliente.cli_coda, "A", (int)ParametrosContribucion.par_anop);
+                                                if (rinCont == 0)
+                                                    throw new Exception(string.Format("No se encontró informe rifinc cargado para el cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
+                                                autliq.cxc_bgrav = new DAO_Xb_Rinif().getTotalReportado(emp_codi, rinCont);
+                                                // Tomar base de SXBRIFINC
+                                                break;
+                                            case "FORM":
+                                                var exbrl = new DAO_Xb_Exbrl().ConsultarXbEXbrlPorEstado(emp_codi, long.Parse(cliente.cli_codi.ToString()), (int)ParametrosContribucion.par_anop, new string[] { "A" });
+                                                if (exbrl == null)
+                                                    throw new Exception(string.Format("No se encontró un formulario XBRL aprobado para cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
+                                                if (string.IsNullOrEmpty(DetalleParametrosContribucion.FirstOrDefault().dde_codi))
+                                                    throw new Exception("El grupo de información financiera no tiene detalles asociados en parámetros de contribución");
 
-                                            var xbDConc = new DAO_Xb_Dconc().ConsultarXbDConce(exbrl.hxb_cont, emp_codi, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi, (int)ParametrosContribucion.par_anop);
-                                            if (xbConce[0].con_valo == "" || xbConce[0].con_valo == null)
-                                            {
-
-
-
-                                                if (xbDConc == null)
+                                                var xbConce = new DAO_Xb_Conce().ConsultarXbConce(emp_codi, exbrl.hxb_cont, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi);
+                                                if (xbConce == null)
                                                     throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
 
-                                                if (xbDConc[0].dco_valo == "" || xbDConc[0].dco_valo == null)
+                                                var xbDConc = new DAO_Xb_Dconc().ConsultarXbDConce(exbrl.hxb_cont, emp_codi, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi, (int)ParametrosContribucion.par_anop);
+                                                if (xbConce[0].con_valo == "" || xbConce[0].con_valo == null)
                                                 {
-                                                    autliq.cxc_bgrav = 0;
+
+
+
+                                                    if (xbDConc == null)
+                                                        throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
+
+                                                    if (xbDConc[0].dco_valo == "" || xbDConc[0].dco_valo == null)
+                                                    {
+                                                        autliq.cxc_bgrav = 0;
+                                                    }
+                                                    else
+                                                    {
+
+                                                        if (xbDConc[0].dco_valo.Contains(","))
+                                                            throw new Exception(String.Format("El valor no puede contener el simbolo (,)"));
+
+                                                        xbDConc[0].dco_valo = xbDConc[0].dco_valo.Replace(".", "");
+                                                        autliq.cxc_bgrav = decimal.Parse(xbDConc[0].dco_valo);
+
+                                                    }
+
                                                 }
                                                 else
                                                 {
 
-                                                    if (xbDConc[0].dco_valo.Contains(","))
-                                                        throw new Exception(String.Format("El valor no puede contener el simbolo (,)"));
-
-                                                    xbDConc[0].dco_valo = xbDConc[0].dco_valo.Replace(".", "");
-                                                    autliq.cxc_bgrav = decimal.Parse(xbDConc[0].dco_valo);
+                                                    autliq.cxc_bgrav = decimal.Parse(xbConce[0].con_valo);
 
                                                 }
 
-                                            }
-                                            else
-                                            {
-
-                                                autliq.cxc_bgrav = decimal.Parse(xbConce[0].con_valo);
-
-                                            }
-
-                                            break;
+                                                break;
+                                        }
                                     }
                                     //TODO:Si es una cxc de contribución, preguntar si tiene cxc de interes asociadas con abonos
                                     if (autliq.top_codi == ParametrosCartera.top_coco)
@@ -175,8 +176,8 @@ namespace RSELFANG.BO
                                         //TODO// cA 
                                         if (CxcInteresesPendientes != null && CxcInteresesPendientes.Any())
                                         {
-                                            if (CxcInteresesPendientes.FirstOrDefault().cxc_fupa > par_fech && par_fech > autliq.par_fech)
-                                                autliq.par_fech = CxcInteresesPendientes.FirstOrDefault().cxc_fupa;
+                                            if (CxcInteresesPendientes.FirstOrDefault().cxc_fupa > autliq.par_fech)
+                                                autliq.par_fech = autliq.cxc_fupa;
                                             autliq.cxc_inan = CxcInteresesPendientes.Sum(c => c.cxc_sald);
                                         }
 
@@ -203,6 +204,7 @@ namespace RSELFANG.BO
                             }
                             finally
                             {
+                                if(autliq.cxc_sald>0)
                                 liquidacionLista.Add(autliq);
                             }
 
