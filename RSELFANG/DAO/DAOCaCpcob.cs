@@ -85,10 +85,7 @@ namespace RSELFANG.DAO
                 sql.Append("  CXC_ORIG,               ");
                 sql.Append("  CXC_DEST,               ");
                 sql.Append("  CPC_ESTA,               ");
-                sql.Append("  CPC_VIGE,               ");
-                sql.Append("  CLI_CODI,               ");
-                sql.Append("  DCL_CODD,               ");
-                sql.Append("  ITE_CTSE                ");
+                sql.Append("  CPC_VIGE              ");              
                 sql.Append("  )                       ");
                 sql.Append("  VALUES                  ");
                 sql.Append("  (                       ");
@@ -100,10 +97,7 @@ namespace RSELFANG.DAO
                 sql.Append("  @CXC_ORIG,              ");
                 sql.Append("  @CXC_DEST,              ");
                 sql.Append("  @CPC_ESTA,              ");
-                sql.Append("  @CPC_VIGE,              ");
-                sql.Append("  @CLI_CODI,              ");
-                sql.Append("  @DCL_CODD,              ");
-                sql.Append("  @ITE_CTSE               ");
+                sql.Append("  @CPC_VIGE               ");               
                 sql.Append("  )                       ");
                 List<SQLParams> parametros = new List<SQLParams>();
                 parametros.Add(new SQLParams("AUD_USUA", usu_codi));
@@ -112,10 +106,7 @@ namespace RSELFANG.DAO
                 parametros.Add(new SQLParams("CPC_CONT", cacpcob.cpc_cont));
                 parametros.Add(new SQLParams("CXC_ORIG", cacpcob.cxc_orig));
                 parametros.Add(new SQLParams("CXC_DEST", cacpcob.cxc_dest));
-                parametros.Add(new SQLParams("CPC_ESTA", "A"));
-                parametros.Add(new SQLParams("CLI_CODI", cacpcob.cli_codi));
-                parametros.Add(new SQLParams("DCL_CODD", cacpcob.dcl_codd));
-                parametros.Add(new SQLParams("ITE_CTSE", cacpcob.ite_ctse));
+                parametros.Add(new SQLParams("CPC_ESTA", "A"));              
                 parametros.Add(new SQLParams("CPC_VIGE", cacpcob.cpc_vige));
                 var result = new DbConnection().Insert(sql.ToString(), false, parametros);
                 return result;

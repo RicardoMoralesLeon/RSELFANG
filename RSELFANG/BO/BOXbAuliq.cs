@@ -30,223 +30,337 @@ namespace RSELFANG.BO
                 var cliente = DAOFaClien.GetFaClien(emp_codi, cli_coda);
                 //TODO:Validar todos los exbrl , rifinc regads, validar cuales tienen ya cxc asociados a esa vigencia, si no tiene cxc generar los calculos
                 var historicos = new DAO_Xb_Exbrl().GetHistoricoInformacion(emp_codi, cliente.cli_codi);
+                //if(historicos!=null && historicos.Any())
+                //{
+                //    historicos.ForEach(h => h.exb_anop = h.exb_anop + 1);
+                //}
                 var ParametrosCartera = new DAO_Xb_Pceca().GetXbPeca(emp_codi);
                 List<TOXbAuliq> liquidacionLista = new List<TOXbAuliq>();
                 var cuentasExistentes = new DAOCaCxcob().GetAuliquidacion(emp_codi, cliente.cli_codi);
                 //Obtengo el grupo de información financiera al que pertenece el cliente
                 var GrupoInformacionFinanciera = new DAO_Fa_Inacl().GetFaInacl(emp_codi, cliente.cli_codi);
-                //TODO: Crear las cxc calculadas
-                foreach (Xb_Exbrl historico in historicos)
+                var xbpceca = new DAO_Xb_Pceca().GetXbPeca(emp_codi);
+
+                if (cuentasExistentes != null && cuentasExistentes.Any())
                 {
-                    //var fadina = new DAO_Fa_Dina().ConsultarFaDdina(emp_codi, cliente.cli_codi).FirstOrDefault();
-                    TOXbAuliq tOXbAuliqCxcContribucion = new TOXbAuliq();
-                    try
+                    if (cuentasExistentes != null && cuentasExistentes.Any())
                     {
-                        tOXbAuliqCxcContribucion.emp_codi = emp_codi;
-                        var ParametrosContribucion = new DAO_Xb_Dparc().GetXbParco(emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, (int)historico.exb_anop);
-                        var DetalleParametrosContribucion = new DAO_Xb_Dparc().GetXbDparc(emp_codi, (int)historico.exb_anop, GrupoInformacionFinanciera.Ite_Ctgo, ite_ctse);
-                        if (DetalleParametrosContribucion == null)
-                            throw new Exception(string.Format("No se encontraron parametros de contribución para el año {0} y grupo de información financiera {1}", historico.exb_anop, GrupoInformacionFinanciera.ite_nomb));
-                        string BaseGravType = string.Empty;
-                        if (DetalleParametrosContribucion.FirstOrDefault().par_rega.ToUpper() == "S")
-                            BaseGravType = "REGADS";
-                        if (DetalleParametrosContribucion.FirstOrDefault().par_rifi.ToUpper() == "S")
-                            BaseGravType = "RIFINC";
-                        if (string.IsNullOrEmpty(BaseGravType))
-                            BaseGravType = "FORM";
-                        //Si no encuentra cxc de contribución para cada vigencia
-                        if (cuentasExistentes == null || cuentasExistentes.Find(f => f.rcx_vige == historico.exb_anop && f.top_codi == ParametrosCartera.top_como) == null)
+                        foreach (TOXbAuliq autliq in cuentasExistentes.FindAll(p => p.ite_ctse == ite_ctse))
                         {
-
-                            tOXbAuliqCxcContribucion.cxc_desc = string.Format("Contribución {0}", historico.exb_anop);
-                            if (ParametrosContribucion != null && ParametrosContribucion.par_fec1 < DateTime.Now.Date)
-                                tOXbAuliqCxcContribucion.par_fech = ParametrosContribucion.par_fec2.Value;
-                            else
-                                tOXbAuliqCxcContribucion.par_fech = ParametrosContribucion.par_fec1;
-                            switch (BaseGravType)
+                            //var listFadina = new DAO_Fa_Dina().GetFaDdina(emp_codi, cliente.cli_codi, autliq.dcl_codd);
+                            //if (listFadina == null)
+                            //    throw new Exception(string.Format("No se encontró tipo de servicio para el detalle de cliente {0}", autliq.dcl_codd));
+                          //  var fadina = listFadina.FirstOrDefault();
+                            try
                             {
-                                case "REGADS":
-                                    int regCont = new DAO_Xb_Regad().getRegCont(emp_codi, (int)historico.exb_anop, decimal.Parse(cliente.cli_codi.ToString()), (int)historico.exb_anop);
-                                    if (regCont == 0)
-                                        throw new Exception(string.Format("No se encontró informe regads cargado para el cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
-                                    tOXbAuliqCxcContribucion.cxc_sald = new DAO_Xb_Dgape().getTotalReportado(emp_codi, regCont);
-                                    //TODO:Se valida la fecha de vencimiento de la cxc que se va a generar
-                                   
-                                    //Tomar base de SXBREGAD
-                                    break;
-                                case "RIFINC":
-                                    int rinCont = new DAO_Xb_Rinif().GetRintCont(emp_codi, cliente.cli_coda, "A", (int)historico.exb_anop);
-                                    if (rinCont == 0)
-                                        throw new Exception(string.Format("No se encontró informe rifinc cargado para el cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
-                                    tOXbAuliqCxcContribucion.cxc_sald = new DAO_Xb_Rinif().getTotalReportado(emp_codi, rinCont);
-                                    // Tomar base de SXBRIFINC
-                                    break;
-                                case "FORM":
-                                    var exbrl = new DAO_Xb_Exbrl().ConsultarXbEXbrlPorEstado(emp_codi, long.Parse(cliente.cli_codi.ToString()), (int)historico.exb_anop, new string[] { "A" });
-                                    if (exbrl == null)
-                                        throw new Exception(string.Format("No se encontró un formulario XBRL aprobado para cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
-                                    if (string.IsNullOrEmpty(DetalleParametrosContribucion.FirstOrDefault().dde_codi))
-                                        throw new Exception("El grupo de información financiera no tiene detalles asociados en parámetros de contribución");
+                                //Cálculos para multas y sanciones
+                                if (autliq.top_codi == ParametrosCartera.top_core)
+                                {
+                                    DateTime fechaVencimiento = autliq.cxc_feve.Date;
+                                    DateTime fechaPago = par_fech;
+                                    int numDias = (fechaPago - fechaVencimiento).Days;
+                                    int diasGracia = ParametrosCartera.pce_digr;
+                                    int cantidadDiasNoLaborales = new DAOGnDiasn().CantidadDiasNoLaborales(autliq.cxc_feve, diasGracia);
+                                    decimal saldoCapital = autliq.cxc_sald;
+                                    decimal interes = ParametrosCartera.pce_intm / 360;
+                                    if (fechaPago <= fechaVencimiento.AddDays(diasGracia + cantidadDiasNoLaborales))
+                                        interes = 0;
+                                    autliq.cxc_inmo = interes * numDias * saldoCapital / 100;
+                                    autliq.dpa_tari = xbpceca.pce_intm;
+                                    autliq.par_fech = par_fech;
 
-                                    var xbConce = new DAO_Xb_Conce().ConsultarXbConce(emp_codi, exbrl.hxb_cont, DetalleParametrosContribucion.FirstOrDefault().dde_codi, long.Parse(DetalleParametrosContribucion.FirstOrDefault().def_codi));
-                                    if (xbConce == null)
-                                        throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
 
-                                    var xbDConc = new DAO_Xb_Dconc().ConsultarXbDConce(exbrl.hxb_cont, emp_codi, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi, (int)historico.exb_anop);
-                                    if (xbConce[0].con_valo == "" || xbConce[0].con_valo == null)
+                                    //if (autliq.cxc_inmo > 0)
+                                    //{
+                                    //    autliq.liq_apro = true;
+                                    //    break;
+                                    //}
+                                }
+
+                                else
+                                {
+
+                                    var ParametrosContribucion = new DAO_Xb_Dparc().GetXbParcoAnoPagar(emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, autliq.rcx_vige);
+                                    if (ParametrosContribucion == null)
+                                        throw new Exception(string.Format("No se encontró parámetros de contribución para el año {0}", autliq.rcx_vige));
+                                    var DetalleParametrosContribucion = new DAO_Xb_Dparc().GetXbDparc(emp_codi, ParametrosContribucion.par_anop, GrupoInformacionFinanciera.Ite_Ctgo, ite_ctse);
+                                    if (DetalleParametrosContribucion == null)
+                                        throw new Exception(string.Format("No se encontró parámetros de contribución para el año {0} y {1}", autliq.rcx_vige, ite_ctse));
+                                    if (DetalleParametrosContribucion.Where(c => c.ite_ctts == autliq.ite_ctse).FirstOrDefault() == null)
+                                        throw new Exception(String.Format("No se encontró detalle de parámetros de contribución para el año {0} y servicio {1}", autliq.rcx_vige, autliq.cts_nomb));
+                                    autliq.dpa_tari = DetalleParametrosContribucion.Where(c => c.ite_ctts == autliq.ite_ctse).FirstOrDefault().dpa_tari;
+                                    if (ParametrosContribucion != null && ParametrosContribucion.par_fec1 < DateTime.Now.Date && ParametrosContribucion.par_fec2 != null)
+                                        autliq.par_fech = ParametrosContribucion.par_fec2.Value;
+                                    else
+                                        autliq.par_fech = ParametrosContribucion.par_fec1;
+
+                                  
+                                    string BaseGravType = string.Empty;
+                                    if (DetalleParametrosContribucion.FirstOrDefault().par_rega.ToUpper() == "S")
+                                        BaseGravType = "REGADS";
+                                    if (DetalleParametrosContribucion.FirstOrDefault().par_rifi.ToUpper() == "S")
+                                        BaseGravType = "RIFINC";
+                                    if (string.IsNullOrEmpty(BaseGravType))
+                                        BaseGravType = "FORM";
+
+                                    switch (BaseGravType)
                                     {
+                                        case "REGADS":
+                                            int regCont = new DAO_Xb_Regad().getRegCont(emp_codi, (int)ParametrosContribucion.par_anop, decimal.Parse(cliente.cli_codi.ToString()), (int)ParametrosContribucion.par_anop);
+                                            if (regCont == 0)
+                                                throw new Exception(string.Format("No se encontró informe regads cargado para el cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
+                                            autliq.cxc_bgrav = new DAO_Xb_Dgape().getTotalReportado(emp_codi, regCont);
+                                            //TODO:Se valida la fecha de vencimiento de la cxc que se va a generar
+
+                                            //Tomar base de SXBREGAD
+                                            break;
+                                        case "RIFINC":
+                                            int rinCont = new DAO_Xb_Rinif().GetRintCont(emp_codi, cliente.cli_coda, "A", (int)ParametrosContribucion.par_anop);
+                                            if (rinCont == 0)
+                                                throw new Exception(string.Format("No se encontró informe rifinc cargado para el cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
+                                            autliq.cxc_bgrav = new DAO_Xb_Rinif().getTotalReportado(emp_codi, rinCont);
+                                            // Tomar base de SXBRIFINC
+                                            break;
+                                        case "FORM":
+                                            var exbrl = new DAO_Xb_Exbrl().ConsultarXbEXbrlPorEstado(emp_codi, long.Parse(cliente.cli_codi.ToString()), (int)ParametrosContribucion.par_anop, new string[] { "A" });
+                                            if (exbrl == null)
+                                                throw new Exception(string.Format("No se encontró un formulario XBRL aprobado para cliente {0} y año {1}", cliente.cli_coda, (int)ParametrosContribucion.par_anop));
+                                            if (string.IsNullOrEmpty(DetalleParametrosContribucion.FirstOrDefault().dde_codi))
+                                                throw new Exception("El grupo de información financiera no tiene detalles asociados en parámetros de contribución");
+
+                                            var xbConce = new DAO_Xb_Conce().ConsultarXbConce(emp_codi, exbrl.hxb_cont, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi);
+                                            if (xbConce == null)
+                                                throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
+
+                                            var xbDConc = new DAO_Xb_Dconc().ConsultarXbDConce(exbrl.hxb_cont, emp_codi, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi, (int)ParametrosContribucion.par_anop);
+                                            if (xbConce[0].con_valo == "" || xbConce[0].con_valo == null)
+                                            {
 
 
 
-                                        if (xbDConc == null)
+                                                if (xbDConc == null)
+                                                    throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
+
+                                                if (xbDConc[0].dco_valo == "" || xbDConc[0].dco_valo == null)
+                                                {
+                                                    autliq.cxc_bgrav = 0;
+                                                }
+                                                else
+                                                {
+
+                                                    if (xbDConc[0].dco_valo.Contains(","))
+                                                        throw new Exception(String.Format("El valor no puede contener el simbolo (,)"));
+
+                                                    xbDConc[0].dco_valo = xbDConc[0].dco_valo.Replace(".", "");
+                                                    autliq.cxc_bgrav = decimal.Parse(xbDConc[0].dco_valo);
+
+                                                }
+
+                                            }
+                                            else
+                                            {
+
+                                                autliq.cxc_bgrav = decimal.Parse(xbConce[0].con_valo);
+
+                                            }
+
+                                            break;
+                                    }
+                                    //TODO:Si es una cxc de contribución, preguntar si tiene cxc de interes asociadas con abonos
+                                    if (autliq.top_codi == ParametrosCartera.top_coco)
+                                    {
+                                        //TODO: Si tiene ninguna cxc con abonos, entonces contar los intereses desde la fecha en que pagó la última cxc de intereses
+                                        var CxcInteresesPendientes = new DAOCaCpcob().GetCaCpCobConAbonos(emp_codi, autliq.cxc_cont);
+                                        // TODO:Calcular los intereses en base a la fecha máxima de pago. Si ya hay cxc de intereses con abonos parciales la fecha inicial para calculo de intereses debe ser la ultima fecha de pago de esas cxc con intereses, campo CXC_FUPA
+                                        //TODO// cA 
+                                        if (CxcInteresesPendientes != null && CxcInteresesPendientes.Any())
+                                        {
+                                            if (CxcInteresesPendientes.FirstOrDefault().cxc_fupa > par_fech && par_fech > autliq.par_fech)
+                                                autliq.par_fech = CxcInteresesPendientes.FirstOrDefault().cxc_fupa;
+                                            autliq.cxc_inan = CxcInteresesPendientes.Sum(c => c.cxc_sald);
+                                        }
+
+
+
+                                        //Suma los saldos de todas las cuentas por cobrar con intereses
+
+                                        //int DiasTotalesLiquidar = (par_fech - autliq.par_fech).Days;
+                                        if (par_fech > autliq.par_fech)
+                                        {
+                                            autliq.cxc_inmo = new BO_Autliq().CalcularIntereses(autliq.par_fech, par_fech, autliq.cxc_sald, emp_codi);
+                                            autliq.par_fech = par_fech;
+                                        }
+
+                                    }
+                                }
+                           
+                            }
+                            catch (Exception ex)
+                            {
+                                autliq.error = ex.Message;
+                                autliq.liq_lock = true;
+
+                            }
+                            finally
+                            {
+                                liquidacionLista.Add(autliq);
+                            }
+
+                        };
+                    }
+                }
+                //TODO: Crear las cxc calculadas
+                if (historicos != null && historicos.Any())
+                {
+                    foreach (Xb_Exbrl historico in historicos)
+                    {
+                        TOXbAuliq tOXbAuliqCxcContribucion = new TOXbAuliq();
+                        try
+                        {
+                            //var fadina = new DAO_Fa_Dina().ConsultarFaDdina(emp_codi, cliente.cli_codi).FirstOrDefault();
+
+                            var itemService = DAO_Gn_Items.GetGnItems(ite_ctse, 0, "").FirstOrDefault();
+                            tOXbAuliqCxcContribucion.ite_ctse = itemService.ite_cont;
+                            tOXbAuliqCxcContribucion.cts_nomb = itemService.ite_nomb;
+                            tOXbAuliqCxcContribucion.top_codi = xbpceca.top_coco;
+                            tOXbAuliqCxcContribucion.top_nomb = DAOGnToper.GetGnToper(emp_codi, xbpceca.top_coco).top_nomb;
+
+
+
+
+                            tOXbAuliqCxcContribucion.emp_codi = emp_codi;
+                            var ParametrosContribucion = new DAO_Xb_Dparc().GetXbParco(emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, (int)historico.exb_anop);
+                            var DetalleParametrosContribucion = new DAO_Xb_Dparc().GetXbDparc(emp_codi, (int)historico.exb_anop, GrupoInformacionFinanciera.Ite_Ctgo, ite_ctse);
+                            if (DetalleParametrosContribucion == null)
+                                throw new Exception(string.Format("No se encontraron parametros de contribución para el año {0} y grupo de información financiera {1}", historico.exb_anop, GrupoInformacionFinanciera.ite_nomb));
+                            tOXbAuliqCxcContribucion.rcx_vige = ParametrosContribucion.par_anof;
+                            if (cuentasExistentes!= null && cuentasExistentes.Find(p => p.rcx_vige == ParametrosContribucion.par_anof && p.top_codi == xbpceca.top_coco) != null)
+                                throw new Exception(string.Format("Ya existe cuenta por cobrar para año {0}", ParametrosContribucion.par_anof));
+                               
+                            string BaseGravType = string.Empty;
+                            if (DetalleParametrosContribucion.FirstOrDefault().par_rega.ToUpper() == "S")
+                                BaseGravType = "REGADS";
+                            if (DetalleParametrosContribucion.FirstOrDefault().par_rifi.ToUpper() == "S")
+                                BaseGravType = "RIFINC";
+                            if (string.IsNullOrEmpty(BaseGravType))
+                                BaseGravType = "FORM";
+                            //Si no encuentra cxc de contribución para cada vigencia
+                            if (cuentasExistentes == null || cuentasExistentes.Find(f => f.rcx_vige == ParametrosContribucion.par_anof && f.top_codi == ParametrosCartera.top_como) == null)
+                            {
+                                tOXbAuliqCxcContribucion.top_codi = int.Parse(ParametrosCartera.top_coco.ToString());
+                                tOXbAuliqCxcContribucion.cxc_desc = string.Format("Contribución {0}", ParametrosContribucion.par_anof);
+                                if (ParametrosContribucion != null && ParametrosContribucion.par_fec1 < DateTime.Now.Date && ParametrosContribucion.par_fec2 != null)
+                                    tOXbAuliqCxcContribucion.par_fech = ParametrosContribucion.par_fec2.Value;
+                                else
+                                    tOXbAuliqCxcContribucion.par_fech = ParametrosContribucion.par_fec1;
+                                switch (BaseGravType)
+                                {
+                                    case "REGADS":
+                                        int regCont = new DAO_Xb_Regad().getRegCont(emp_codi, (int)historico.exb_anop, decimal.Parse(cliente.cli_codi.ToString()), (int)historico.exb_anop);
+                                        if (regCont == 0)
+                                            throw new Exception(string.Format("No se encontró informe regads cargado para el cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
+                                        tOXbAuliqCxcContribucion.cxc_sald = new DAO_Xb_Dgape().getTotalReportado(emp_codi, regCont);
+                                       
+                                        //TODO:Se valida la fecha de vencimiento de la cxc que se va a generar
+
+                                        //Tomar base de SXBREGAD
+                                        break;
+                                    case "RIFINC":
+                                        int rinCont = new DAO_Xb_Rinif().GetRintCont(emp_codi, cliente.cli_coda, "A", (int)historico.exb_anop);
+                                        if (rinCont == 0)
+                                            throw new Exception(string.Format("No se encontró informe rifinc cargado para el cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
+                                        tOXbAuliqCxcContribucion.cxc_sald = new DAO_Xb_Rinif().getTotalReportado(emp_codi, rinCont);
+                                        // Tomar base de SXBRIFINC
+                                        break;
+                                    case "FORM":
+                                        var exbrl = new DAO_Xb_Exbrl().ConsultarXbEXbrlPorEstado(emp_codi, long.Parse(cliente.cli_codi.ToString()), (int)historico.exb_anop, new string[] { "A" });
+                                        if (exbrl == null)
+                                            throw new Exception(string.Format("No se encontró un formulario XBRL aprobado para cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
+                                        if (string.IsNullOrEmpty(DetalleParametrosContribucion.FirstOrDefault().dde_codi))
+                                            throw new Exception("El grupo de información financiera no tiene detalles asociados en parámetros de contribución");
+
+                                        var xbConce = new DAO_Xb_Conce().ConsultarXbConce(emp_codi, exbrl.hxb_cont, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi);
+                                        if (xbConce == null)
                                             throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
 
-                                        if (xbDConc[0].dco_valo == "" || xbDConc[0].dco_valo == null)
+                                        var xbDConc = new DAO_Xb_Dconc().ConsultarXbDConce(exbrl.hxb_cont, emp_codi, DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi, (int)historico.exb_anop);
+                                        if (xbConce[0].con_valo == "" || xbConce[0].con_valo == null)
                                         {
-                                            tOXbAuliqCxcContribucion.cxc_sald = 0;
+
+
+
+                                            if (xbDConc == null)
+                                                throw new Exception(String.Format("No se encontró el concepto {0} en el formulario XBRL {1}", DetalleParametrosContribucion.FirstOrDefault().dde_codi, DetalleParametrosContribucion.FirstOrDefault().def_codi));
+
+                                            if (xbDConc[0].dco_valo == "" || xbDConc[0].dco_valo == null)
+                                            {
+                                                tOXbAuliqCxcContribucion.cxc_sald = 0;
+                                            }
+                                            else
+                                            {
+
+                                                if (xbDConc[0].dco_valo.Contains(","))
+                                                    throw new Exception(String.Format("El valor no puede contener el simbolo (,)"));
+
+                                                xbDConc[0].dco_valo = xbDConc[0].dco_valo.Replace(".", "");
+                                                tOXbAuliqCxcContribucion.cxc_sald = decimal.Parse(xbDConc[0].dco_valo);
+
+                                            }
+
                                         }
                                         else
                                         {
 
-                                            if (xbDConc[0].dco_valo.Contains(","))
-                                                throw new Exception(String.Format("El valor no puede contener el simbolo (,)"));
-
-                                            xbDConc[0].dco_valo = xbDConc[0].dco_valo.Replace(".", "");
-                                            tOXbAuliqCxcContribucion.cxc_sald = decimal.Parse(xbDConc[0].dco_valo);
+                                            tOXbAuliqCxcContribucion.cxc_sald = decimal.Parse(xbConce[0].con_valo);
 
                                         }
 
-                                    }
-                                    else
-                                    {
-
-                                        tOXbAuliqCxcContribucion.cxc_sald = decimal.Parse(xbConce[0].con_valo);
-
-                                    }
-
-                                    break;
-                            }
-                            tOXbAuliqCxcContribucion.dpa_tari = DetalleParametrosContribucion.Where(t => t.ite_ctts == ite_ctse).FirstOrDefault().dpa_tari;
-                            tOXbAuliqCxcContribucion.cxc_sald = (decimal.Parse(DetalleParametrosContribucion.Where(t => t.ite_ctts == ite_ctse).FirstOrDefault().dpa_tari.ToString()) * tOXbAuliqCxcContribucion.cxc_sald) / 100;
-                            tOXbAuliqCxcContribucion.cxc_tota = tOXbAuliqCxcContribucion.cxc_sald;
-                            tOXbAuliqCxcContribucion.rcx_vige = (int)historico.exb_anop;
-                            tOXbAuliqCxcContribucion.cxc_inmo = 0;
-                            tOXbAuliqCxcContribucion.cxc_feve = tOXbAuliqCxcContribucion.par_fech;
+                                        break;
+                                }
+                                tOXbAuliqCxcContribucion.cxc_bgrav = tOXbAuliqCxcContribucion.cxc_sald;
+                                tOXbAuliqCxcContribucion.dpa_tari = DetalleParametrosContribucion.Where(t => t.ite_ctts == ite_ctse).FirstOrDefault().dpa_tari;
+                                tOXbAuliqCxcContribucion.cxc_sald = (decimal.Parse(DetalleParametrosContribucion.Where(t => t.ite_ctts == ite_ctse).FirstOrDefault().dpa_tari.ToString()) * tOXbAuliqCxcContribucion.cxc_sald) / 100;
+                                tOXbAuliqCxcContribucion.cxc_tota = tOXbAuliqCxcContribucion.cxc_sald;
+                                tOXbAuliqCxcContribucion.cxc_inmo = 0;
+                                tOXbAuliqCxcContribucion.cxc_feve = tOXbAuliqCxcContribucion.par_fech;
 
 
 
-                            //TODO:CREAR LA CXC DE INTERESES INMEDIATAMENTE SI YA SE PASÓ LA FECHA MÁXIMA EN LA QUE DEBE PAGAR EL VIGILADO
-                            if (par_fech > tOXbAuliqCxcContribucion.par_fech)
-                            {
-                                tOXbAuliqCxcContribucion.cxc_inmo = new BO_Autliq().CalcularIntereses(tOXbAuliqCxcContribucion.par_fech, par_fech, tOXbAuliqCxcContribucion.cxc_sald, emp_codi);
-                                //Si la fecha seleccionada por el usuario es mayor a par_fech (máxima fecha de pago sin intereses) entonces el par_fech de la cuenta es la fecha seleccionada por el usuario
-                                tOXbAuliqCxcContribucion.par_fech = par_fech;
-                            }
-
-
-
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        tOXbAuliqCxcContribucion.error = ex.Message;
-                        tOXbAuliqCxcContribucion.liq_lock = true;
-
-                    }
-                    finally
-                    {
-
-                        liquidacionLista.Add(tOXbAuliqCxcContribucion);
-                    }
-
-
-                }
-                if (cuentasExistentes != null && cuentasExistentes.Any())
-                {
-                    foreach (TOXbAuliq autliq in cuentasExistentes)
-                    {
-                        var listFadina = new DAO_Fa_Dina().GetFaDdina(emp_codi, cliente.cli_codi, autliq.dcl_codd);
-                        if (listFadina == null)
-                            throw new Exception(string.Format("No se encontró tipo de servicio para el detalle de cliente {0}", autliq.dcl_codd));
-                        var fadina = listFadina.FirstOrDefault();
-                        try
-                        {
-                            var ParametrosContribucion = new DAO_Xb_Dparc().GetXbParco(emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, autliq.rcx_vige);
-                            if (ParametrosContribucion == null)
-                                throw new Exception(string.Format("No se encontró parámetros de contribución para el año {0}", autliq.rcx_vige));
-                            var DetalleParametrosContribucion = new DAO_Xb_Dparc().GetXbDparc(emp_codi, autliq.rcx_vige, GrupoInformacionFinanciera.Ite_Ctgo, fadina.ite_ctse);
-                            if (DetalleParametrosContribucion == null)
-                                throw new Exception(string.Format("No se encontró parámetros de contribución para el año {0} y {1}", autliq.rcx_vige, fadina.ite_nose));
-                            if (DetalleParametrosContribucion.Where(c => c.ite_ctts == autliq.ite_ctse).FirstOrDefault() == null)
-                                throw new Exception(String.Format("No se encontró detalle de parámetros de contribución para el año {0} y servicio {1}", autliq.rcx_vige, autliq.cts_nomb));
-                            autliq.dpa_tari = DetalleParametrosContribucion.Where(c => c.ite_ctts == autliq.ite_ctse).FirstOrDefault().dpa_tari;
-                            if (ParametrosContribucion != null && ParametrosContribucion.par_fec1 < DateTime.Now.Date && ParametrosContribucion.par_fec2 != null)
-                                autliq.par_fech = ParametrosContribucion.par_fec2.Value;
-                            else
-                                autliq.par_fech = ParametrosContribucion.par_fec1;
-
-                            //TODO:Si es una cxc de contribución, preguntar si tiene cxc de interes asociadas con abonos
-
-                            if (autliq.top_codi == ParametrosCartera.top_coco)
-                            {
-                                //TODO: Si tiene ninguna cxc con abonos, entonces contar los intereses desde la fecha en que pagó la última cxc de intereses
-                                var CxcInteresesPendientes = new DAOCaCpcob().GetCaCpCobConAbonos(emp_codi, autliq.cxc_cont);
-                                // TODO:Calcular los intereses en base a la fecha máxima de pago. Si ya hay cxc de intereses con abonos parciales la fecha inicial para calculo de intereses debe ser la ultima fecha de pago de esas cxc con intereses, campo CXC_FUPA
-                                //TODO// cA 
-                                if (CxcInteresesPendientes != null && CxcInteresesPendientes.Any())
+                                //TODO:CREAR LA CXC DE INTERESES INMEDIATAMENTE SI YA SE PASÓ LA FECHA MÁXIMA EN LA QUE DEBE PAGAR EL VIGILADO
+                                if (par_fech > tOXbAuliqCxcContribucion.par_fech)
                                 {
-                                    if (CxcInteresesPendientes.FirstOrDefault().cxc_fupa > par_fech && par_fech>autliq.par_fech)
-                                        autliq.par_fech = CxcInteresesPendientes.FirstOrDefault().cxc_fupa;
-                                    autliq.cxc_inan = CxcInteresesPendientes.Sum(c => c.cxc_sald);
+                                    tOXbAuliqCxcContribucion.cxc_inmo = new BO_Autliq().CalcularIntereses(tOXbAuliqCxcContribucion.par_fech, par_fech, tOXbAuliqCxcContribucion.cxc_sald, emp_codi);
+                                    //Si la fecha seleccionada por el usuario es mayor a par_fech (máxima fecha de pago sin intereses) entonces el par_fech de la cuenta es la fecha seleccionada por el usuario
+                                    tOXbAuliqCxcContribucion.par_fech = par_fech;
                                 }
 
-                              
 
-                                //Suma los saldos de todas las cuentas por cobrar con intereses
 
-                                //int DiasTotalesLiquidar = (par_fech - autliq.par_fech).Days;
-                                if( par_fech > autliq.par_fech)
-                                {
-                                    autliq.cxc_inmo = new BO_Autliq().CalcularIntereses(autliq.par_fech, par_fech, autliq.cxc_sald, emp_codi);
-                                    autliq.par_fech = par_fech;
-                                }
-                               
-                            }
-                            //Cálculos para multas y sanciones
-                            if (autliq.top_codi == ParametrosCartera.top_core)
-                            {
-                                DateTime fechaVencimiento = autliq.cxc_feve.Date;
-                                DateTime fechaPago = par_fech;
-                                int numDias = (fechaPago - fechaVencimiento).Days;
-                                int diasGracia = ParametrosCartera.pce_digr;
-                                int cantidadDiasNoLaborales = new DAOGnDiasn().CantidadDiasNoLaborales(autliq.cxc_feve, diasGracia);
-                                decimal saldoCapital = autliq.cxc_sald;
-                                decimal interes = ParametrosCartera.pce_intm / 360;
-                                if (fechaPago <= fechaVencimiento.AddDays(diasGracia + cantidadDiasNoLaborales))
-                                    interes = 0;
-                                autliq.cxc_inmo = interes * numDias * saldoCapital / 100;
-                                //if (autliq.cxc_inmo > 0)
-                                //{
-                                //    autliq.liq_apro = true;
-                                //    break;
-                                //}
+
                             }
                         }
                         catch (Exception ex)
                         {
-                            autliq.error = ex.Message;
-                            autliq.liq_lock = true;
+
+                            tOXbAuliqCxcContribucion.error = ex.Message;
+                            tOXbAuliqCxcContribucion.liq_lock = true;
 
                         }
                         finally
                         {
-                            liquidacionLista.Add(autliq);
+                            if(tOXbAuliqCxcContribucion.error.IndexOf("Ya existe")<0)
+                            liquidacionLista.Add(tOXbAuliqCxcContribucion);
                         }
 
-                    };
+
+                    }
                 }
+
+              if(liquidacionLista != null && liquidacionLista.Any())
+                {
+                    liquidacionLista = liquidacionLista.OrderBy(t => t.rcx_vige).ToList();
+                }
+
                 return new TOTransaction<List<TOXbAuliq>>() { ObjTransaction = liquidacionLista, Retorno = 0, TxtError = "" };
             }
             catch (Exception ex)
@@ -273,7 +387,7 @@ namespace RSELFANG.BO
                 SCaCxCob.ISCaCxCobDMR scacxcob = new SCaCxCob.SCaCxCobDMR();
                 string txterror = "";
                 object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SCaCxCob", "", "", "", "", "", "N" };
-                object varSali;              
+                object varSali;
                 if (scacxcob.ProgramLogin(varEntr, out varSali, out txterror) != 0)
                     throw new Exception("Error al ingresar a SEVEN-ERP, " + txterror);
                 var gnParam = new DAO_Gn_Param().GetGnParam(autoliquidacion.emp_codi);
@@ -284,15 +398,15 @@ namespace RSELFANG.BO
                 foreach (TOXbAuliq cuenta in autoliquidacion.cuentas)
                 {
                     var ddina = new DAO_Fa_Dina().ConsultarFaDdina(autoliquidacion.emp_codi, cliente.cli_codi).Where(f => f.ite_ctse == cuenta.ite_ctse).FirstOrDefault();
-                    var parco = new DAO_Xb_Dparc().GetXbParco(autoliquidacion.emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, cuenta.rcx_vige);
-                    if (parco == null)
+                   var parco = new DAO_Xb_Dparc().GetXbParco(autoliquidacion.emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, cuenta.rcx_vige);
+                    if (parco == null && cuenta.top_codi != xbpceca.top_core)
                         throw new Exception("No se encontró fecha máxima de pago.");
 
                     //Si el cxc_cont es 0 quiere decir que es nueva contribución 
                     if (cuenta.cxc_cont == 0 && cuenta.top_codi == xbpceca.top_coco)
                     {
                         DateTime fechaMaxinaSinInteres = new DateTime();
-                        var ParametrosContribucion = new DAO_Xb_Dparc().GetXbParco(autoliquidacion.emp_codi, GrupoInformacionFinanciera.Ite_Ctgo,cuenta.rcx_vige);
+                        var ParametrosContribucion = new DAO_Xb_Dparc().GetXbParco(autoliquidacion.emp_codi, GrupoInformacionFinanciera.Ite_Ctgo, cuenta.rcx_vige);
                         if (ParametrosContribucion != null && ParametrosContribucion.par_fec1 < DateTime.Now.Date && ParametrosContribucion.par_fec2 != null)
                             fechaMaxinaSinInteres = ParametrosContribucion.par_fec2.Value;
                         else
@@ -338,7 +452,7 @@ namespace RSELFANG.BO
                         scacxcob.cxc_feta = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
                         scacxcob.cxc_tasa = 1;
                         scacxcob.cxc_tipo = "D";
-                        scacxcob.cxc_feve = int.Parse( fechaMaxinaSinInteres.ToString("yyyyMMdd"));
+                        scacxcob.cxc_feve = int.Parse(fechaMaxinaSinInteres.ToString("yyyyMMdd"));
                         scacxcob.cxc_gcte = 0;
                         scacxcob.cxc_gmor = 0;
                         scacxcob.cxc_inco = 0;
@@ -449,7 +563,7 @@ namespace RSELFANG.BO
                         var produMO = DAO_In_Produ.GetInProdu(autoliquidacion.emp_codi, "", xbpceca.pro_como); ;
                         if (produMO == null)
                             throw new Exception("No se encontró Producto con consecutivo " + xbpceca.pro_como);
-                       
+
                         scacxcob.emp_codi = autoliquidacion.emp_codi;
                         scacxcob.dcc_cont = 1;
                         scacxcob.fac_cont = 0;
@@ -518,8 +632,6 @@ namespace RSELFANG.BO
                         cacpcob.cxc_orig = cuenta.cxc_cont;
                         cacpcob.cpc_cont = new DAOCaCpcob().getConseCaCpcob(autoliquidacion.emp_codi);
                         cacpcob.cxc_dest = scacxcob.cxc_cont;
-                        cacpcob.dcl_codd = cuenta.dcl_codd;
-                        cacpcob.cpc_vige = cuenta.rcx_vige;
                         new DAOCaCpcob().SetCaCpcob(cacpcob, autoliquidacion.usu_codi);
                     }
                     if (cuenta.cxc_inmo > 0 && cuenta.top_codi == xbpceca.top_core)
@@ -613,8 +725,8 @@ namespace RSELFANG.BO
                         scacxcob.cxc_fecf = Convert.ToDateTime(autoliquidacion.par_fech);   //;   //fecha
                         scacxcob.cxc_cref = "";
                         scacxcob.cxc_fpag = Convert.ToDateTime(autoliquidacion.par_fech);   //fecha
-                                                                                   //scacxcob.cxc_fexi = p_cxc_fech;   //fecha
-                                                                                   //scacxcob.cxc_cosa = "N";
+                                                                                            //scacxcob.cxc_fexi = p_cxc_fech;   //fecha
+                                                                                            //scacxcob.cxc_cosa = "N";
                         scacxcob.cxc_fupa = int.Parse(DateTime.Now.ToString("yyyyMMdd")); //Numerica YYYYMMDD
                         res = scacxcob.InsertarCaCxCob();
                         if (res == 1)
@@ -648,7 +760,6 @@ namespace RSELFANG.BO
                         cacpcob.cxc_orig = cuenta.cxc_cont;
                         cacpcob.cpc_cont = new DAOCaCpcob().getConseCaCpcob(autoliquidacion.emp_codi);
                         cacpcob.cxc_dest = scacxcob.cxc_cont;
-                        cacpcob.dcl_codd = cuenta.dcl_codd;
                         cacpcob.cpc_vige = cuenta.rcx_vige;
                         new DAOCaCpcob().SetCaCpcob(cacpcob, autoliquidacion.usu_codi);
 
@@ -758,7 +869,7 @@ namespace RSELFANG.BO
                     {
                         throw new Exception(string.Format("Error convirtiendo IP:{0}", ex.Message));
                     }
-                    url = gurl.GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
+                    url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
 
                     return new TOTransaction<string>() { ObjTransaction = url, Retorno = 0, TxtError = "" };
                 }
@@ -776,7 +887,7 @@ namespace RSELFANG.BO
                     sf.Append(" AND {CA_CXCOB.TOP_CODI} = " + xbpceca.top_core.ToString());
                     sf.Append(" AND {CA_CXCOB.CLI_CODI} = " + client.cli_codi.ToString());
                     sf.Append(" AND {CA_CXCOB.CXC_ESTA} = 'A' ");
-                    url = gurl.GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
+                    url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                     return new TOTransaction<string>() { ObjTransaction = url, Retorno = 0, TxtError = "" };
                 }
 
@@ -789,7 +900,38 @@ namespace RSELFANG.BO
 
         }
 
+        public string GetURLReporte(string reporte, List<string> parametros, string sf, string urlreport)
+        {
+            string servidor = urlreport;
+            string formatofecha = ConfigurationManager.AppSettings["formatoFecha"].ToString();
+
+            string urlreporte = servidor;
+
+            urlreporte += "?" + "nombrerpt=" + reporte;
+            int i = 0;
+
+            //empresa
+            //nombre
+            //usuario
+            //formato
+
+            foreach (var item in parametros)
+            {
+                urlreporte += "&promptex" + i + "=" + item.ToString();
+                i++;
+            }
+
+            urlreporte += "&sf=" + sf;
+
+
+            return urlreporte;
+        }
+
+
     }
 
-
 }
+
+
+
+

@@ -28,8 +28,8 @@ namespace RSELFANG.Models
         public int cxc_dest { get; set; }
         public string cpc_esta { get; set; }
         public int cpc_vige { get; set; }
-        public long cli_codi { get; set; }
-        public int dcl_codd { get; set; }
-        public int ite_ctse { get; set; }
+        //public long cli_codi { get; set; }
+        //public int dcl_codd { get; set; }
+        //public int ite_ctse { get; set; }
     }
 }
