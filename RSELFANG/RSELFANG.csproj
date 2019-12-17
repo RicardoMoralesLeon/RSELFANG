@@ -13,7 +13,7 @@
     <RootNamespace>RSELFANG</RootNamespace>
     <AssemblyName>RSELFANG</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -498,7 +498,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/RSELFANG</IISUrl>
+          <IISUrl>http://localhost:62126/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://localhost:62126/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

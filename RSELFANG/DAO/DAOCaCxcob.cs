@@ -43,7 +43,7 @@ namespace RSELFANG.DAO
 
         }
 
-        public List<TOXbAuliq> GetAuliquidacion(short emp_codi, long cli_codi)
+        public List<TOXbAuliq> GetAuliquidacion(short emp_codi, long cli_codi,Boolean saldo=true)
         {
             OException exception = new OException();
             try
@@ -77,7 +77,8 @@ namespace RSELFANG.DAO
                 sql.Append("AND CXC.TOP_CODI = (SELECT PCE.TOP_COCO             ");
                 sql.Append("                FROM   XB_PCECA PCE                 ");
                 sql.Append("                WHERE PCE.EMP_CODI = @EMP_CODI)     ");
-                //sql.Append("AND CXC.CXC_SALD > 0                                ");
+                if(saldo)
+                sql.Append("AND CXC.CXC_SALD > 0                                ");
                 sql.Append("UNION                                               ");
                 sql.Append("SELECT                                              ");
                 sql.Append("CPC.ITE_CTSE,  CXC.EMP_CODI,                                         ");
@@ -107,7 +108,8 @@ namespace RSELFANG.DAO
                 sql.Append("AND CXC.TOP_CODI = (SELECT PCE.TOP_CORE             ");
                 sql.Append("                FROM   XB_PCECA PCE                 ");
                 sql.Append("                WHERE PCE.EMP_CODI = @EMP_CODI)     ");
-                //sql.Append("AND CXC.CXC_SALD > 0                                ");
+                if(saldo)
+                sql.Append("AND CXC.CXC_SALD > 0                                ");
 
 
                 List<SQLParams> sQLParams = new List<SQLParams>();
