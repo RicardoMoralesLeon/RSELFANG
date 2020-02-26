@@ -48,6 +48,7 @@ namespace RSELFANG.Controllers
                         var saveAttchment =   boRadju.insertGnRadju((short) emp_codi, key, "PQ_INPQR", "SPQINPQR",inp_cont, postedFile,"S");
                         if (!saveAttchment.Item1)
                             throw new Exception(string.Format("Error insertando adjunto en documentos {0}", saveAttchment.Item2));
+                        
                         //Sube archivo a workflow
                          saveAttchment = boRadju.insertGnRadju((short)emp_codi, key, "PQ_INPQR", "SPQINPQR", pqr.cas_cont, postedFile,"W");
                         if (!saveAttchment.Item1)

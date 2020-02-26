@@ -34,7 +34,6 @@ namespace RSELFANG.Models
         public int dcl_codd { get; set; }
         public int emp_codi { get; set; }
         public decimal cxc_bgrav { get; set; }
-        public DateTime cxc_fupa { get; set; }
 
 
 

@@ -43,7 +43,7 @@ namespace RSELFANG.DAO
 
         }
 
-        public List<TOXbAuliq> GetAuliquidacion(short emp_codi, long cli_codi,Boolean saldo=true)
+        public List<TOXbAuliq> GetAuliquidacion(short emp_codi, long cli_codi)
         {
             OException exception = new OException();
             try
@@ -61,8 +61,7 @@ namespace RSELFANG.DAO
                 sql.Append("CXC.CXC_SALD,                                       ");            
                 sql.Append("CXC.CXC_CONT,                                       ");
                 sql.Append("CXC.CXC_FEVE,                                         ");
-                sql.Append("CXC.DCL_CODD,                                       ");
-                sql.Append("CXC.CXC_FUPA                                       ");
+                sql.Append("CXC.DCL_CODD                                       ");
                 sql.Append("FROM   CA_CXCOB CXC                                 ");
                 sql.Append("INNER JOIN CA_RCXCV RCX                             ");
                 sql.Append("ON CXC.EMP_CODI = RCX.EMP_CODI                      ");
@@ -77,8 +76,7 @@ namespace RSELFANG.DAO
                 sql.Append("AND CXC.TOP_CODI = (SELECT PCE.TOP_COCO             ");
                 sql.Append("                FROM   XB_PCECA PCE                 ");
                 sql.Append("                WHERE PCE.EMP_CODI = @EMP_CODI)     ");
-                if(saldo)
-                sql.Append("AND CXC.CXC_SALD > 0                                ");
+                //sql.Append("AND CXC.CXC_SALD > 0                                ");
                 sql.Append("UNION                                               ");
                 sql.Append("SELECT                                              ");
                 sql.Append("CPC.ITE_CTSE,  CXC.EMP_CODI,                                         ");
@@ -92,8 +90,7 @@ namespace RSELFANG.DAO
                 sql.Append("CXC.CXC_SALD,                                       ");            
                 sql.Append("CXC.CXC_CONT,                                       ");
                 sql.Append("CXC.CXC_FEVE,                                       ");
-                sql.Append("CXC.DCL_CODD,                                        ");
-                sql.Append("CXC.CXC_FUPA                                       ");
+                sql.Append("CXC.DCL_CODD                                        ");
                 sql.Append("FROM   CA_CXCOB CXC                                 ");
                 sql.Append("INNER JOIN CA_RVMSA CPC                             ");
                 sql.Append("ON CXC.EMP_CODI = CPC.EMP_CODI                      ");
@@ -108,8 +105,7 @@ namespace RSELFANG.DAO
                 sql.Append("AND CXC.TOP_CODI = (SELECT PCE.TOP_CORE             ");
                 sql.Append("                FROM   XB_PCECA PCE                 ");
                 sql.Append("                WHERE PCE.EMP_CODI = @EMP_CODI)     ");
-                if(saldo)
-                sql.Append("AND CXC.CXC_SALD > 0                                ");
+                //sql.Append("AND CXC.CXC_SALD > 0                                ");
 
 
                 List<SQLParams> sQLParams = new List<SQLParams>();

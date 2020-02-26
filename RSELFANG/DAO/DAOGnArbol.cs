@@ -33,7 +33,7 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT * FROM GN_ARBOL  ");
             sql.Append(" WHERE EMP_CODI =@EMP_CODI AND TAR_CODI = @TAR_CODI");
-            sql.Append(" AND ARB_MOVI = 'S' ");
+            sql.Append(" AND ARB_MOVI = 'S' AND ARB_ACTI='A' ");
             List<Parameter> parameters = new List<Parameter>();
             parameters.Add(new Parameter("@EMP_CODI", emp_codi));
             parameters.Add(new Parameter("@TAR_CODI", tar_codi));            

@@ -16,6 +16,7 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT REG_CODI, REG_NOMB ");
             sql.Append(" FROM GN_REGIO WHERE PAI_CODI=@PAI_CODI ");
+            sql.Append(" ORDER BY REG_NOMB ");
             List<Parameter> sqlParams = new List<Parameter>();
             sqlParams.Add(new Parameter("PAI_CODI", pai_codi));
 

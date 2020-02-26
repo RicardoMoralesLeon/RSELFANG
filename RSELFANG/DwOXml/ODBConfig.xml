@@ -34,13 +34,14 @@
     
     <!--<connectionString>Server=sql2014\sevendc;User ID=consultoria;Password=Sistemas15;Database=replicas;App=WPQINPQR;</connectionString>-->
   
-  <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>
-    <providerName>SQL</providerName>-->
+  <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>-->
+    <connectionString>Server=cerezo;User ID=desarrollo;Password=Desarrollo2018;Database=sevenDesarrollo;App=wpqinpqr2;</connectionString>
+    <providerName>SQL</providerName>
 
-    <connectionString>
+    <!--<connectionString>
       Server=192.168.0.199;User ID=seven;Password=S3v3n2016@;Database=SEVENPRE;App=SelfServicesSeven;
     </connectionString>
-    <providerName>SQL</providerName>
+    <providerName>SQL</providerName>-->
 
   </Parametro>
 </Parametros>

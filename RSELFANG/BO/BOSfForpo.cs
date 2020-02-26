@@ -23,19 +23,19 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<List<SfForpo>> GetInfoModalidad(int emp_codi)
+        public TOTransaction<List<SfFovisInfo>> GetInfoModalidad(int emp_codi)
         {
             DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             try
             {
-                List<SfForpo> sfmodvi = new List<SfForpo>();
+                List<SfFovisInfo> sfmodvi = new List<SfFovisInfo>();
                 sfmodvi = daoSfForpo.GetModVi(emp_codi);
-                return new TOTransaction<List<SfForpo>>() { objTransaction = sfmodvi, txtRetorno = "", retorno = 0 };
+                return new TOTransaction<List<SfFovisInfo>>() { objTransaction = sfmodvi, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
             {
-                return new TOTransaction<List<SfForpo>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+                return new TOTransaction<List<SfFovisInfo>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
                 
@@ -71,53 +71,41 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<SfFovis> GetInfoPostulante(int emp_codi, int afi_cont)
+        public TOTransaction<SfFovis> GetInfoPostulante(int emp_codi, int afi_cont, bool validTope)
         {
             SfFovis sffovis = new SfFovis();
             DAOSfForpo daoSfForpo = new DAOSfForpo();
-            gnmasal InfoGnMasal = new gnmasal();
-
+            Gnmasal InfoGnMasal = new Gnmasal();
             InfoAportante suconyu = new InfoAportante();
-            List<InfoNovedades> novedad = new List<InfoNovedades>();
-            List<InfoTrayectoria> trayect = new List<InfoTrayectoria>();
-            List<InfoSuPerca> superca = new List<InfoSuPerca>();
-            List<InfoOtrosMiembros> otrosM = new List<InfoOtrosMiembros>();
-            sfmodvi InfoModvi = new sfmodvi();
-
+            InfoEmpresa InfoEmpre = new InfoEmpresa();
+            
             try
             {
                 InfoAportante sfafili = new InfoAportante();
-                sfafili = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
-                sfafili.for_insf = "P";
+                sfafili = daoSfForpo.getInfoAportante(emp_codi, afi_cont);                
                 sfafili.for_cond = "";
 
                 InfoGnMasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
                 sfafili.afi_ipil = daoSfForpo.getSalarioPostul(emp_codi, afi_cont);
 
-                if (sfafili.afi_ipil > InfoGnMasal.mas_vrsm)
+                if (validTope)
                 {
-                    throw new Exception("El postulante superal el tope salarial");
+                    if (sfafili.afi_ipil > InfoGnMasal.mas_vrsm)
+                    {
+                        throw new Exception("El postulante superal el tope salarial");
+                    }
                 }
-
-                if (sfafili.mod_cont != null)
-                    InfoModvi = daoSfForpo.getInfoModvi(emp_codi, sfafili.mod_cont);
-
+            
                 if (afi_cont != 0)
                 {
-                    suconyu = daoSfForpo.getInfoConyu(emp_codi, afi_cont);                    
-                    superca = daoSfForpo.getInfoSuPerca(emp_codi, afi_cont);
-                    otrosM = daoSfForpo.getInfoMiembros(emp_codi, afi_cont);
+                    suconyu = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
+                    InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
                 }
 
                 sffovis.InfoAportante = sfafili;
                 sffovis.InfoConyuge = suconyu;
-                sffovis.InfoModvi = InfoModvi;
-                //sffovis.InfoNovedades = novedad;
-                //sffovis.InfoTrayectoria = trayect;
-                //sffovis.InfoSuPerca = superca;
-                //sffovis.InfoOtrosMiembros = otrosM;
-
-
+                sffovis.InfoGnmasal = InfoGnMasal;
+                sffovis.InfoEmpresa = InfoEmpre;
                 return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -153,9 +141,10 @@ namespace RSELFANG.BO
             List<InfoTrayectoria> trayect = new List<InfoTrayectoria>();
             List<InfoSuPerca> superca = new List<InfoSuPerca>();
             List<InfoOtrosMiembros> otrosM = new List<InfoOtrosMiembros>();
-            sfmodvi InfoModvi = new sfmodvi();
-            gnmasal InfoGnMasal = new gnmasal();
-            
+            sfdmodv InfoModvi = new sfdmodv();
+            Gnmasal InfoGnMasal = new Gnmasal();
+            InfoEmpresa InfoEmpre = new InfoEmpresa();
+
             try
             {
                 rnradic = daoSfForpo.GetInfoRnRadi(emp_codi, rad_nume);
@@ -168,15 +157,15 @@ namespace RSELFANG.BO
                     if(for_nume != 0)
                     {
                         throw new Exception("El afiliado tiene registros de postulación en estado diferente a Rechazado o Retiro voluntario. Formulario Número: " + for_nume);
-                    }                    
-
+                    }
+                    
                     InfoGnMasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
                     sffovis.drp_salab = daoSfForpo.getSalarioPostul(emp_codi, rnradic.afi_cont);
 
                     if (sffovis.drp_salab > InfoGnMasal.mas_vrsm)
                     {
                         throw new Exception("El postulante superal el tope salarial");
-                    }                    
+                    }
 
                     suafili = daoSfForpo.getInfoAportante(emp_codi, rnradic.afi_cont);
 
@@ -185,25 +174,33 @@ namespace RSELFANG.BO
                         suafili.rad_nume = rad_nume;                      
                         sffovis.InfoAportante = suafili;                        
 
-                        if (suafili.mod_cont != null)
-                            InfoModvi = daoSfForpo.getInfoModvi(emp_codi, suafili.mod_cont);
+                        if (sffovis.mod_cont != null)
+                            InfoModvi = daoSfForpo.getInfoModvi(emp_codi, sffovis.mod_cont);
+
+                        InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
                     }
 
                     if (for_cont != 0)
                     {
-                        suconyu = daoSfForpo.getInfoConyugeFromForpo(emp_codi, for_cont);                        
+                        suconyu = daoSfForpo.getInfoConyugeFromForpo(emp_codi, for_cont);
                         novedad = daoSfForpo.getInfoNovedades(emp_codi, for_cont);
                         trayect = daoSfForpo.getInfoTrayectorias(emp_codi, for_cont);
                         superca = daoSfForpo.getInfoSuPerca(emp_codi, for_cont);
                         otrosM = daoSfForpo.getInfoMiembros(emp_codi, for_cont);
                     }
+                    else
+                    {
+                        if (suafili.afi_cont != 0)
+                        {
+                            suconyu = daoSfForpo.getInfoConyu(emp_codi, suafili.afi_cont);
+                            InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
+                        }
+                    }
 
-                    sffovis.InfoConyuge = suconyu;
-                    sffovis.InfoNovedades = novedad;
-                    sffovis.InfoTrayectoria = trayect;
-                    sffovis.InfoSuPerca = superca;
-                    sffovis.InfoOtrosMiembros = otrosM;
+                    sffovis.InfoConyuge = suconyu;                  
                     sffovis.InfoModvi = InfoModvi;
+                    sffovis.InfoGnmasal = InfoGnMasal;
+                    sffovis.InfoEmpresa = InfoEmpre;
                 }                
 
                 return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
@@ -261,8 +258,7 @@ namespace RSELFANG.BO
                 return new TOTransaction<List<SfPostu>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
-
-
+        
         public TOTransaction<List<SfPostu>> GetInfoIdPerca(int emp_codi, int afi_cont)
         {
             DAOSfForpo daoSfForpo = new DAOSfForpo();
@@ -276,6 +272,70 @@ namespace RSELFANG.BO
             catch (Exception ex)
             {
                 return new TOTransaction<List<SfPostu>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<InfoAportante> GetInfoPerca(int emp_codi, int afi_trab, int afi_cont, string afi_docu)
+        {
+            InfoAportante superca = new InfoAportante();
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+
+            try
+            {
+                superca = daoSfForpo.getInfoPerca(emp_codi, afi_trab, afi_cont, afi_docu);
+                return new TOTransaction<InfoAportante>() { objTransaction = superca, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<InfoAportante>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<InfoAportante> GetInfoOtrosM(int emp_codi, int afi_trab, int afi_cont, string afi_docu)
+        {
+            InfoAportante otrosM = new InfoAportante();
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+
+            try
+            {
+                otrosM = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
+                return new TOTransaction<InfoAportante>() { objTransaction = otrosM, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<InfoAportante>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+                
+        public TOTransaction<sfdmodv> GetInfoIngresos(int emp_codi, int mod_cont, double for_sala)
+        {
+            sfdmodv modvi = new sfdmodv();
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+
+            try
+            {
+                modvi = daoSfForpo.GetInfoIngresos(emp_codi, mod_cont, for_sala);
+                return new TOTransaction<sfdmodv>() { objTransaction = modvi, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<sfdmodv>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<sfconec>> GetInfoConceptos(int emp_codi, string con_tipo)
+        {
+            List<sfconec> dfore = new List<sfconec>();
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+
+            try
+            {
+                dfore = daoSfForpo.GetInfoConceptos(emp_codi, con_tipo);
+                return new TOTransaction<List<sfconec>>() { objTransaction = dfore, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<sfconec>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
     }
