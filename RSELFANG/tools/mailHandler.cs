@@ -182,7 +182,6 @@ namespace RSELFANG.tools
         }
         public string createWorkFlow(PqInpqr pqr, string TypeRequest)
         {
-
             swflup.SWFRFLUP ws = new swflup.SWFRFLUP();
             swflup.TOWfRflup to = new swflup.TOWfRflup();
             to.cam_name = "INP_CONT";

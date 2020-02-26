@@ -12,9 +12,7 @@ namespace RSELFANG.BO
         {
             DAOGnBarri dao = new DAOGnBarri();
             List<GnBarri> result = new List<GnBarri>();
-            result = dao.GetGnBarri(pai_codi, reg_codi, dep_codi, mun_codi, loc_codi);
-            if (result == null || !result.Any())
-                throw new Exception("No se encontraron barrios parametrizados en Seven-Erp");
+            result = dao.GetGnBarri(pai_codi, reg_codi, dep_codi, mun_codi, loc_codi);            
             return result;
         }
     }

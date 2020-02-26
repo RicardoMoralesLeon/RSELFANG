@@ -50,7 +50,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.11.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
@@ -60,6 +60,10 @@
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Xb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Xb.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Interop.Midas.dll</HintPath>
@@ -76,10 +80,10 @@
     <Reference Include="Interop.SXE4DmrAncestroPrj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.SXE4DmrAncestroPrj.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Interop.SXE4DmrAncestroPrj.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SXE4DmrDocumentoPrj">
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.SXE4DmrDocumentoPrj.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Interop.SXE4DmrDocumentoPrj.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -92,20 +96,17 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.4.0\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Ophelia, Version=19.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Ophelia">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.dll</HintPath>
     </Reference>
-    <Reference Include="Ophelia.Proteccion, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Ophelia.Proteccion">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.Proteccion.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.6.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SevenFramework, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SevenFramework">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -207,6 +208,7 @@
     <Compile Include="BO\BoPqTrazabilidad.cs" />
     <Compile Include="BO\BoRnRadic.cs" />
     <Compile Include="BO\BOSfForpo.cs" />
+    <Compile Include="BO\BOSfFovis.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
     <Compile Include="BO\BOXbAuliq.cs" />
@@ -221,9 +223,11 @@
     <Compile Include="Controllers\FaDdinaController.cs" />
     <Compile Include="Controllers\FaInaclController.cs" />
     <Compile Include="Controllers\GnArbolController.cs" />
+    <Compile Include="Controllers\GnBarriController.cs" />
     <Compile Include="Controllers\GnDeparController.cs" />
     <Compile Include="Controllers\GnEmpreController.cs" />
     <Compile Include="Controllers\GnItemsController.cs" />
+    <Compile Include="Controllers\GnLocalController.cs" />
     <Compile Include="Controllers\GnLoginController.cs" />
     <Compile Include="Controllers\GnlogoController.cs" />
     <Compile Include="Controllers\GnMunicController.cs" />
@@ -238,6 +242,7 @@
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
     <Compile Include="Controllers\SfForpoController.cs" />
+    <Compile Include="Controllers\SfFovisController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
@@ -382,6 +387,7 @@
     <Compile Include="TO\RnRadic.cs" />
     <Compile Include="TO\Rnradtd.cs" />
     <Compile Include="TO\SfFovis.cs" />
+    <Compile Include="TO\SfFovisInfo.cs" />
     <Compile Include="TO\SfForpo.cs" />
     <Compile Include="TO\TORnRadic.cs" />
     <Compile Include="TO\SuAfili.cs" />
@@ -476,12 +482,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb\DigitalWare.Apps.Utilities.Xb.csproj">
-      <Project>{8050504b-681d-4643-8a59-c897add7a9c2}</Project>
-      <Name>DigitalWare.Apps.Utilities.Xb</Name>
-    </ProjectReference>
+    <COMReference Include="SSfForpo">
+      <Guid>{D27B9B57-42ED-45D2-B837-5ED2F0C70B71}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -21,6 +21,7 @@ namespace RSELFANG.DAO
             sql.Append(" AND REG_CODI=@REG_CODI ");
             sql.Append(" AND DEP_CODI=@DEP_CODI ");
             sql.Append(" AND MUN_CODI=@MUN_CODI ");
+            sql.Append(" ORDER BY LOC_NOMB ");
             List<Parameter> sqlParams = new List<Parameter>();
             sqlParams.Add(new Parameter("PAI_CODI", pai_codi));
             sqlParams.Add(new Parameter("REG_CODI", reg_codi));

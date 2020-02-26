@@ -19,6 +19,7 @@ namespace RSELFANG.DAO
             sql.Append(" SELECT DEP_NOMB, DEP_CODI, PAI_CODI ");
             sql.Append(" FROM GN_DEPAR ");
             sql.Append(" WHERE PAI_CODI = @PAI_CODI ");
+            sql.Append(" ORDER BY DEP_NOMB ");
             List<Parameter> parameters = new List<Parameter>();
             parameters.Add(new Parameter("PAI_CODI", pai_codi));
             OTOContext pTOContext = new OTOContext();
