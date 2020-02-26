@@ -42,9 +42,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Digitalware.Apps.Utilities, Version=19.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\Digitalware.Apps.Utilities.dll</HintPath>
+    <Reference Include="Digitalware.Apps.Utilities">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.Fa, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,7 +65,7 @@
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Xb.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\Interop.Midas.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Interop.Midas.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.S07DmrAncestroPrj">
@@ -102,12 +101,8 @@
     <Reference Include="Ophelia.Proteccion">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.Proteccion.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.6.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\SSelfvDLL\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="SevenFramework">
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
+    <Reference Include="RestSharp">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.4.0\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -160,6 +155,7 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -179,6 +175,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BO\BoCaCxcob.cs" />
+    <Compile Include="BO\BOCfModcr.cs" />
     <Compile Include="BO\BOCtConsu.cs" />
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
@@ -214,6 +211,9 @@
     <Compile Include="BO\BOXbAuliq.cs" />
     <Compile Include="BO\BOXbPceca.cs" />
     <Compile Include="Controllers\CaCxCobController.cs" />
+    <Compile Include="Controllers\CfModcrController.cs" />
+    <Compile Include="Controllers\CfTasasController.cs" />
+    <Compile Include="Controllers\CrRtmclController.cs" />
     <Compile Include="Controllers\CtConsuController.cs" />
     <Compile Include="Controllers\CtPropoController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
@@ -244,6 +244,8 @@
     <Compile Include="Controllers\SfForpoController.cs" />
     <Compile Include="Controllers\SfFovisController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
+    <Compile Include="Controllers\SuAfiliController.cs" />
+    <Compile Include="Controllers\SuTrayeController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\TrazabilidadPQRController.cs" />
@@ -492,6 +494,24 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\DLLDAUCF\Digitalware.Apps.Utilities.Cf\Digitalware.Apps.Utilities.Cf.csproj">
+      <Project>{9df7619f-1baf-4c0b-8ddb-35b35205f153}</Project>
+      <Name>Digitalware.Apps.Utilities.Cf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\DLLDAUCR\Digitalware.Apps.Utilities.Cr\Digitalware.Apps.Utilities.Cr.csproj">
+      <Project>{C2E330A4-9296-4988-93D1-815DC17455DB}</Project>
+      <Name>Digitalware.Apps.Utilities.Cr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\DLLDAUSU\Digitalware.Apps.Utilities.Su\Digitalware.Apps.Utilities.Su.csproj">
+      <Project>{0E3EB36D-BF80-46FA-B8DA-27A288324C71}</Project>
+      <Name>Digitalware.Apps.Utilities.Su</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\proyects\Elisa.DataBase\SevenFramework.csproj">
+      <Project>{367c7437-7814-41db-be95-f32974e8f5c6}</Project>
+      <Name>SevenFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -519,7 +539,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

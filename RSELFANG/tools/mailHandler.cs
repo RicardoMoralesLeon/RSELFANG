@@ -231,9 +231,9 @@ namespace RSELFANG.tools
 
                     body = body.Replace("#", "");
 
-                    body = body.Replace("<PASSWORD>", pqr.genratedKey);
+                    body = body.Replace("<<PASSWORD>>", pqr.genratedKey);
                     if(!string.IsNullOrEmpty(link))
-                      body = body.Replace("<LINK>", string.Format("<a href = '{0}'> Consultar Solicitud </a>",link));
+                      body = body.Replace("<<LINK>>", string.Format("<a href = '{0}'> Consultar Solicitud </a>",link));
                 }
             }
             catch(Exception ex)

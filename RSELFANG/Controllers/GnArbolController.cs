@@ -27,6 +27,23 @@ namespace RSELFANG.Controllers
             return bo.GetGbnArbol(tar_codi, arb_codi,emp_codi);
         }
 
+        [HttpGet]
+        [Route("api/gnarbol/GetArbolPorTipo")]
+        public SevenFramework.TO.TOTransaction<List<GnArbol>> GetArbolPorTipo(int emp_codi, int tar_codi)
+        {
+            try
+            {
+                BOGnArbol bo = new BOGnArbol();
+                return new SevenFramework.TO.TOTransaction<List<GnArbol>>() { Retorno = 0, ObjTransaction = bo.GetGbnArbol(tar_codi, emp_codi), TxtError = "" };
+            }
+            
+            catch (Exception ex)
+            {
+
+                return new SevenFramework.TO.TOTransaction<List<GnArbol>>() { TxtError = ex.Message, ObjTransaction = null, Retorno = 1 };
+            }
+        }
+
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public TOTransaction<GnArbol> Get(int con_cont,int emp_codi)
         {
