@@ -162,16 +162,17 @@ namespace RSELFANG.BO
                     InfoGnMasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
                     sffovis.drp_salab = daoSfForpo.getSalarioPostul(emp_codi, rnradic.afi_cont);
 
-                    if (sffovis.drp_salab > InfoGnMasal.mas_vrsm)
-                    {
-                        throw new Exception("El postulante superal el tope salarial");
-                    }
+                    //if (sffovis.drp_salab > InfoGnMasal.mas_vrsm)
+                    //{
+                    //    throw new Exception("El postulante superal el tope salarial");
+                    //}
 
                     suafili = daoSfForpo.getInfoAportante(emp_codi, rnradic.afi_cont);
 
                     if (suafili != null)
                     {
-                        suafili.rad_nume = rad_nume;                      
+                        suafili.rad_nume = rad_nume;
+                        sffovis.rad_nume = rad_nume;
                         sffovis.InfoAportante = suafili;                        
 
                         if (sffovis.mod_cont != null)

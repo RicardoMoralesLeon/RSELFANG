@@ -17,7 +17,9 @@
 
     <!--<connectionString>Server=sql2014\sevendc;User ID=consultoria;Password=Sistemas15;Database=replicas;App=WPQINPQR;</connectionString>-->
 
-  <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>-->
+    <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>
+    <providerName>SQL</providerName>-->
+    
     <connectionString>Server=cerezo;User ID=desarrollo;Password=Desarrollo2018;Database=sevenDesarrollo;App=wpqinpqr2;</connectionString>
     <providerName>SQL</providerName>
 

@@ -222,7 +222,8 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("FOR_CONT", for_cont));
-            return new DbConnection().Get<InfoAportante>(sql.ToString(), sqlparams);
+            var result = new DbConnection().Get<InfoAportante>(sql.ToString(), sqlparams);
+            return result == null ? new InfoAportante() : result;
         }
 
         public List<InfoNovedades> getInfoNovedades(int emp_codi, int for_cont)
@@ -369,9 +370,10 @@ namespace RSELFANG.DAO
             ds = new DbConnection().GetDataSet(sql.ToString(), sqlparams);
 
             if (ds.Tables[0].Rows.Count > 0)
-                drp_salb = double.Parse(ds.Tables[0].Rows[0]["DRP_SALB"].ToString());
+                if (ds.Tables[0].Rows[0]["DRP_SALB"].ToString() != "")
+                    drp_salb = double.Parse(ds.Tables[0].Rows[0]["DRP_SALB"].ToString());
 
-             return drp_salb;
+            return drp_salb;
         }
 
         public rnradic GetInfoRnRadi(int emp_codi, int rad_nume)
