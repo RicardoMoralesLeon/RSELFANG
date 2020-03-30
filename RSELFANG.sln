@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.Apps.Utilities.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalware.Apps.Utilities.Cr", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCR\Digitalware.Apps.Utilities.Cr\Digitalware.Apps.Utilities.Cr.csproj", "{C2E330A4-9296-4988-93D1-815DC17455DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalware.Apps.Utilities.Fa", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauFA\Digitalware.Apps.Utilities.Fa\Digitalware.Apps.Utilities.Fa.csproj", "{B00EFB19-DF1C-4165-9D82-E2506FED536C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C2E330A4-9296-4988-93D1-815DC17455DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2E330A4-9296-4988-93D1-815DC17455DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2E330A4-9296-4988-93D1-815DC17455DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

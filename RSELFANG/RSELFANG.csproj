@@ -45,10 +45,6 @@
     <Reference Include="Digitalware.Apps.Utilities">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Digitalware.Apps.Utilities.Fa, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
-    </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
     </Reference>
@@ -176,6 +172,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BO\BoCaCxcob.cs" />
     <Compile Include="BO\BOCfModcr.cs" />
+    <Compile Include="BO\BOCfScrev.cs" />
     <Compile Include="BO\BOCtConsu.cs" />
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
@@ -309,9 +306,11 @@
     <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
+    <Compile Include="DAO\DAO_Ca_Licre.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Ca_Licre.cs" />
     <Compile Include="Models\Ca_Rcxcv.cs" />
     <Compile Include="Models\Gn_Diasn.cs" />
     <Compile Include="Models\LoginRequest.cs" />
@@ -461,6 +460,24 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="SCfCodeu">
+      <Guid>{1E542303-9C4E-45F3-BC4C-3EB41B1DDAC7}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SCfScrev">
+      <Guid>{C0538273-C38C-4B6B-8367-7F111A794340}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="SCtPropo">
       <Guid>{EDE71941-47D2-11D6-8EB7-00302111D27B}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -506,6 +523,10 @@
     <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCR\Digitalware.Apps.Utilities.Cr\Digitalware.Apps.Utilities.Cr.csproj">
       <Project>{c2e330a4-9296-4988-93d1-815dc17455db}</Project>
       <Name>Digitalware.Apps.Utilities.Cr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauFA\Digitalware.Apps.Utilities.Fa\Digitalware.Apps.Utilities.Fa.csproj">
+      <Project>{b00efb19-df1c-4165-9d82-e2506fed536c}</Project>
+      <Name>Digitalware.Apps.Utilities.Fa</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn.csproj">
       <Project>{46d82d84-75fc-4508-994a-5cfe3b81436a}</Project>
