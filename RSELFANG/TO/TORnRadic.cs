@@ -28,10 +28,10 @@ namespace RSELFANG.TO
         /// Parentesco
         /// </summary>
         public List<SuMpare> SuMpare { get; set; }
-        /// <summary>
-        /// Afiliados
-        /// </summary>
-        public List<SuAfili> SuAfili { get; set; }
+        ///// <summary>
+        ///// Afiliados
+        ///// </summary>
+        //public List<SuAfili> SuAfili { get; set; }
         /// <summary>
         /// Digiflag SRN000001
         /// </summary>

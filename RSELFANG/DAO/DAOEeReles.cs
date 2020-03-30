@@ -205,5 +205,19 @@ namespace RSELFANG.DAO
 
             return 0;
         }
+
+        public TOPqParam GetEerelesServ(int rel_serv, int emp_codi)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            DataSet ds = new DataSet();
+            sql.Append(" SELECT MAX(REL_CONT) REL_CONT ");
+            sql.Append(" FROM EE_RELES ");
+            sql.Append(" WHERE REL_SERV = @REL_SERV ");
+            sql.Append(" AND EMP_CODI = @EMP_CODI ");
+            sqlparams.Add(new SQLParams("REL_SERV", rel_serv));
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            return  new DbConnection().Get<TOPqParam>(sql.ToString(), sqlparams);            
+        }
     }
 }

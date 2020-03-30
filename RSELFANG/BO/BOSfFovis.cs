@@ -182,6 +182,9 @@ namespace RSELFANG.BO
                 if (ret != 0)
                     throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
 
+                if (sfdfomh.afi_docu == null)
+                    return "";
+
                 object objSalida;
                 List<object> LEntrada = new List<object>();
                 LEntrada.Add(emp_codi);

@@ -63,7 +63,7 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT RN_RADIC.EMP_CODI,RN_RADIC.RAD_NUME,RN_RADIC.RAD_FECH,SU_AFILI.TIP_CODI, ");
             sql.Append("        SU_AFILI.AFI_DOCU,SU_AFILI.AFI_NOM1,SU_AFILI.AFI_NOM2,SU_AFILI.AFI_APE1, ");
-            sql.Append("        SU_AFILI.AFI_APE2, SF_FORPO.FOR_CONT ");
+            sql.Append("        SU_AFILI.AFI_APE2, MAX(SF_FORPO.FOR_CONT) FOR_CONT ");
             sql.Append(" FROM RN_RADIC ");
             sql.Append(" INNER JOIN SU_AFILI ON RN_RADIC.EMP_CODI = SU_AFILI.EMP_CODI ");
             sql.Append(" AND RN_RADIC.AFI_CONT = SU_AFILI.AFI_CONT ");
@@ -75,6 +75,9 @@ namespace RSELFANG.DAO
             sql.Append(" AND RN_RADIC.RAD_ESTA = 'R' ");
             sql.Append(" AND RN_CRACO.CRA_DEST = 'F' ");
             sql.Append(" AND RN_RADIC.EMP_CODI = @EMP_CODI ");
+            sql.Append(" GROUP BY RN_RADIC.EMP_CODI,RN_RADIC.RAD_NUME,RN_RADIC.RAD_FECH,SU_AFILI.TIP_CODI, ");
+            sql.Append(" SU_AFILI.AFI_DOCU,SU_AFILI.AFI_NOM1,SU_AFILI.AFI_NOM2,SU_AFILI.AFI_APE1, ");
+            sql.Append(" SU_AFILI.AFI_APE2 ");
             List <SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             return new DbConnection().GetList<SfRadic>(sql.ToString(), sqlparams);

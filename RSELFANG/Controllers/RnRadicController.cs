@@ -17,6 +17,22 @@ namespace RSELFANG.Controllers
             return bo.GetInitialDataRnRadic(emp_codi, usu_codi);
         }
 
+        [Route("api/RnRadic/RnRadicLoadAfili")]
+        public TOTransaction<List<SuAfili>> Get(int emp_codi, string usu_codi = "", bool param = false)
+        {
+            BoRnRadic bo = new BoRnRadic();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
+            return bo.GetDataSuAfili(emp_codi, usu_codi);
+        }
+
+        [Route("api/RnRadic/RnRadicLoadInfoAfili")]
+        public TOTransaction<SuAfili> Get(int emp_codi, int afi_cont, bool param = false, bool param2 = false)
+        {
+            BoRnRadic bo = new BoRnRadic();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
+            return bo.getInfoAdicionalAfili(emp_codi, afi_cont);
+        }
+
         [Route("api/RnRadic/RnCracoLoad")]
         public TOTransaction<List<RnCraco>> Get(int gru_cont,int emp_codi)
         {
@@ -26,7 +42,7 @@ namespace RSELFANG.Controllers
         }
 
         [Route("api/RnRadic/InserRnRadic")]
-        public TOTransaction Post(RnRadic rnradic)
+        public TOTransaction<RnRadicSalida> Post(RnRadic rnradic)
         {
             BoRnRadic bo = new BoRnRadic();           
             return bo.InsertRnRadic(rnradic);

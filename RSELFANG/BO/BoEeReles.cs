@@ -21,7 +21,7 @@ namespace RSELFANG.BO
                 result = daoEeReles.getEeReles(rel_cont);
                                
                 if (result.Tables[0].Rows.Count == 0)
-                    throw new Exception("No se encontraron datos con los parámetros especificados");
+                    throw new Exception("No se encontró parametrización para la encuesta especificada.");
                                 
                 objReles.rel_cont = Int32.Parse(result.Tables[0].Rows[0]["REL_CONT"].ToString());
                 objReles.rel_nomb = result.Tables[0].Rows[0]["REL_NOMB"].ToString();
@@ -151,6 +151,21 @@ namespace RSELFANG.BO
             catch (Exception ex)
             {
                 return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<TOPqParam> GetInfoEerelesService(int rel_serv ,int emp_codi)
+        {
+            DAOEeReles daoEeReles = new DAOEeReles();
+
+            try
+            {
+                TOPqParam pqrList = daoEeReles.GetEerelesServ(rel_serv, emp_codi);
+                return new TOTransaction<TOPqParam>() { objTransaction = pqrList, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<TOPqParam>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
     }

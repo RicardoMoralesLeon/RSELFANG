@@ -42,7 +42,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Digitalware.Apps.Utilities">
+    <Reference Include="Digitalware.Apps.Utilities, Version=19.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.Cf">
@@ -104,16 +105,18 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.4.0\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Ophelia">
+    <Reference Include="Ophelia, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.dll</HintPath>
     </Reference>
-    <Reference Include="Ophelia.Proteccion">
+    <Reference Include="Ophelia.Proteccion, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.Proteccion.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SevenFramework, Version=20.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SevenFramework, Version=20.0.3.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
@@ -193,6 +196,7 @@
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
     <Compile Include="BO\BoEeReles.cs" />
+    <Compile Include="BO\BoEeRemes.cs" />
     <Compile Include="BO\BOFaclien.cs" />
     <Compile Include="BO\BOFaDdina.cs" />
     <Compile Include="BO\BOFaInacl.cs" />
@@ -206,10 +210,12 @@
     <Compile Include="BO\BOGnLocal.cs" />
     <Compile Include="BO\BOGnLogo.cs" />
     <Compile Include="BO\BOGnMunic.cs" />
+    <Compile Include="BO\BOGnNomdi.cs" />
     <Compile Include="BO\BOGnPaise.cs" />
     <Compile Include="BO\BOGnRadju.cs" />
     <Compile Include="BO\BOGnRegio.cs" />
     <Compile Include="BO\BOGnTerce.cs" />
+    <Compile Include="BO\BOGnTipdo.cs" />
     <Compile Include="BO\BOPqDpara.cs" />
     <Compile Include="BO\BOPqEncue.cs" />
     <Compile Include="BO\BoPqEstadisticas.cs" />
@@ -232,6 +238,7 @@
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EcCotizController.cs" />
     <Compile Include="Controllers\EeRelesController.cs" />
+    <Compile Include="Controllers\EeRemesController.cs" />
     <Compile Include="Controllers\FaClienController.cs" />
     <Compile Include="Controllers\FaDdinaController.cs" />
     <Compile Include="Controllers\FaInaclController.cs" />
@@ -244,9 +251,11 @@
     <Compile Include="Controllers\GnLoginController.cs" />
     <Compile Include="Controllers\GnlogoController.cs" />
     <Compile Include="Controllers\GnMunicController.cs" />
+    <Compile Include="Controllers\GnNomdiController.cs" />
     <Compile Include="Controllers\GnPaiseController.cs" />
     <Compile Include="Controllers\GnRegioController.cs" />
     <Compile Include="Controllers\GnTerceController.cs" />
+    <Compile Include="Controllers\GnTipdoController.cs" />
     <Compile Include="Controllers\GnUsuarController.cs" />
     <Compile Include="Controllers\PaPagosController.cs" />
     <Compile Include="Controllers\PqEncueController.cs" />
@@ -262,6 +271,7 @@
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\TrazabilidadPQRController.cs" />
+    <Compile Include="Controllers\uploadAttachmentController.cs" />
     <Compile Include="Controllers\uploadController.cs" />
     <Compile Include="Controllers\XbBauliqController.cs" />
     <Compile Include="Controllers\XbPcecaController.cs" />
@@ -277,6 +287,7 @@
     <Compile Include="DAO\DAOEcDphij.cs" />
     <Compile Include="DAO\DAOEcLisev.cs" />
     <Compile Include="DAO\DAOEeReles.cs" />
+    <Compile Include="DAO\DAOEeRemes.cs" />
     <Compile Include="DAO\DAOFaClien.cs" />
     <Compile Include="DAO\DAOGnAdjFi.cs" />
     <Compile Include="DAO\DAOGnAdju.cs" />
@@ -292,6 +303,7 @@
     <Compile Include="DAO\DAOGnLocal.cs" />
     <Compile Include="DAO\DAOGnLogo.cs" />
     <Compile Include="DAO\DAOGnMunic.cs" />
+    <Compile Include="DAO\DAOGnNomdi.cs" />
     <Compile Include="DAO\DAOGnPaise.cs" />
     <Compile Include="DAO\DAOGnParam.cs" />
     <Compile Include="DAO\DAOGnRadju.cs" />
@@ -365,7 +377,9 @@
     <Compile Include="TO\EeDdprc.cs" />
     <Compile Include="TO\EeDrele.cs" />
     <Compile Include="TO\EeDrsee.cs" />
+    <Compile Include="TO\EeReenc.cs" />
     <Compile Include="TO\EeReles.cs" />
+    <Compile Include="TO\Eeremes.cs" />
     <Compile Include="TO\EeResem.cs" />
     <Compile Include="TO\EeResen.cs" />
     <Compile Include="TO\FaClien.cs" />
@@ -379,6 +393,7 @@
     <Compile Include="TO\GnLocal.cs" />
     <Compile Include="TO\Gnlogo.cs" />
     <Compile Include="TO\GnMunic.cs" />
+    <Compile Include="TO\GnNomdi.cs" />
     <Compile Include="TO\GnPaise.cs" />
     <Compile Include="TO\GnParam.cs" />
     <Compile Include="TO\GnRegio.cs" />
@@ -400,6 +415,7 @@
     <Compile Include="TO\RnDperc.cs" />
     <Compile Include="TO\RnGrura.cs" />
     <Compile Include="TO\RnRadic.cs" />
+    <Compile Include="TO\RnRadicSalida.cs" />
     <Compile Include="TO\Rnradtd.cs" />
     <Compile Include="TO\SfFovis.cs" />
     <Compile Include="TO\SfFovisInfo.cs" />

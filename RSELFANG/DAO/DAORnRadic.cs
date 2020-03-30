@@ -80,11 +80,32 @@ namespace RSELFANG.DAO
             sql.Append(" SELECT SU_TRAYE.AFI_CONT, SU_AFILI.TIP_CODI, GN_TIPDO.TIP_NOMB,  SU_AFILI.AFI_DOCU, ");
             sql.Append(" SU_AFILI.AFI_NOM1, SU_AFILI.AFI_NOM2, SU_AFILI.AFI_APE1, SU_AFILI.AFI_APE2, ");
             sql.Append(" SU_AFILI.AFI_FECN, SU_AFILI.AFI_TELE, SU_TRAYE.TRA_ESTA, SU_TRAYE.APO_CONT, ");
+            sql.Append(" AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS, AR_APOVO.TIP_CODI TIP_CODA, ");
+            sql.Append(" AR_APOVO.TIA_CONT, AR_APOVO.APO_ESTD, SU_TRAYE.TRA_FCHI,SU_TRAYE.TRA_PRIN, SU_TRAYE.TRA_FCHR, ");
+            sql.Append(" AR_TIAPO.TIA_CODI,SU_TRAYE.TRA_CONT ");
+            sql.Append(" FROM SU_AFILI, GN_TIPDO, SU_TRAYE ");
+            sql.Append(" INNER JOIN AR_APOVO ON AR_APOVO.EMP_CODI = SU_TRAYE.EMP_CODI AND AR_APOVO.APO_CONT = SU_TRAYE.APO_CONT ");
+            sql.Append(" INNER JOIN AR_TIAPO ON AR_APOVO.EMP_CODI = AR_TIAPO.EMP_CODI AND AR_APOVO.TIA_CONT = AR_TIAPO.TIA_CONT ");
+            sql.Append(" WHERE SU_AFILI.TIP_CODI = GN_TIPDO.TIP_CODI ");
+            sql.Append(" AND SU_TRAYE.EMP_CODI = SU_AFILI.EMP_CODI ");
+            sql.Append(" AND SU_TRAYE.AFI_CONT = SU_AFILI.AFI_CONT ");
+            sql.Append(" ORDER BY SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2,SU_AFILI.AFI_NOM1,SU_AFILI.AFI_NOM2, SU_TRAYE.TRA_FCHI DESC, SU_TRAYE.TRA_ESTA ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            return new DbConnection().GetList<SuAfili>(sql.ToString(), sqlparams);
+        }
+
+        public SuAfili getInfoAdicionalAfili(int emp_codi, int afi_cont)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT SU_TRAYE.AFI_CONT, SU_AFILI.TIP_CODI, GN_TIPDO.TIP_NOMB,  SU_AFILI.AFI_DOCU, ");
+            sql.Append(" SU_AFILI.AFI_NOM1, SU_AFILI.AFI_NOM2, SU_AFILI.AFI_APE1, SU_AFILI.AFI_APE2, ");
+            sql.Append(" SU_AFILI.AFI_FECN, SU_AFILI.AFI_TELE, SU_TRAYE.TRA_ESTA, SU_TRAYE.APO_CONT, ");
             sql.Append(" AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS, AR_APOVO.TIP_CODI TIP_CODA, GN_TIPDO2.TIP_NOMB TIP_NOMA, ");
             sql.Append(" AR_APOVO.TIA_CONT, AR_APOVO.APO_ESTD, SU_TRAYE.TRA_FCHI,SU_TRAYE.TRA_PRIN, SU_TRAYE.TRA_FCHR, ");
             sql.Append(" AR_TIAPO.TIA_CODI,TIA_NOMB,SU_TRAYE.TRA_CONT, DSU_TELE , AFI_MAIL, AFI_DIRE, ");
             sql.Append(" SU_AFILI.PAI_CODI,GN_PAISE.PAI_NOMB, ");
-            sql.Append(" SU_AFILI.REG_CODI,GN_REGIO.REG_NOMB, "); 
+            sql.Append(" SU_AFILI.REG_CODI,GN_REGIO.REG_NOMB, ");
             sql.Append(" SU_AFILI.DEP_CODI,GN_DEPAR.DEP_NOMB, ");
             sql.Append(" SU_AFILI.MUN_CODI,GN_MUNIC.MUN_NOMB, ");
             sql.Append(" SU_AFILI.LOC_CODI,GN_LOCAL.LOC_NOMB, ");
@@ -107,15 +128,16 @@ namespace RSELFANG.DAO
             sql.Append(" INNER JOIN GN_BARRI ON GN_BARRI.BAR_CODI = SU_AFILI.BAR_CODI AND GN_BARRI.LOC_CODI = SU_AFILI.LOC_CODI ");
             sql.Append(" AND GN_BARRI.DEP_CODI = SU_AFILI.DEP_CODI AND GN_BARRI.REG_CODI = SU_AFILI.REG_CODI ");
             sql.Append(" AND GN_BARRI.PAI_CODI = SU_AFILI.PAI_CODI ");
-            sql.Append(" WHERE SU_AFILI.TIP_CODI = GN_TIPDO.TIP_CODI ");
+            sql.Append(" WHERE  SU_AFILI.AFI_CONT = @AFI_CONT AND SU_AFILI.TIP_CODI = GN_TIPDO.TIP_CODI ");
             sql.Append(" AND SU_TRAYE.EMP_CODI = SU_AFILI.EMP_CODI ");
             sql.Append(" AND SU_TRAYE.AFI_CONT = SU_AFILI.AFI_CONT ");
             sql.Append(" AND SU_AFILI.EMP_CODI = @EMP_CODI ");
             sql.Append(" ORDER BY SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2,SU_AFILI.AFI_NOM1,SU_AFILI.AFI_NOM2, SU_TRAYE.TRA_FCHI DESC, ");
             sql.Append(" SU_TRAYE.TRA_ESTA ");
-            List <SQLParams> sqlparams = new List<SQLParams>();
+            List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
-            return new DbConnection().GetList<SuAfili>(sql.ToString(), sqlparams);
+            sqlparams.Add(new SQLParams("AFI_CONT", afi_cont));
+            return new DbConnection().Get<SuAfili>(sql.ToString(), sqlparams);
         }
 
         public string getDigflag(string dig_codi)
