@@ -46,8 +46,28 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Cf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Cf.dll</HintPath>
+    </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Cr, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Cr.dll</HintPath>
+    </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Fa, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+    </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
+    </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Su, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Su.dll</HintPath>
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -175,7 +195,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BO\BoCaCxcob.cs" />
     <Compile Include="BO\BOCfModcr.cs" />
-    <Compile Include="BO\BOCfScrev.cs" />
     <Compile Include="BO\BOCtConsu.cs" />
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
@@ -214,8 +233,6 @@
     <Compile Include="BO\BOXbAuliq.cs" />
     <Compile Include="BO\BOXbPceca.cs" />
     <Compile Include="Controllers\CaCxCobController.cs" />
-    <Compile Include="Controllers\CfScrevController.cs" />
-    <Compile Include="Controllers\CfCodeuController.cs" />
     <Compile Include="Controllers\CfModcrController.cs" />
     <Compile Include="Controllers\CfTasasController.cs" />
     <Compile Include="Controllers\CrRtmclController.cs" />
@@ -231,7 +248,6 @@
     <Compile Include="Controllers\GnArbolController.cs" />
     <Compile Include="Controllers\GnBarriController.cs" />
     <Compile Include="Controllers\GnDeparController.cs" />
-    <Compile Include="Controllers\GnDivpoController.cs" />
     <Compile Include="Controllers\GnEmpreController.cs" />
     <Compile Include="Controllers\GnItemsController.cs" />
     <Compile Include="Controllers\GnLocalController.cs" />
@@ -242,7 +258,6 @@
     <Compile Include="Controllers\GnPaiseController.cs" />
     <Compile Include="Controllers\GnRegioController.cs" />
     <Compile Include="Controllers\GnTerceController.cs" />
-    <Compile Include="Controllers\GnTipdoController.cs" />
     <Compile Include="Controllers\GnUsuarController.cs" />
     <Compile Include="Controllers\PaPagosController.cs" />
     <Compile Include="Controllers\PqEncueController.cs" />
@@ -254,7 +269,6 @@
     <Compile Include="Controllers\SfFovisController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\SuAfiliController.cs" />
-    <Compile Include="Controllers\SuTrayeController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\TrazabilidadPQRController.cs" />
@@ -529,28 +543,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCF\Digitalware.Apps.Utilities.Cf\Digitalware.Apps.Utilities.Cf.csproj">
-      <Project>{9df7619f-1baf-4c0b-8ddb-35b35205f153}</Project>
-      <Name>Digitalware.Apps.Utilities.Cf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCR\Digitalware.Apps.Utilities.Cr\Digitalware.Apps.Utilities.Cr.csproj">
-      <Project>{c2e330a4-9296-4988-93d1-815dc17455db}</Project>
-      <Name>Digitalware.Apps.Utilities.Cr</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauFA\Digitalware.Apps.Utilities.Fa\Digitalware.Apps.Utilities.Fa.csproj">
-      <Project>{b00efb19-df1c-4165-9d82-e2506fed536c}</Project>
-      <Name>Digitalware.Apps.Utilities.Fa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn.csproj">
-      <Project>{46d82d84-75fc-4508-994a-5cfe3b81436a}</Project>
-      <Name>DigitalWare.Apps.Utilities.Gn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUSU\Digitalware.Apps.Utilities.Su\Digitalware.Apps.Utilities.Su.csproj">
-      <Project>{0e3eb36d-bf80-46fa-b8da-27a288324c71}</Project>
-      <Name>Digitalware.Apps.Utilities.Su</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
