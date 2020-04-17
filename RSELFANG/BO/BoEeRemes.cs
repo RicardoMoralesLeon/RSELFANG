@@ -16,6 +16,10 @@ namespace RSELFANG.BO
             {
                 Eeremes result = new Eeremes();
                 result = dao.GetInfoFaclien(emp_codi, cli_coda);
+
+                if (result == null)
+                    throw new Exception("Documento no encontrado.");
+
                 return new TOTransaction<Eeremes>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)

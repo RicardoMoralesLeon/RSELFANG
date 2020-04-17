@@ -17,6 +17,7 @@ namespace RSELFANG.Controllers
         [Route("api/EeRemes/loadInfoRelesService")]
         public TOTransaction<TOPqParam> Get(int rel_serv, int emp_codi)
         {
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
             BoEeReles bo = new BoEeReles();
             return bo.GetInfoEerelesService(rel_serv, emp_codi);
         }
