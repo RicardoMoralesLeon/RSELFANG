@@ -9,7 +9,7 @@ namespace RSELFANG.Models
     {
 
         public string lic_nomb { get; set; }
-        public int lic_codi lic_codi { get; set; }
+        public int  lic_codi { get; set; }
     public int lic_cont { get; set; }
 }
 }
