@@ -192,7 +192,8 @@ namespace RSELFANG.BO
                     }
                 }
 
-                return new TOTransaction<RnRadicSalida>() { objTransaction = new RnRadicSalida() { rad_cont = rad_cont, msg = "" }, retorno = 0, txtRetorno = "" };
+                string radnume = daoradic.getNumeroRadicado(rad_cont);
+                return new TOTransaction<RnRadicSalida>() { objTransaction = new RnRadicSalida() { rad_cont = rad_cont, msg = "", rad_nume = radnume }, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
             {

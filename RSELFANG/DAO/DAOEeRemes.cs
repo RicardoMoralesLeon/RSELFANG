@@ -34,18 +34,17 @@ namespace RSELFANG.DAO
             return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
         }
 
-        public int insertEeremes(EeReenc eereenc)
+        public int insertEeremes(EeReenc eereenc, int emp_codi)
         {
             try
             {
-                int emp_codi = int.Parse(ConfigurationManager.AppSettings["emp_codi"]);
-
                 StringBuilder sql = new StringBuilder();
-                sql.Append("INSERT INTO EE_REMES(REM_CONT, CLI_CODA, ITE_SERV, ITE_MORE, EMP_CODI, AUD_USUA, AUD_ESTA, AUD_UFAC)");
-                sql.Append("VALUES(@REM_CONT, @CLI_CODA, @ITE_SERV, @ITE_MORE, @EMP_CODI, @AUD_USUA, @AUD_ESTA, @AUD_UFAC)");
+                sql.Append("INSERT INTO EE_REMES(REM_CONT, CLI_CODA, ITE_SERV, ITE_MORE, EMP_CODI, AUD_USUA, AUD_ESTA, AUD_UFAC,REM_FECH)");
+                sql.Append("VALUES(@REM_CONT, @CLI_CODA, @ITE_SERV, @ITE_MORE, @EMP_CODI, @AUD_USUA, @AUD_ESTA, @AUD_UFAC,@REM_FECH)");
 
+                int rem_cont = GetCont(emp_codi, "EE_REMES");
                 List<SQLParams> sqlparams = new List<SQLParams>();
-                sqlparams.Add(new SQLParams("REM_CONT", GetCont(emp_codi, "EE_REMES")));
+                sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
                 sqlparams.Add(new SQLParams("CLI_CODA", eereenc.cli_coda));
                 sqlparams.Add(new SQLParams("ITE_SERV", eereenc.ree_serv));
                 sqlparams.Add(new SQLParams("ITE_MORE", eereenc.ree_more));
@@ -53,10 +52,11 @@ namespace RSELFANG.DAO
                 sqlparams.Add(new SQLParams("AUD_USUA", "SEVEN"));
                 sqlparams.Add(new SQLParams("AUD_ESTA", "A"));
                 sqlparams.Add(new SQLParams("AUD_UFAC", DateTime.Now));
+                sqlparams.Add(new SQLParams("REM_FECH", DateTime.Now));
                 new DbConnection().Insert(sql.ToString(), false, sqlparams);
-                return 0;
+                return rem_cont;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return 1;
             }           

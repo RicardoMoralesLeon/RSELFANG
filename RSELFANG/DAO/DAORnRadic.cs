@@ -236,5 +236,16 @@ namespace RSELFANG.DAO
             sqlparams.Add(new SQLParams("CRA_CODI", cra_codi));
             return new DbConnection().GetList<RnDdocu>(sql.ToString(), sqlparams);
         }
+
+        public string getNumeroRadicado(int rad_cont)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sql.Append(" SELECT RAD_NUME ");
+            sql.Append(" FROM RN_RADIC ");
+            sql.Append(" WHERE RAD_CONT = @RAD_CONT ");
+            sqlparams.Add(new SQLParams("RAD_CONT", rad_cont));
+            return new DbConnection().GetDataSet(sql.ToString(), sqlparams).Tables[0].Rows[0]["RAD_NUME"].ToString();
+        }
     }
 }

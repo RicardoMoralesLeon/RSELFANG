@@ -7,5 +7,6 @@
         public int rse_cont { get; set; }
         public int drs_cont { get; set; }
         public string res_valo { get; set; }
+        public int rem_cont { get; set; }
     }
 }
