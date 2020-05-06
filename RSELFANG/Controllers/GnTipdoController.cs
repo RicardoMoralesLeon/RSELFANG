@@ -11,14 +11,21 @@ namespace RSELFANG.Controllers
 {
     public class GnTipdoController : ApiController
     {
-        /// <summary>
-        /// Retorna todos los tipos de documento
-        /// </summary>
-        /// <returns></returns>
-        public List<GnTipdo> Get()
+        // GET: api/GnTipdo
+        public TOTransaction<List<RSELFANG.TO.GnTipdo>> Get()
         {
-            BOGnTipdo bo = new BOGnTipdo();
-            return bo.GetGnTipdo();
+            try
+            {
+                return new TOTransaction<List<RSELFANG.TO.GnTipdo>> { ObjTransaction = new DAOGnTipdo().getListGnTipdo(), Retorno = 0, TxtError = "" };
+            }
+            catch (Exception ex)
+            {
+
+                return new TOTransaction<List<RSELFANG.TO.GnTipdo>>() { ObjTransaction = null, Retorno = 1, TxtError = string.Format("Error cargando lista de documentos: {0}", ex.Message) };
+            }
+
         }
+
+
     }
 }

@@ -28,18 +28,23 @@ namespace RSELFANG.BO
                     {
                         if (codeudor.cod_cont == 0)
                         {
+                            codeudor.cod_cont = daoCodeu.GetContCfCodeu(codeudor.emp_codi);
                            daoCodeu.SetCfCodeu(codeudor);
                         }
                         else
                         {
                             daoCodeu.Update(codeudor);
                         }
+                       
 
                         if (codeudor.referencias != null && codeudor.referencias.Any())
                         {
 
                                 foreach(Cf_Refen referecia  in codeudor.referencias)
                             {
+                                referecia.cod_cont = codeudor.cod_cont;
+                                //referecia.ref_cont = codeudor.referencias.IndexOf(referecia) + 1;
+                                referecia.ref_noco = string.Format("{0} {1} {2} {3}", referecia.ref_nm1r, referecia.ref_nm2r, referecia.ref_ap1r, referecia.ref_ap2r);
                                 new DAO_Cf_Refen().SetCfRefe(referecia);
                             }
                         }
@@ -65,11 +70,22 @@ namespace RSELFANG.BO
                 credito.scr_nech = int.Parse(DateTime.Now.ToString("ddMMyyyy"));
                 credito.scr_fevi = DateTime.Now;
                 credito.scr_esta = "S";
-                                              
-              var x =  com.InsertarCfScrev(credito.emp_codi, credito.top_codi, 0, credito.scr_fech.ToString(), "",
-                    new DAO_Fa_Clien().GetCliCoda(credito.emp_codi, credito.cli_codi), 1,new DAO_Ca_Licre().GetCaLicre(credito.emp_codi,credito.lic_cont).lic_codi, 0, 0, credito.scr_ncuo, credito.scr_fech.ToString(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, credito.scr_vsol, ".","0", "",
-                    credito.scr_fpcu.ToString(), "", credito.scr_gene, null, "", 0, 0, 0, "", null, credito.scr_nent, credito.scr_diem, credito.scr_teem, "", credito.pai_codu, credito.dep_codu, credito.mun_codu, 0, "", "", 0, 0, 0, 0, "0", "", "",
-                    0, 0, "", "", 0, "", credito.scr_care, "", "", "", "","","",null,"",credito.codeudores.FirstOrDefault().cod_dnum,"","","","","","");
+                credito.dcl_codd = 1;
+               
+                com.scr_gerj = "M";
+                com.scr_cara = "P";
+                com.scr_gefc = "M";
+                com.dcl_dire = credito.scr_dire;
+                com.dcl_ntel = credito.scr_tele;
+                com.dcl_nfax = credito.dcl_nfax;
+                com.dcl_mail = credito.dcl_mail;
+
+
+                string arb_csuc = new DAO_Gn_Arbol().GetGnArbol(credito.emp_codi, credito.arb_sucu).arb_codi;
+              var x =  com.InsertarCfScrev(credito.emp_codi, credito.top_codi, 0, credito.scr_fech.ToString("dd-MM-yyyy"), arb_csuc,
+                    new DAO_Fa_Clien().GetCliCoda(credito.emp_codi, credito.cli_codi), credito.dcl_codd,new DAO_Ca_Licre().GetCaLicre(credito.emp_codi,credito.lic_cont).lic_codi, 0, 0, credito.scr_ncuo, credito.scr_fech.ToString("dd-MM-yyyy"), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, credito.scr_vsol, ".","0", "",
+                    credito.scr_fpcu.ToString("dd-MM-yyyy"), "N", credito.scr_gene, DateTime.Now.ToString("dd-MM-yyyy"),credito.scr_trab, 0, 0, 0, "E", DateTime.Now.ToString("dd-MM-yyyy"), credito.scr_nent, credito.scr_diem, credito.scr_teem, "", credito.pai_codu, credito.dep_codu, credito.mun_codu, credito.scr_sala, "", "", 0, 0, 0, 0, "0", "", "",
+                    0, 0, "", "", 0, "", credito.scr_care,"", "", "", "","","", DateTime.Now.ToString("dd-MM-yyyy"), "",credito.codeudores.FirstOrDefault().cod_dnum,"","","", DateTime.Now.ToString("dd-MM-yyyy"), "","");
 
 
                 if (x != 0)
