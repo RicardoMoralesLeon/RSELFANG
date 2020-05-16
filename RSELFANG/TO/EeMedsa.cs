@@ -15,6 +15,7 @@ namespace RSELFANG.TO
 
     public class EeSaSec
     {
+        public int sec_cont { get; set; }
         public string sec_codi { get; set; }
         public string sec_nomb { get; set; }
         public string frecuencia { get; set; }

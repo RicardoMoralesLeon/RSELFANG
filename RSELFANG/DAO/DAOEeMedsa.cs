@@ -8,7 +8,7 @@ namespace RSELFANG.DAO
 {
     public class DAOEeMedsa
     {
-        public List<EeMedsa> getInfoXServicio(int ser_cont)
+        public List<EeMedsa> getInfoXServicio(int ser_cont, DateTime fini, DateTime ffin)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();            
@@ -17,14 +17,19 @@ namespace RSELFANG.DAO
             sql.Append(" FROM EE_REMES ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = EE_REMES.ITE_SERV ");
             sql.Append(" INNER JOIN EE_RESEN ON EE_RESEN.REM_CONT = EE_REMES.REM_CONT ");
+            sql.Append(" WHERE CONVERT(DATE, EE_REMES.REM_FECH) >= @FEC_INIC ");
+            sql.Append(" AND   CONVERT(DATE, EE_REMES.REM_FECH) <= @FEC_FINA ");
 
             if (ser_cont != 0)
             {
                 sqlparams.Add(new SQLParams("SER_CONT", ser_cont));
-                sql.Append(" WHERE GN_ITEMS.ITE_CONT = @SER_CONT");
+                sql.Append(" AND GN_ITEMS.ITE_CONT = @SER_CONT");
             }
             
             sql.Append(" GROUP BY ITE_CODI, ITE_NOMB ");
+
+            sqlparams.Add(new SQLParams("FEC_INIC", fini));
+            sqlparams.Add(new SQLParams("FEC_FINA", ffin));
             return new DbConnection().GetList<EeMedsa>(sql.ToString(), sqlparams);
         }
 
@@ -36,7 +41,7 @@ namespace RSELFANG.DAO
             sql.Append(" CASE WHEN SATISFACCION < 40 THEN 'MALO' WHEN SATISFACCION BETWEEN 40 AND 79 THEN 'REGULAR' ");
             sql.Append("      WHEN SATISFACCION >= 80 THEN 'BUENO' END INTERPRETACION ");
             sql.Append(" FROM( ");
-            sql.Append(" SELECT EE_SECCE.SEC_CODI, EE_SECCE.SEC_NOMB, COUNT(EE_DRSEE.DRS_CONT) FRECUENCIA, ");
+            sql.Append(" SELECT EE_SECCE.SEC_CONT, EE_SECCE.SEC_CODI, EE_SECCE.SEC_NOMB, COUNT(EE_DRSEE.DRS_CONT) FRECUENCIA, ");
             sql.Append(" SUM(CONVERT(FLOAT, RES_VALO)) / CONVERT(FLOAT, COUNT(EE_DRSEE.DRS_CONT))  CALIFICACION, ");
             sql.Append(" SUM(CONVERT(FLOAT, RES_VALO)) / CONVERT(FLOAT, COUNT(EE_DRSEE.DRS_CONT)) / 5 * 100 SATISFACCION ");            
             sql.Append(" FROM EE_RELES ");
@@ -49,12 +54,12 @@ namespace RSELFANG.DAO
             sql.Append(" AND EE_RESEN.DRS_CONT = EE_DRSEE.DRS_CONT ");
             sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT ");
             sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' ");
-            sql.Append(" GROUP BY  EE_SECCE.SEC_CODI, EE_SECCE.SEC_NOMB ");
+            sql.Append(" GROUP BY  EE_SECCE.SEC_CONT, EE_SECCE.SEC_CODI, EE_SECCE.SEC_NOMB ");
             sql.Append(" ) A ");
             return new DbConnection().GetList<EeSaSec>(sql.ToString(), sqlparams);
         }
 
-        public List<EeDeSec> getInfoDetalleSatis()
+        public List<EeDeSec> getInfoDetalleSatis(int sec_cont)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
@@ -77,8 +82,10 @@ namespace RSELFANG.DAO
             sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = EE_REMES.ITE_SERV ");
             sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' ");
+            sql.Append(" AND EE_SECCE.SEC_CONT = @SEC_CONT ");
             sql.Append(" GROUP BY  EE_DRSEE.DRS_CONT, EE_DRSEE.DRS_PREG ");
             sql.Append(" ) A ");
+            sqlparams.Add(new SQLParams("SEC_CONT", sec_cont));
             return new DbConnection().GetList<EeDeSec>(sql.ToString(), sqlparams);
         }
 

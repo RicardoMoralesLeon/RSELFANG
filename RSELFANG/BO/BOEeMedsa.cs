@@ -9,14 +9,14 @@ namespace RSELFANG.BO
 {
     public class BOEeMedsa
     {
-        public TOTransaction<List<EeMedsa>> GetInfo(int ser_cont)
+        public TOTransaction<List<EeMedsa>> GetInfo(int ser_cont, DateTime fini, DateTime ffin)
         {
             DAOEeMedsa daoEeMedsa = new DAOEeMedsa();
 
             try
             {
                 List<EeMedsa> result = new List<EeMedsa>();           
-                result = daoEeMedsa.getInfoXServicio(ser_cont);
+                result = daoEeMedsa.getInfoXServicio(ser_cont, fini, ffin);
                 return new TOTransaction<List<EeMedsa>>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -41,14 +41,14 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<List<EeDeSec>> GetInfoDetalleSatisfaccion()
+        public TOTransaction<List<EeDeSec>> GetInfoDetalleSatisfaccion(int sec_cont)
         {
             DAOEeMedsa daoEeMedsa = new DAOEeMedsa();
 
             try
             {
                 List<EeDeSec> result = new List<EeDeSec>();
-                result = daoEeMedsa.getInfoDetalleSatis();
+                result = daoEeMedsa.getInfoDetalleSatis(sec_cont);
                 return new TOTransaction<List<EeDeSec>>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)

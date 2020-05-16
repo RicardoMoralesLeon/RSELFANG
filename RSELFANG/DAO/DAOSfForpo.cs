@@ -2,6 +2,7 @@
 using Ophelia.DataBase;
 using RSELFANG.TO;
 using SevenFramework.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -48,7 +49,7 @@ namespace RSELFANG.DAO
         public List<SfFovisInfo> GetModVi(int emp_codi)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT SF_MODVI.MOD_CONT,SF_MODVI.MOD_NOMB,SF_TCONV.TCO_CODI,SF_TCONV.TCO_NOMB, MOD_CSPM ");
+            sql.Append(" SELECT SF_MODVI.MOD_CONT,SF_MODVI.MOD_NOMB,SF_TCONV.TCO_CODI,SF_TCONV.TCO_NOMB, MOD_CSPM,TCO_ZONA ");
             sql.Append(" FROM SF_MODVI,SF_TCONV ");
             sql.Append(" WHERE SF_MODVI.EMP_CODI = SF_TCONV.EMP_CODI ");
             sql.Append(" AND SF_MODVI.TCO_CONT = SF_TCONV.TCO_CONT ");
@@ -568,17 +569,20 @@ namespace RSELFANG.DAO
         public sfdmodv GetInfoIngresos(int emp_codi, int mod_cont, double for_sala)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT SF_DMODV.DMO_RSMD,SF_DMODV.DMO_RSMH,SF_DMODV.DMO_OPER,SF_DMODV.DMO_FSVS,SF_MODVI.MOD_CSPM ");
-            sql.Append(" FROM SF_MODVI,SF_DMODV ");
+            sql.Append(" SELECT SF_DMODV.DMO_RSMD,SF_DMODV.DMO_RSMH,SF_DMODV.DMO_OPER,SF_DMODV.DMO_FSVS,SF_MODVI.MOD_CSPM, ");
+            sql.Append(" CONVERT(INT,MAS_VRSM * SF_DMODV.DMO_FSVS) DFO_VSOL ");
+            sql.Append(" FROM SF_MODVI,SF_DMODV, GN_MASAL ");
             sql.Append(" WHERE SF_MODVI.EMP_CODI = SF_DMODV.EMP_CODI ");
             sql.Append("   AND SF_MODVI.MOD_CONT = SF_DMODV.MOD_CONT ");
             sql.Append("   AND SF_MODVI.EMP_CODI = @EMP_CODI ");
             sql.Append("   AND SF_MODVI.MOD_CONT = @MOD_CONT ");
             sql.Append("   AND @FOR_SALA BETWEEN SF_DMODV.DMO_RSMD AND SF_DMODV.DMO_RSMH ");
+            sql.Append("   AND MAS_ANOP = @MAS_ANOP ");
             List <SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("MOD_CONT", mod_cont));
             sqlparams.Add(new SQLParams("FOR_SALA", for_sala));
+            sqlparams.Add(new SQLParams("MAS_ANOP", DateTime.Now.Year));
             return new DbConnection().Get<sfdmodv>(sql.ToString(), sqlparams);
         }
 

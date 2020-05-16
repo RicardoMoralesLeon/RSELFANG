@@ -9,6 +9,7 @@ namespace RSELFANG.TO
         public int TCO_CODI{ get; set; }
         public string TCO_NOMB{ get; set; }
         public string MOD_CSPM { get; set; }
+        public string TCO_ZONA { get; set; }
     }
 
     public class SfRadic
