@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSELFANG", "RSELFANG\RSELFANG.csproj", "{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.Apps.Utilities.Gn", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn.csproj", "{46D82D84-75FC-4508-994A-5CFE3B81436A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalware.Apps.Utilities.Cf", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCF\Digitalware.Apps.Utilities.Cf\Digitalware.Apps.Utilities.Cf.csproj", "{9DF7619F-1BAF-4C0B-8DDB-35B35205F153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalware.Apps.Utilities.Cr", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCR\Digitalware.Apps.Utilities.Cr\Digitalware.Apps.Utilities.Cr.csproj", "{C2E330A4-9296-4988-93D1-815DC17455DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalware.Apps.Utilities.Fa", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauFA\Digitalware.Apps.Utilities.Fa\Digitalware.Apps.Utilities.Fa.csproj", "{B00EFB19-DF1C-4165-9D82-E2506FED536C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalware.Apps.Utilities.Su", "..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUSU\Digitalware.Apps.Utilities.Su\Digitalware.Apps.Utilities.Su.csproj", "{0E3EB36D-BF80-46FA-B8DA-27A288324C71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,26 @@ Global
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35E7698C-FD1E-4DB3-9C6E-0ECEF57FA56B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D82D84-75FC-4508-994A-5CFE3B81436A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D82D84-75FC-4508-994A-5CFE3B81436A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D82D84-75FC-4508-994A-5CFE3B81436A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D82D84-75FC-4508-994A-5CFE3B81436A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF7619F-1BAF-4C0B-8DDB-35B35205F153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF7619F-1BAF-4C0B-8DDB-35B35205F153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF7619F-1BAF-4C0B-8DDB-35B35205F153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF7619F-1BAF-4C0B-8DDB-35B35205F153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2E330A4-9296-4988-93D1-815DC17455DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2E330A4-9296-4988-93D1-815DC17455DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2E330A4-9296-4988-93D1-815DC17455DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2E330A4-9296-4988-93D1-815DC17455DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00EFB19-DF1C-4165-9D82-E2506FED536C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3EB36D-BF80-46FA-B8DA-27A288324C71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3EB36D-BF80-46FA-B8DA-27A288324C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3EB36D-BF80-46FA-B8DA-27A288324C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3EB36D-BF80-46FA-B8DA-27A288324C71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
