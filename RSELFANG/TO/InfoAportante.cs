@@ -160,6 +160,7 @@ namespace RSELFANG.TO
         public int dmo_rsmh { get; set; }
         public decimal dmo_fsvs { get; set; }
         public string mod_cspm { get; set; }
+        public int dfo_vsol { get; set; }
 
         public sfdmodv()
         {

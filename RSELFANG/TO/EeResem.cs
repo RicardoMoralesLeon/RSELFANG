@@ -7,5 +7,6 @@
         public int drp_cont { get; set; }
         public int ddp_cont { get; set; }
         public string res_valo { get; set; }
+        public int rem_cont { get; set; }
     }
 }

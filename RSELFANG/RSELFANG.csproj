@@ -97,6 +97,10 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ophelia, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.dll</HintPath>
@@ -153,9 +157,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
@@ -196,6 +197,7 @@
     <Compile Include="BO\BOCtConsu.cs" />
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
+    <Compile Include="BO\BOEeMedsa.cs" />
     <Compile Include="BO\BoEeReles.cs" />
     <Compile Include="BO\BoEeRemes.cs" />
     <Compile Include="BO\BOFaclien.cs" />
@@ -240,6 +242,7 @@
     <Compile Include="Controllers\CtPropoController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EcCotizController.cs" />
+    <Compile Include="Controllers\EeMedsaController.cs" />
     <Compile Include="Controllers\EeRelesController.cs" />
     <Compile Include="Controllers\EeRemesController.cs" />
     <Compile Include="Controllers\FaClienController.cs" />
@@ -291,6 +294,7 @@
     <Compile Include="DAO\DAOEcDetan.cs" />
     <Compile Include="DAO\DAOEcDphij.cs" />
     <Compile Include="DAO\DAOEcLisev.cs" />
+    <Compile Include="DAO\DAOEeMedsa.cs" />
     <Compile Include="DAO\DAOEeReles.cs" />
     <Compile Include="DAO\DAOEeRemes.cs" />
     <Compile Include="DAO\DAOFaClien.cs" />
@@ -384,6 +388,7 @@
     <Compile Include="TO\EeDdprc.cs" />
     <Compile Include="TO\EeDrele.cs" />
     <Compile Include="TO\EeDrsee.cs" />
+    <Compile Include="TO\EeMedsa.cs" />
     <Compile Include="TO\EeReenc.cs" />
     <Compile Include="TO\EeReles.cs" />
     <Compile Include="TO\Eeremes.cs" />

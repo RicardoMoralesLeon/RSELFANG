@@ -17,17 +17,14 @@ namespace RSELFANG.Controllers
         {
             try
             {
-               var modul = DAO_Gn_Modul.GetGnModul(mod_codi);
-                return new TOTransaction<Gn_Modul>() { ObjTransaction = modul, Retorno = 0, TxtError = "" };
+                var modul = DAO_Gn_Modul.GetGnModul(mod_codi);
+                return new TOTransaction<Gn_Modul>() { ObjTransaction = modul, Retorno = 0, TxtError = "" };                
             }
             catch (Exception ex)
             {
-
                 return new TOTransaction<Gn_Modul>() { ObjTransaction = null, Retorno = 1, TxtError = ex.Message };
             }
-          
         }
-
       
     }
 }

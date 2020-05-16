@@ -125,7 +125,8 @@ namespace RSELFANG.DAO
                 sql.Append(" REL_CONT, ");
                 sql.Append(" RSE_CONT, ");
                 sql.Append(" DRS_CONT, ");
-                sql.Append(" RES_VALO) ");
+                sql.Append(" RES_VALO, ");
+                sql.Append(" REM_CONT) ");
                 sql.Append(" VALUES( ");
                 sql.Append(" @EMP_CODI, ");
                 sql.Append(" @AUD_USUA, ");
@@ -136,7 +137,8 @@ namespace RSELFANG.DAO
                 sql.Append(" @REL_CONT, ");
                 sql.Append(" @RSE_CONT, ");
                 sql.Append(" @DRS_CONT, ");
-                sql.Append(" @RES_VALO ");
+                sql.Append(" @RES_VALO, ");
+                sql.Append(" @REM_CONT ");
                 sql.Append(" ) ");
 
                 List<SQLParams> sqlparams = new List<SQLParams>();
@@ -150,6 +152,7 @@ namespace RSELFANG.DAO
                 sqlparams.Add(new SQLParams("RSE_CONT", param.rse_cont));
                 sqlparams.Add(new SQLParams("DRS_CONT", param.drs_cont));
                 sqlparams.Add(new SQLParams("RES_VALO", param.res_valo));
+                sqlparams.Add(new SQLParams("REM_CONT", param.rem_cont));
 
                 new DbConnection().Insert(sql.ToString(), false,sqlparams);
             }
@@ -174,7 +177,8 @@ namespace RSELFANG.DAO
                 sql.Append(" REL_CONT, ");                
                 sql.Append(" DRP_CONT, ");
                 sql.Append(" DDP_CONT, ");
-                sql.Append(" RES_VALO) ");
+                sql.Append(" RES_VALO, ");
+                sql.Append(" REM_CONT) ");
                 sql.Append(" VALUES( ");
                 sql.Append(" @EMP_CODI, ");
                 sql.Append(" @AUD_USUA, ");
@@ -185,7 +189,8 @@ namespace RSELFANG.DAO
                 sql.Append(" @REL_CONT, ");
                 sql.Append(" @DRP_CONT, ");
                 sql.Append(" @DDP_CONT, ");
-                sql.Append(" @RES_VALO ");
+                sql.Append(" @RES_VALO, ");
+                sql.Append(" @REM_CONT ");
                 sql.Append(" ) ");
 
                 List<SQLParams> sqlparams = new List<SQLParams>();
@@ -199,6 +204,7 @@ namespace RSELFANG.DAO
                 sqlparams.Add(new SQLParams("DRP_CONT", param.drp_cont));
                 sqlparams.Add(new SQLParams("DDP_CONT", param.ddp_cont));
                 sqlparams.Add(new SQLParams("RES_VALO", param.res_valo));
+                sqlparams.Add(new SQLParams("REM_CONT", param.rem_cont));
 
                 new DbConnection().Insert(sql.ToString(), false, sqlparams);
             }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using RSELFANG.DAO;
+using System.Configuration;
 
 namespace RSELFANG.BO
 {
@@ -33,9 +34,10 @@ namespace RSELFANG.BO
             DAOEeRemes daoEeRemes = new DAOEeRemes();
 
             try
-            {
-                daoEeRemes.insertEeremes(eereenc);
-                return new TOTransaction() { retorno = 0, txtRetorno = "" };
+            {               
+                int emp_codi = int.Parse(ConfigurationManager.AppSettings["emp_codi"]);
+                int rem_cont = daoEeRemes.insertEeremes(eereenc, emp_codi);               
+                return new TOTransaction() { retorno = 0, txtRetorno = rem_cont.ToString() };
             }
             catch (Exception ex)
             {
@@ -50,7 +52,7 @@ namespace RSELFANG.BO
             try
             {
                 daoEeRemes.updateTratamientoClient(emp_codi, cli_coda);
-                daoEeRemes.updateTratamientoTerce(emp_codi, cli_coda);
+                daoEeRemes.updateTratamientoTerce(emp_codi, cli_coda);                
                 return new TOTransaction() { retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
