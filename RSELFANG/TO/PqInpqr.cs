@@ -42,7 +42,7 @@ namespace RSELFANG.TO
         public HttpResponseMessage adj_file { get; set; }
         public string inp_tcli { get; set; }     
         public int ter_codi { get; set; }
-
+        public string dig_valo { get; set; }
 
     }
 }

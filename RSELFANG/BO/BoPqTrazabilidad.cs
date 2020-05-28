@@ -12,7 +12,8 @@ namespace RSELFANG.BO
             BOGnItems boItems = new BOGnItems();
             BOGnArbol boArbol = new BOGnArbol();
             BOPqDpara boPerte = new BOPqDpara();
-
+            BOGnDigfl boDigfl = new BOGnDigfl();
+            
             try
             {
                 PqTrazab result = new PqTrazab();
@@ -24,6 +25,7 @@ namespace RSELFANG.BO
                 List<GnItem> tipificac = boItems.GetGnItems(330);
                 List<GnItem> subtipifi = boItems.GetGnItems(331);
                 List<TOGPerte> pqrGrpups = boPerte.GetPqDpara(emp_codi);
+                GnFlag SPQ000003 = boDigfl.GetGnDigfl("SPQ000003");
 
                 result.seccional = seccional;
                 result.formRecib = formRecib;
@@ -32,6 +34,7 @@ namespace RSELFANG.BO
                 result.tipificac = tipificac;
                 result.subtipifi = subtipifi;
                 result.grupPerte = pqrGrpups;
+                result.SPQ000003 = SPQ000003.dig_valo;
 
                 return new TOTransaction<PqTrazab>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }

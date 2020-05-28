@@ -118,7 +118,7 @@ namespace RSELFANG.DAO
         {            
             StringBuilder sql = new StringBuilder();
             List<Parameter> parameters = new List<Parameter>();
-            sql.Append(" SELECT * FROM PQ_INPQR WHERE INP_CONT = @INP_CONT ");
+            sql.Append(" SELECT *,DIG_VALO FROM PQ_INPQR, GN_DIGFL WHERE INP_CONT = @INP_CONT AND DIG_CODI = 'SPQ000004' ");
             if (emp_codi > 0)
             {
                 sql.Append("  AND EMP_CODI=@EMP_CODI");
@@ -269,7 +269,8 @@ namespace RSELFANG.DAO
             inp_apel = reader["INP_APEL"].AsString(),
             cas_cont = reader["CAS_CONT"].AsInt(),    
             emp_codi = reader["EMP_CODI"].AsInt(),
-            inp_tido = reader["INP_TIDO"].AsString()
+            inp_tido = reader["INP_TIDO"].AsString(),
+            dig_valo = reader["DIG_VALO"].AsString()
         };
                
     }

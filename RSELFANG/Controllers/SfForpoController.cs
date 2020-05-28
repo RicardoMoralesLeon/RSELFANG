@@ -118,5 +118,12 @@ namespace RSELFANG.Controllers
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetInfoConceptos(emp_codi, con_tipo);
         }
+
+        [Route("api/Fovis/SfForpoGetParentesco")]
+        public TOTransaction<List<GnItems>> Get()
+        {
+            BOSfForpo bo = new BOSfForpo();           
+            return bo.GetGnItems(487);
+        }
     }
 }

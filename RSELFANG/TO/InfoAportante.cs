@@ -53,6 +53,7 @@ namespace RSELFANG.TO
         public double for_apr { get; set; }
         public int afi_edad { get; set; }
         public string afi_cond { get; set; }
+        public string mpa_codi { get; set; }
         public string mpa_nomb { get; set; }
         public string apo_razs { get; set; }
         public int ite_pare { get; set; }
@@ -75,6 +76,18 @@ namespace RSELFANG.TO
         public string mun_codi { get; set; }
         public string mun_nomb { get; set; }
         public string dsu_dire { get; set; }
+
+        public InfoEmpresa() {
+            apo_coda = "";
+            apo_razs = "";
+            tia_codi = "";
+            tia_nomb = "";
+            dep_codi = "";
+            dep_nomb = "";
+            mun_codi = "";
+            mun_nomb = "";
+            dsu_dire = "";
+        }
     }
 
     public class InfoNovedades
@@ -138,6 +151,7 @@ namespace RSELFANG.TO
         public string dfo_nom2 { get; set; }
         public string dfo_ape1 { get; set; }
         public string dfo_ape2 { get; set; }
+        public string mpa_codi { get; set; }
         public string mpa_nomb { get; set; }
         public DateTime dfo_fecn { get; set; }
         public string dfo_esci { get; set; }

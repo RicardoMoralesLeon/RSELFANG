@@ -124,5 +124,26 @@ namespace RSELFANG.DAO
                 return 1;
             }
         }
+
+        public int GetInfoValidEnc(string cli_coda, int ite_serv, int emp_codi)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT REM_CONT ");
+            sql.Append(" FROM EE_REMES ");
+            sql.Append(" WHERE CLI_CODA = @CLI_CODA ");
+            sql.Append(" AND ITE_SERV = @ITE_SERV ");
+            sql.Append(" AND EMP_CODI = @EMP_CODI ");
+            List<Parameter> parametros = new List<Parameter>();
+            parametros.Add(new Parameter("@CLI_CODA", cli_coda));
+            parametros.Add(new Parameter("@EMP_CODI", emp_codi));
+            parametros.Add(new Parameter("@ITE_SERV", ite_serv));
+            OTOContext pTOContext = new OTOContext();
+            var conection = DBFactory.GetDB(pTOContext);
+            var result = conection.GetScalar(pTOContext, sql.ToString(), parametros.ToArray());
+            if (result == null)
+                return 0;
+            return result.AsInt();
+        }
     }
 }
+

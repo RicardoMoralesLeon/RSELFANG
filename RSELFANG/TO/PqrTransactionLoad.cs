@@ -52,6 +52,8 @@ namespace RSELFANG.TO
         public GnFlag spq000001 { get; set; }
         public GnFlag spq000003 { get; set; }
 
+        public string SGN000008 { get; set; }
+
         public List<CtContr> contracts { get; set; }
 
 

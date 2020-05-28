@@ -67,5 +67,10 @@ namespace RSELFANG.TO
         /// Imagen de empresa
         /// </summary>        
         public byte[] empImage { get; set; }
+
+        /// <summary>
+        /// Manejar Nomenclatura DIAN en Campos de Dirrección
+        /// </summary>
+        public string SGN000008 { get; set; }
     }
 }

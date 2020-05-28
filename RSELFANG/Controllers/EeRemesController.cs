@@ -36,5 +36,13 @@ namespace RSELFANG.Controllers
             BoEeRemes bo = new BoEeRemes();
             return bo.actualizarTratamiento(emp_codi, cli_coda);
         }
+
+        [Route("api/EeRemes/loadValidInfoEnc")]
+        public TOTransaction Get(string cli_coda, int ite_serv, int emp_codi = 0)
+        {
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
+            BoEeRemes bo = new BoEeRemes();
+            return bo.GetInfoValidEnc(cli_coda, ite_serv, emp_codi);
+        }
     }
 }

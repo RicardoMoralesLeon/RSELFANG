@@ -32,5 +32,9 @@ namespace RSELFANG.TO
         /// Grupo pertenece
         /// </summary>
         public List<TOGPerte> grupPerte { get; set; }
+        /// <summary>
+        /// VALIDA RELACIONES DE TIPIFICACIÓN, SUBTIPIFICACIÓN Y ÁREAS RESPONSABLES EN EL INGRESO DE PQR’S
+        /// </summary>
+        public string SPQ000003 { get; set; }
     }
 }

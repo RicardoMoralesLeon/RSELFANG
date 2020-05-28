@@ -53,7 +53,8 @@ namespace RSELFANG.BO
                 List<GnItem> pqrSubject = boItems.GetGnItems(330);               
                 List<GnItem> pqrInscription = boItems.GetGnItems(331);               
                 List<TOGPerte> pqrGrpups = boPerte.GetPqDpara(emp_codi);
-                
+                GnFlag flag008 = boFlag.GetGnDigfl("SGN000008");
+
                 result.countries = countries;
                 result.states = states;
                 result.cities = cities;
@@ -63,6 +64,8 @@ namespace RSELFANG.BO
                 result.pqrGroup = pqrGrpups;
                 result.digiflag = flag;
                 result.pqrImage = daoLogo.GetGnLogo(emp_codi).emp_logs;
+                result.SGN000008 = flag008.dig_valo;
+
                 if (emp_codi > 0 &&  cli_coda != null && cli_coda != "undefined")
                 {
                     FaClien client = DAOFaClien.GetFaClien(emp_codi, cli_coda);
@@ -74,7 +77,8 @@ namespace RSELFANG.BO
                 }              
                 if (spq000001 != null)
                     result.spq000001 = spq000001;
-                             
+                
+
                 return new TOTransaction<PqrTransactionLoad>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)

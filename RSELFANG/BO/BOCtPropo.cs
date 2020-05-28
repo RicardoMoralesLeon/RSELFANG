@@ -120,6 +120,7 @@ namespace RSELFANG.BO
             BOGnPaise boPaise = new BOGnPaise();
             BOGnArbol boArbol = new BOGnArbol();
             DAOGnLogo daoLogo = new DAOGnLogo();
+            BOGnDigfl boDigfl = new BOGnDigfl();
 
             try {
 
@@ -133,6 +134,7 @@ namespace RSELFANG.BO
                 string parptda = daoCtPropo.GetPolitica(emp_codi);
                 List<GnItem> CtDtrda = boItems.GetGnItems(342);
                 string parcrpr = daoCtPropo.GetInfoProv(emp_codi);
+                GnFlag digfl = boDigfl.GetGnDigfl("SGN000008");
 
                 result.tipdoct = tipdoct;
                 result.CtCamar = CtCamar;
@@ -143,6 +145,7 @@ namespace RSELFANG.BO
                 result.CtDtrda = CtDtrda;
                 result.parcrpr = parcrpr;
                 result.empImage = daoLogo.GetGnLogo(emp_codi).emp_logs;
+                result.SGN000008 = digfl.dig_valo;
 
                 return new TOTransaction<CtPropoLoad>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }

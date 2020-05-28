@@ -99,7 +99,10 @@ namespace RSELFANG.BO
                 if (afi_cont != 0)
                 {
                     suconyu = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
-                    InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+                    var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+
+                    if (_InfoEmpre != null)
+                        InfoEmpre = _InfoEmpre;
                 }
 
                 sffovis.InfoAportante = sfafili;
@@ -178,7 +181,10 @@ namespace RSELFANG.BO
                         if (sffovis.mod_cont != null)
                             InfoModvi = daoSfForpo.getInfoModvi(emp_codi, sffovis.mod_cont);
 
-                        InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
+                        var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
+
+                        if (_InfoEmpre != null)
+                            InfoEmpre = _InfoEmpre;
                     }
 
                     if (for_cont != 0)
@@ -194,7 +200,11 @@ namespace RSELFANG.BO
                         if (suafili.afi_cont != 0)
                         {
                             suconyu = daoSfForpo.getInfoConyu(emp_codi, suafili.afi_cont);
-                            InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
+                            var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
+
+                            if (_InfoEmpre != null)
+                                InfoEmpre = _InfoEmpre;
+
                         }
                     }
 

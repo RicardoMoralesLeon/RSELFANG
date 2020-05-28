@@ -61,12 +61,9 @@ namespace RSELFANG.DAO
 
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
 
-            if (fini != ffin)
-            {
-                sqlparams.Add(new SQLParams("INP_FECI", fini));
-                sqlparams.Add(new SQLParams("INP_FECF", ffin));
-            }
-             
+            sqlparams.Add(new SQLParams("INP_FECI", fini));
+            sqlparams.Add(new SQLParams("INP_FECF", ffin));
+
             return new DbConnection().GetList<PqTrazabilidad>(sql.ToString(), sqlparams);
         }
 
