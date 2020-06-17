@@ -388,5 +388,39 @@ namespace RSELFANG.BO
             }
         }
 
+        public TOTransaction prueba()
+        {
+            sfforpo result = new sfforpo();
+            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+            TOTransaction salida = new TOTransaction();
+            string msgError = "";
+
+            try
+            {
+                string txtError = "";
+                object varSali;
+                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
+                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
+                               
+                if (ret != 0)
+                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+
+               string _emp_codi = ConfigurationManager.AppSettings["emp_codi"].ToString();
+                int emp_Codi = int.Parse(_emp_codi);
+
+                double x = ws.Redondear(emp_Codi, 1, 10000);
+                salida.retorno = int.Parse(x.ToString());
+                salida.txtRetorno = "OK";           
+
+            }
+            catch (Exception err)
+            {
+                salida.retorno = 1;
+                salida.txtRetorno = err.Message;               
+            }
+
+            return salida;
+        }
+
     }
 }

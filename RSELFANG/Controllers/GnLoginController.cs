@@ -91,6 +91,42 @@ namespace RSELFANG.Controllers
                 }
                
             }
+
+            [HttpPost]
+            [Route("CreatePassword")]
+            public IHttpActionResult CreatePassword(LoginRequestForgetPassword login, bool _new = true)
+            {
+                try
+                {
+                    string link = ConfigurationManager.AppSettings["JWT_TRANSACT_SITE"];
+                    if (string.IsNullOrEmpty(link))
+                        throw new Exception("Llave JWT_TRANSACT_SITE no parametrizada.Contacte con su administrador de la configuración");
+                    BOGnUsuar bo = new BOGnUsuar();
+                    if (login == null)
+                        throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+                    bool isCredentialValid = bo.GnUsuarAutenticate(login.Username, login.Password).Retorno == 0;
+                    if (isCredentialValid)
+                    {
+                        if (string.IsNullOrEmpty(login.LoginUser))
+                            throw new Exception("El usuario a restaurar no puede estar vacío");
+                        var token = TokenGenerator.GenerateTokenJwt(login.LoginUser);
+                        bo.SendMailCreatePasswordToUser(login.LoginUser, token, link);
+                        return Ok(new TOTransaction() { Retorno = 0, TxtError = "" });
+
+                    }
+                    else
+                    {
+                        return Ok(new TOTransaction() { Retorno = 1, TxtError = string.Format("Credenciales para el usuario {0} no válidas", login.Username) });
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    return Ok(new TOTransaction() { TxtError = ex.Message, Retorno = 1 });
+                }
+
+            }
         }
     }
 }

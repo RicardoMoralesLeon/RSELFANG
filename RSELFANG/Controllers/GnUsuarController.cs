@@ -28,7 +28,7 @@ namespace RSELFANG.Controllers
                 byte[] data = System.Convert.FromBase64String(login.Password);
                 BOGnUsuar bo = new BOGnUsuar();
                 var identity = Thread.CurrentPrincipal.Identity;
-                return Ok(bo.SetNewPassword(identity.Name, System.Text.ASCIIEncoding.ASCII.GetString(data)));
+                return Ok(bo.SetNewPassword(identity.Name, System.Text.ASCIIEncoding.ASCII.GetString(data),login.Username));
             }
             catch (Exception ex)
             {

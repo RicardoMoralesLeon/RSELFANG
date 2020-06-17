@@ -13,5 +13,12 @@ namespace RSELFANG.Controllers
             sffovis.InfoAportante.emp_codi = new tools.General().GetEmpCodi(sffovis.InfoAportante.emp_codi);
             return bo.InsertSfForpo(sffovis);
         }
+
+        //[Route("api/Fovis/SfForpoPrueba")]
+        //public TOTransaction get()
+        //{
+        //    BOSfFovis bo = new BOSfFovis();          
+        //    return bo.prueba();
+        //}
     }
 }
