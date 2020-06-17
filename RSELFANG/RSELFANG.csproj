@@ -292,6 +292,7 @@
     <Compile Include="Controllers\SfFovisController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\SuAfiliController.cs" />
+    <Compile Include="Controllers\SuTrayeController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\TrazabilidadPQRController.cs" />
