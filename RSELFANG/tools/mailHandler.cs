@@ -199,6 +199,34 @@ namespace RSELFANG.tools
 
             return response.Tra_cont;
         }
+       /// <summary>
+       /// Crea una tarea en workflow
+       /// </summary>
+       /// <param name="name_consecutive">Nombre del campo consecutivo del documento</param>
+       /// <param name="work_desc">Descripción del caso</param>
+       /// <param name="form_codi">Código del formulario</param>
+       /// <param name="consecutive">Consecutivo del documento</param>
+       /// <param name="emp_codi">Código de empresa</param>
+       /// <returns></returns>
+        public float createWorkFlow(string name_consecutive, string work_desc, string form_codi, int consecutive,int emp_codi,string pro_codi, string table_name)
+        {
+            swflup.SWFRFLUP ws = new swflup.SWFRFLUP();
+            swflup.TOWfRflup to = new swflup.TOWfRflup();
+            to.cam_name = name_consecutive;
+            to.cas_desc = work_desc;
+            to.cas_narc = "";
+            to.emp_codi = emp_codi;
+            to.frm_codi = form_codi;
+            to.num_cont = consecutive.ToString();
+            to.pro_codi = pro_codi;
+            to.tbl_name = table_name;
+            to.usu_codi = ConfigurationManager.AppSettings["usu_codi"].ToString();
+            var response = ws.EnviarWF(to);
+            if (response.Retorno != "0")
+                throw new Exception(string.Format("Error creando flujo :{0}", response.TxtError));
+           
+            return float.Parse(response.Tra_cont);
+        }
 
         public string BuildDinamicMail (String source,int emp_codi,int inp_cont,PqInpqr pqr,string link="")
         {
