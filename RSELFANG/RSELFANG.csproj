@@ -357,6 +357,7 @@
     <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
+    <Compile Include="DAO\DAOWfRflup.cs" />
     <Compile Include="DAO\DAO_Ca_Licre.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
