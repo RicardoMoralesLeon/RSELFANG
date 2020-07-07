@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.12.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\Fuentes\DLLDAUGN\27122019\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\bin\Debug\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+      <HintPath>E:\Fuentes\DLLDAUGN\03062020\DLlDauGN\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\bin\Debug\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
@@ -269,6 +269,7 @@
     <Compile Include="Controllers\GnArbolController.cs" />
     <Compile Include="Controllers\GnBarriController.cs" />
     <Compile Include="Controllers\GnDeparController.cs" />
+    <Compile Include="Controllers\GnDivpoController.cs" />
     <Compile Include="Controllers\GnEmpreController.cs" />
     <Compile Include="Controllers\GnItemsController.cs" />
     <Compile Include="Controllers\GnLocalController.cs" />
