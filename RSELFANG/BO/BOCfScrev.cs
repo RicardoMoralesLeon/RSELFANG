@@ -91,7 +91,7 @@ namespace RSELFANG.BO
                 if (x != 0)
                     throw new Exception(com.TxtError);
 
-                if(infoFlujo.Rows.Count >0)
+                if (infoFlujo.Rows.Count > 0)
                 {
                     //caso  620238: Se inicia la creación del flujo.
                     int scr_cont = 0;
@@ -99,7 +99,7 @@ namespace RSELFANG.BO
                     if (cas_cont > 0)
                         new DAO_Cf_Screv().updateWorkFlow(credito.emp_codi, com.scr_cont, cas_cont);
                 }
-               
+
 
                 return new TOTransaction() { Retorno = 0, TxtError = "" };
             }
