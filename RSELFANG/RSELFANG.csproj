@@ -13,7 +13,7 @@
     <RootNamespace>RSELFANG</RootNamespace>
     <AssemblyName>RSELFANG</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -46,40 +46,59 @@
   <ItemGroup>
     <Reference Include="Digitalware.Apps.Utilities, Version=19.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Cf, Version=20.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Cf.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.Cr">
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Digitalware.Apps.Utilities.Cr.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Cr.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.Fa">
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
+    </Reference>
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.12.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Fuentes\DLLDAUGN\03062020\DLlDauGN\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\bin\Debug\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
+    </Reference>
+    <Reference Include="Digitalware.Apps.Utilities.Su">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Su.dll</HintPath>
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Wf, Version=19.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Wf.dll</HintPath>
     </Reference>
     <Reference Include="DigitalWare.Apps.Utilities.Xb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\DigitalWare.Apps.Utilities.Xb.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Xb.dll</HintPath>
     </Reference>
     <Reference Include="DWTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\DWTools.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DWTools.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Midas">
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ensamblados\Interop.Midas.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Interop.Midas.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.S07DmrAncestroPrj">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.S07DmrAncestroPrj.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.S07DmrDocumentoPrj">
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\LibsNET\Interop.S07DmrDocumentoPrj.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.SXE4DmrAncestroPrj, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ensamblados\Interop.SXE4DmrAncestroPrj.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Interop.SXE4DmrAncestroPrj.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SXE4DmrDocumentoPrj">
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ensamblados\Interop.SXE4DmrDocumentoPrj.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Interop.SXE4DmrDocumentoPrj.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -97,22 +116,22 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ensamblados\Newtonsoft.Json.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ophelia, Version=19.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ophelia.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.dll</HintPath>
     </Reference>
     <Reference Include="Ophelia.Proteccion, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ophelia.Proteccion.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ophelia.Proteccion.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
-      <HintPath>..\..\..\..\Downloads\Dll.Net\Ensamblados\RestSharp.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Ensamblados\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SevenFramework, Version=20.0.3.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Dll.Net\SevenFramework.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\SevenFramework.dll</HintPath>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
@@ -338,7 +357,6 @@
     <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
-    <Compile Include="DAO\DAOWfRflup.cs" />
     <Compile Include="DAO\DAO_Ca_Licre.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -553,20 +571,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUCF\Digitalware.Apps.Utilities.Cf\Digitalware.Apps.Utilities.Cf.csproj">
-      <Project>{9df7619f-1baf-4c0b-8ddb-35b35205f153}</Project>
-      <Name>Digitalware.Apps.Utilities.Cf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn.csproj">
-      <Project>{46d82d84-75fc-4508-994a-5cfe3b81436a}</Project>
-      <Name>DigitalWare.Apps.Utilities.Gn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Desktop\OMAR\Datos\omar\Fuentes\DLLDAUSU\Digitalware.Apps.Utilities.Su\Digitalware.Apps.Utilities.Su.csproj">
-      <Project>{0e3eb36d-bf80-46fa-b8da-27a288324c71}</Project>
-      <Name>Digitalware.Apps.Utilities.Su</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -582,7 +586,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/RSELFANG</IISUrl>
+          <IISUrl>http://localhost:62126/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
