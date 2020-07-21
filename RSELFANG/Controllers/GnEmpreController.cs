@@ -17,6 +17,5 @@ namespace RSELFANG.Controllers
         {
             return new BOGnEmpre().GetGnEmpre(usu_codi);
         }
-
     }
 }

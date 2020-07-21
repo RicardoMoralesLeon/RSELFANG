@@ -58,9 +58,9 @@
     <Reference Include="Digitalware.Apps.Utilities.Fa">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+      <HintPath>E:\Fuentes\DLLDAUGN\13072020\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\bin\Debug\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
@@ -396,6 +396,7 @@
     <Compile Include="tools\mailHandler.cs" />
     <Compile Include="TO\ArApovo.cs" />
     <Compile Include="TO\ArTiapo.cs" />
+    <Compile Include="TO\CtConsu.cs" />
     <Compile Include="TO\CtContr.cs" />
     <Compile Include="TO\CtDocpr.cs" />
     <Compile Include="TO\CtPropo.cs" />

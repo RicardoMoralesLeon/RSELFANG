@@ -2,8 +2,8 @@
 
 namespace RSELFANG.TO
 {
-    //public class CtConsu
-    //{     
-    //   public List<TORevPr> ctConsu { get; set; }
-    //}
+    public class CtConsu
+    {
+        public List<TORevPr> ctConsu { get; set; }
+    }
 }

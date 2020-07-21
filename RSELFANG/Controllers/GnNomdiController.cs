@@ -9,8 +9,8 @@ namespace RSELFANG.Controllers
     public class GnNomdiController : ApiController
     {
         [Route("api/GnNomdi/GetInfoNomdi")]
-        public TOTransaction<List<GnNomdi>> Get(int emp_codi)
-        {
+        public TOTransaction<List<GnNomdi>> Get()
+        {   
             BOGnNomdi bo = new BOGnNomdi();
             return bo.GetGnNomdi();
         }

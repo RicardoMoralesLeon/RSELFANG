@@ -121,7 +121,7 @@ namespace RSELFANG.DAO
             sql.Append(" SELECT *,DIG_VALO FROM PQ_INPQR, GN_DIGFL WHERE INP_CONT = @INP_CONT AND DIG_CODI = 'SPQ000004' ");
             if (emp_codi > 0)
             {
-                sql.Append("  AND EMP_CODI=@EMP_CODI");
+                sql.Append("  AND PQ_INPQR.EMP_CODI=@EMP_CODI");
                 parameters.Add(new Parameter("@EMP_CODI", emp_codi));
             }
                      
