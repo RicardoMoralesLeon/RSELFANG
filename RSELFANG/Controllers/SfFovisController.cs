@@ -14,11 +14,5 @@ namespace RSELFANG.Controllers
             return bo.InsertSfForpo(sffovis);
         }
 
-        //[Route("api/Fovis/SfForpoPrueba")]
-        //public TOTransaction get()
-        //{
-        //    BOSfFovis bo = new BOSfFovis();          
-        //    return bo.prueba();
-        //}
     }
 }

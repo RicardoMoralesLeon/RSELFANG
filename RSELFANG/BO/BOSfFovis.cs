@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace RSELFANG.BO
 {
@@ -13,19 +14,20 @@ namespace RSELFANG.BO
         string usuario = ConfigurationManager.AppSettings["usuario"].ToString();
         string password = ConfigurationManager.AppSettings["password"].ToString();
         string alias = ConfigurationManager.AppSettings["alias"].ToString();
+        SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
 
         public TOTransaction<sfforpo> InsertSfForpo(SfForpo sffovis)
         {
             sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+          
             TOTransaction<sfforpo> salida = new TOTransaction<sfforpo>();
             string msgError="";
 
             try
             {
                 string txtError = "";
-                object varSali;                
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
+                object varSali;
+                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
                 int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
 
                 if (ret != 0)
@@ -114,22 +116,14 @@ namespace RSELFANG.BO
         }
 
         private string InsertSfDfoih(int emp_codi, int _for_cont, InfoHogar sfdfoih)
-        {
-            sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+        {   
             int for_cont = _for_cont;
 
             try
             {
                 string txtError = "";
-                object varSali;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
-                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
-
-                if (ret != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
-
                 object objSalida;
+
                 List<object> LEntrada = new List<object>();
                 LEntrada.Add(emp_codi);
                 LEntrada.Add(for_cont);
@@ -167,20 +161,12 @@ namespace RSELFANG.BO
         }
 
         private string InsertSfDfomh(int emp_codi, int _for_cont, InfoAportante sfdfomh, string dfo_tipo)
-        {
-            sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+        {          
             int for_cont = _for_cont;
 
             try
             {
-                string txtError = "";
-                object varSali;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
-                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
-
-                if (ret != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+                string txtError = "";                       
 
                 if (sfdfomh.afi_docu == null)
                     return "";
@@ -220,21 +206,13 @@ namespace RSELFANG.BO
 
         private string InsertSfDfomh(int emp_codi, int _for_cont, List<InfoAportante> sfdfomh, string dfo_tipo)
         {
-            sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+          
             int for_cont = _for_cont;
 
             try
             {
                 string txtError = "";
-                object varSali;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
-                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
-
-                if (ret != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
-
-
+               
                 foreach (InfoAportante perca in sfdfomh)
                 {
                     object objSalida;
@@ -274,22 +252,14 @@ namespace RSELFANG.BO
 
         private string InsertSfDfore(int emp_codi, int _for_cont, List<SfDfore> sfdfore, List<SfDdfor> sfddfor)
         {
-            sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+        
             int for_cont = _for_cont;
             string error = "";
 
             try
             {
                 string txtError = "";
-                object varSali;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
-                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
-
-                if (ret != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
-
-
+              
                 foreach (SfDfore dfore in sfdfore)
                 {
                     object objSalida;
@@ -327,21 +297,12 @@ namespace RSELFANG.BO
         }
 
         private string InsertSfDdfor(int emp_codi, int _for_cont, int dfo_cont, int con_codi ,List<SfDdfor> sfddfor)
-        {
-            sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
+        {          
             int for_cont = _for_cont;
 
             try
             {
-                string txtError = "";
-                object varSali;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
-                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
-
-                if (ret != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");                            
-
+                string txtError = "";               
                 var sfdfforFil = sfddfor.Where(s => s.con_codi == con_codi).ToList();
 
                 foreach (SfDdfor ddfor in sfdfforFil)
@@ -388,39 +349,8 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction prueba()
-        {
-            sfforpo result = new sfforpo();
-            SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
-            TOTransaction salida = new TOTransaction();
-            string msgError = "";
+      
 
-            try
-            {
-                string txtError = "";
-                object varSali;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N" };
-                int ret = ws.ProgramLogin(varEntr, out varSali, out txtError);
-                               
-                if (ret != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
-
-               string _emp_codi = ConfigurationManager.AppSettings["emp_codi"].ToString();
-                int emp_Codi = int.Parse(_emp_codi);
-
-                double x = ws.Redondear(emp_Codi, 1, 10000);
-                salida.retorno = int.Parse(x.ToString());
-                salida.txtRetorno = "OK";           
-
-            }
-            catch (Exception err)
-            {
-                salida.retorno = 1;
-                salida.txtRetorno = err.Message;               
-            }
-
-            return salida;
-        }
 
     }
 }

@@ -138,7 +138,8 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             List<Parameter> parameters = new List<Parameter>();
 
-            sql.Append(" SELECT case when ISNUMERIC(PQ_INPQR.INP_TIDO) = 1 then GN_TIPDO.TIP_NOMB else GN_TIPDO2.TIP_NOMB end INP_TIDO, PQ_INPQR.* ");
+            sql.Append(" SELECT case when ISNUMERIC(PQ_INPQR.INP_TIDO) = 1 then GN_TIPDO.TIP_NOMB else GN_TIPDO2.TIP_NOMB end INP_TIDO, ");
+            sql.Append(" PQ_INPQR.*, '' DIG_VALO ");
             sql.Append(" FROM PQ_INPQR ");
             sql.Append(" left join GN_TIPDO on convert(varchar, GN_TIPDO.TIP_CODI) = PQ_INPQR.INP_TIDO ");
             sql.Append(" left join GN_TIPDO GN_TIPDO2 on convert(varchar, GN_TIPDO2.TIP_ABRE) = PQ_INPQR.INP_TIDO ");

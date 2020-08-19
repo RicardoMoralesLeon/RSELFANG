@@ -58,9 +58,9 @@
     <Reference Include="Digitalware.Apps.Utilities.Fa">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.7.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\Fuentes\DLLDAUGN\13072020\DLlDauGN\DLlDauGN\DigitalWare.Apps.Utilities.Gn\DigitalWare.Apps.Utilities.Gn\bin\Debug\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
+      <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
     <Reference Include="Digitalware.Apps.Utilities.In">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.In.dll</HintPath>
@@ -243,6 +243,7 @@
     <Compile Include="BO\BOPqr.cs" />
     <Compile Include="BO\BoPqTrazabilidad.cs" />
     <Compile Include="BO\BoRnRadic.cs" />
+    <Compile Include="BO\BOSfConsu.cs" />
     <Compile Include="BO\BOSfForpo.cs" />
     <Compile Include="BO\BOSfFovis.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
+    <Compile Include="Controllers\SfConsuController.cs" />
     <Compile Include="Controllers\SfForpoController.cs" />
     <Compile Include="Controllers\SfFovisController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
@@ -349,6 +351,7 @@
     <Compile Include="DAO\DAORevPr.cs" />
     <Compile Include="DAO\DAORnRadic.cs" />
     <Compile Include="DAO\DAOSeCcotiz.cs" />
+    <Compile Include="DAO\DAOSfConsu.cs" />
     <Compile Include="DAO\DAOSfForpo.cs" />
     <Compile Include="DAO\DAOSoConve.cs" />
     <Compile Include="DAO\DAOSoCoxcn.cs" />
@@ -449,6 +452,7 @@
     <Compile Include="TO\RnRadic.cs" />
     <Compile Include="TO\RnRadicSalida.cs" />
     <Compile Include="TO\Rnradtd.cs" />
+    <Compile Include="TO\SfConsu.cs" />
     <Compile Include="TO\SfFovis.cs" />
     <Compile Include="TO\SfFovisInfo.cs" />
     <Compile Include="TO\SfForpo.cs" />
@@ -538,6 +542,15 @@
     </COMReference>
     <COMReference Include="SCtPropo">
       <Guid>{EDE71941-47D2-11D6-8EB7-00302111D27B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SIeWssec">
+      <Guid>{1771DDD5-B9A6-4BD7-A99D-56B45D511BE4}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>

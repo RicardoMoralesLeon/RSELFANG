@@ -80,5 +80,25 @@ namespace RSELFANG.BO
                 return new TOTransaction() {  retorno = 1 , txtRetorno = ex.Message };
             }
         }
+
+        public TOTransaction GetInfoValidEncPqr(int inp_cont, int emp_codi)
+        {
+            DAOEeRemes dao = new DAOEeRemes();
+
+            try
+            {
+                int rem_cont = 0;
+               // rem_cont = dao.GetInfoValidEnc(cli_coda, ite_serv, emp_codi);
+
+                if (rem_cont != 0)
+                    throw new Exception("La encuesta ya fue realizada.");
+
+                return new TOTransaction() { retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
     }
 }

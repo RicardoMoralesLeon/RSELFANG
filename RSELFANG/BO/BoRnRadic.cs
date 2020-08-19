@@ -103,7 +103,7 @@ namespace RSELFANG.BO
 
                 object varSali;
                 string txtError;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SRNRADIC", "", "", "", "", "", "N" };
+                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SRNRADIC", "", "", "", "", "", "N", "S", "" };
                 int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
 
                 int rad_cont = 0;
@@ -152,19 +152,17 @@ namespace RSELFANG.BO
                 {
                     foreach (RnDperc perc in rnradic.rndperc)
                     {
+                        int dpe_cont = 0;
                         lentrada = new List<object>();
-                        p_salida = new object();
-
-                        string ddo_esis = perc.ddo_esis ? "S" : "N";
-                        string ddo_recb = perc.ddo_recb ? "S" : "N";
+                        p_salida = new object();                    
 
                         lentrada.Add("InsertarRnDperc");
                         lentrada.Add(rnradic.emp_codi); // emp_codi
                         lentrada.Add(rad_cont);         // rad_cont
-                        lentrada.Add(perc.ite_codi);    // ite_codi
-                        lentrada.Add(ddo_esis);         // ddo_esis
-                        lentrada.Add(ddo_recb);         // ddo_recb
-                        lentrada.Add(perc.ddo_obse);    // ddo_obse
+                        lentrada.Add(0);                // ite_codi
+                        lentrada.Add("N");               // ddo_esis
+                        lentrada.Add("N");               // ddo_recb
+                        lentrada.Add(".");               // ddo_obse
                         lentrada.Add(perc.dpe_docu);    // dpe_docu
                         lentrada.Add(perc.dpe_nom1);    // dpe_nom1
                         lentrada.Add(perc.dpe_nom2);    // dpe_nom2
@@ -178,6 +176,30 @@ namespace RSELFANG.BO
 
                         if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
                             throw new Exception("Error Insertando grupo familiar :" + txtError);
+
+                        var lsalidas = (object[])p_salida;
+                        dpe_cont = int.Parse(lsalidas[0].ToString());
+
+                        foreach (RnDdocu ddocu in perc.lst_ddoc)
+                        {
+                            lentrada = new List<object>();
+                            p_salida = new object();
+
+                            string ddo_esis = ddocu.ddo_esis ? "S" : "N";
+                            string ddo_recb = ddocu.ddo_recb ? "S" : "N";
+
+                            lentrada.Add("InsertarDocumentosWeb");
+                            lentrada.Add(rnradic.emp_codi);  // emp_codi
+                            lentrada.Add(rad_cont);          // rad_cont
+                            lentrada.Add(ddocu.ite_cont);    // ite_cont
+                            lentrada.Add(dpe_cont);          // dpe_cont
+                            lentrada.Add(ddo_esis);          // ddo_esis
+                            lentrada.Add(ddo_recb);          // ddo_recb
+                            lentrada.Add(ddocu.ddo_obse);    // ddo_obse
+
+                            if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                                throw new Exception("Error Insertando grupo familiar :" + txtError);
+                        }                      
                     }
 
                     if (txtError == null)

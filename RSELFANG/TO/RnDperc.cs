@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace RSELFANG.TO
 {
     public class RnDperc
@@ -15,5 +17,6 @@ namespace RSELFANG.TO
         public bool ddo_recb { get; set; }
         public string ddo_obse { get; set; }
         public string ite_codi { get; set; }
+        public List<RnDdocu> lst_ddoc { get; set; }
     }
 }
