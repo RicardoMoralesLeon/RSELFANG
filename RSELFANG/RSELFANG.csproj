@@ -58,7 +58,7 @@
     <Reference Include="Digitalware.Apps.Utilities.Fa">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.7.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
@@ -209,6 +209,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BO\BoCaCxcob.cs" />
+    <Compile Include="BO\BOCfConct.cs" />
     <Compile Include="BO\BOCfModcr.cs" />
     <Compile Include="BO\BOCfScrev.cs" />
     <Compile Include="BO\BOCtConsu.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
+    <Compile Include="Controllers\SfConctController.cs" />
     <Compile Include="Controllers\SfConsuController.cs" />
     <Compile Include="Controllers\SfForpoController.cs" />
     <Compile Include="Controllers\SfFovisController.cs" />
@@ -307,6 +309,7 @@
     <Compile Include="DAO\DAOCaCpcob.cs" />
     <Compile Include="DAO\DAOCaCxcob.cs" />
     <Compile Include="DAO\DAOCaRcxcv.cs" />
+    <Compile Include="DAO\DAOCfConct.cs" />
     <Compile Include="DAO\DAOCtConsu.cs" />
     <Compile Include="DAO\DAOCtContr.cs" />
     <Compile Include="DAO\DAOCtPropo.cs" />
@@ -456,6 +459,7 @@
     <Compile Include="TO\SfFovis.cs" />
     <Compile Include="TO\SfFovisInfo.cs" />
     <Compile Include="TO\SfForpo.cs" />
+    <Compile Include="TO\TOCfConct.cs" />
     <Compile Include="TO\TORnRadic.cs" />
     <Compile Include="TO\SuAfili.cs" />
     <Compile Include="TO\SuMpare.cs" />
@@ -469,6 +473,7 @@
     <Compile Include="TO\TOGPerte.cs" />
     <Compile Include="TO\TOPqParam.cs" />
     <Compile Include="TO\TORevPr.cs" />
+    <Compile Include="TO\ToSuDimco.cs" />
     <Compile Include="TO\TOTransacion.cs" />
     <Compile Include="TO\TOWfCdocu.cs" />
     <Compile Include="Models\TOXbAuliq.cs" />
