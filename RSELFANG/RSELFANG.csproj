@@ -208,6 +208,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BO\BoArcacea.cs" />
     <Compile Include="BO\BoCaCxcob.cs" />
     <Compile Include="BO\BOCfConct.cs" />
     <Compile Include="BO\BOCfModcr.cs" />
@@ -248,9 +249,11 @@
     <Compile Include="BO\BOSfForpo.cs" />
     <Compile Include="BO\BOSfFovis.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
+    <Compile Include="BO\BoSucacer.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
     <Compile Include="BO\BOXbAuliq.cs" />
     <Compile Include="BO\BOXbPceca.cs" />
+    <Compile Include="Controllers\ArcaceaController.cs" />
     <Compile Include="Controllers\CaCxCobController.cs" />
     <Compile Include="Controllers\CfCodeuController.cs" />
     <Compile Include="Controllers\CfModcrController.cs" />
@@ -291,12 +294,13 @@
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
-    <Compile Include="Controllers\SfConctController.cs" />
+    <Compile Include="Controllers\SuConctController.cs" />
     <Compile Include="Controllers\SfConsuController.cs" />
     <Compile Include="Controllers\SfForpoController.cs" />
     <Compile Include="Controllers\SfFovisController.cs" />
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\SuAfiliController.cs" />
+    <Compile Include="Controllers\SucacerController.cs" />
     <Compile Include="Controllers\SuTrayeController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
@@ -306,6 +310,7 @@
     <Compile Include="Controllers\XbBauliqController.cs" />
     <Compile Include="Controllers\XbPcecaController.cs" />
     <Compile Include="DAO\DAOAeClase.cs" />
+    <Compile Include="DAO\DAOArcacea.cs" />
     <Compile Include="DAO\DAOCaCpcob.cs" />
     <Compile Include="DAO\DAOCaCxcob.cs" />
     <Compile Include="DAO\DAOCaRcxcv.cs" />
@@ -360,6 +365,7 @@
     <Compile Include="DAO\DAOSoCoxcn.cs" />
     <Compile Include="DAO\DAOSoDscfp.cs" />
     <Compile Include="DAO\DAOSoSbene.cs" />
+    <Compile Include="DAO\DAOSucacer.cs" />
     <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
@@ -473,6 +479,7 @@
     <Compile Include="TO\TOGPerte.cs" />
     <Compile Include="TO\TOPqParam.cs" />
     <Compile Include="TO\TORevPr.cs" />
+    <Compile Include="TO\ToSucacer.cs" />
     <Compile Include="TO\ToSuDimco.cs" />
     <Compile Include="TO\TOTransacion.cs" />
     <Compile Include="TO\TOWfCdocu.cs" />

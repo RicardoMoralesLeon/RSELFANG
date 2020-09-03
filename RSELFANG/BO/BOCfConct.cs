@@ -14,17 +14,21 @@ namespace RSELFANG.BO
         public TOTransaction<TOCfConct> GetInfoCfConct(string ter_coda, int emp_codi)
         {
             DAOCfConct daoCfConct = new DAOCfConct();
+            TOCfConct result = new TOCfConct();
 
             try
-            {
-                TOCfConct result = new TOCfConct();
+            {   
                 result = daoCfConct.GetInfoCfConct(ter_coda,emp_codi);
 
                 if (result == null)
-                    throw new Exception("No se encontraron datos con los parámetros especificados");
+                {
+                    result = new TOCfConct();
+                    result.bon_sald = "0";
+                    result.dim_fech = "";
+                }                  
                 else
-                {                  
-                    result.dim_fech = string.IsNullOrEmpty(result.dim_fech) ? "" : Convert.ToDateTime(result.dim_fech).ToString("dd/MM/yyyy");                  
+                {
+                    result.dim_fech = string.IsNullOrEmpty(result.dim_fech) ? "" : Convert.ToDateTime(result.dim_fech).ToString("dd/MM/yyyy");
                 }
 
                 return new TOTransaction<TOCfConct>() { objTransaction = result, retorno = 0, txtRetorno = "" };
@@ -73,15 +77,20 @@ namespace RSELFANG.BO
                 string urlReporte = ConfigurationManager.AppSettings["UrlReport"];
                 string reporte = "";
                
-                reporte = "SCfConct";
+                reporte = "SSuConct";
                 List<string> Params = new List<string>();
                 Params.Add(CfConct.emp_codi.ToString());
                 Params.Add(CfConct.emp_nomb);
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
-                Params.Add(DateTime.Parse(CfConct.dim_feci).ToString("dd/MM/yyy"));
-                Params.Add(DateTime.Parse(CfConct.dim_fecf).ToString("dd/MM/yyy"));
-                Params.Add(String.Format("{0:0,0.0}", CfConct.bon_sald));
+                Params.Add(DateTime.Parse(CfConct.dim_feci).ToString("dd/MM/yyyy"));
+                Params.Add(DateTime.Parse(CfConct.dim_fecf).ToString("dd/MM/yyyy"));
+                Params.Add( "$ " + String.Format("{0:0,0.0}", CfConct.bon_sald));
+
+                if (CfConct.dim_fech != "")
+                    Params.Add(DateTime.Parse(CfConct.dim_fech).ToString("dd/MM/yyyy"));
+                else
+                    Params.Add(""); // DateTime.Now.ToString("dd/MM/yyyy"));
 
                 sf.Append("{Comando.TER_CODA}='" + CfConct.ter_coda + "'");                
                 sf.Append(" AND {Comando.EMP_CODI}=" + CfConct.emp_codi);

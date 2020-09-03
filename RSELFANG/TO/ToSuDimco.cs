@@ -16,7 +16,7 @@ namespace RSELFANG.TO
         /// <summary>
         /// Valor
         /// </summary>
-        public double dim_vtra { get; set; }
+        public string dim_vtra { get; set; }
         /// <summary>
         /// Nombre operador
         /// </summary>

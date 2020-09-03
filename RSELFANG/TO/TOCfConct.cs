@@ -19,7 +19,7 @@ namespace RSELFANG.TO
         /// <summary>
         /// Saldo
         /// </summary>
-        public double bon_sald { get; set; }
+        public string bon_sald { get; set; }
         /// <summary>
         /// Fecha Último Saldo
         /// </summary>

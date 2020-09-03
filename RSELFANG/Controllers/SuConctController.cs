@@ -9,16 +9,16 @@ using System.Web.Http;
 
 namespace RSELFANG.Controllers
 {
-    public class SfConctController : ApiController
+    public class SuConctController : ApiController
     {
-        [Route("api/sfconct/SfLoadInitInfo")]
+        [Route("api/suconct/SfLoadInitInfo")]
         public TOTransaction<TOCfConct> GetInfoCfConct(string ter_coda, int emp_codi)
         {
             BOCfConct bo = new BOCfConct();            
             return bo.GetInfoCfConct(ter_coda, emp_codi);
         }
 
-        [Route("api/sfconct/SfLoadSuDimco")]
+        [Route("api/suconct/SfLoadSuDimco")]
         public TOTransaction<List<ToSuDimco>> GetInfoSuDimco(string ter_coda, int emp_codi, DateTime dim_feci, DateTime dim_fecf)
         {
             BOCfConct bo = new BOCfConct();
@@ -26,7 +26,7 @@ namespace RSELFANG.Controllers
         }
 
         [HttpPost]
-        [Route("api/sfconct/BuildPrintLink")]
+        [Route("api/suconct/BuildPrintLink")]
         public TOTransaction<string> BuildPrintLink(TOCfConct CfConct)
         {
             BOCfConct bo = new BOCfConct();
