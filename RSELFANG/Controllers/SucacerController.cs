@@ -1,6 +1,7 @@
 ﻿using RSELFANG.BO;
 using RSELFANG.TO;
 using System;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace RSELFANG.Controllers
@@ -38,5 +39,22 @@ namespace RSELFANG.Controllers
                 return new TOTransaction<string>() { objTransaction = null, retorno = 1, txtRetorno = "No es posible generar el certificado" };
             }
         }
+
+        [HttpGet]
+        [Route("api/sucacer/getInfoBeneficiarios")]
+        public TOTransaction<List<ToSuperca>> getInfoBeneficiarios(string ter_coda, int emp_codi)
+        {
+            try
+            {
+                BoSucacer bo = new BoSucacer();
+                emp_codi = new tools.General().GetEmpCodi(emp_codi);
+                return bo.getInfoBeneficiarios(emp_codi, ter_coda);
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<ToSuperca>>() { objTransaction = null, retorno = 1, txtRetorno = "No es posible generar el certificado" };
+            }
+        }
+
     }
 }

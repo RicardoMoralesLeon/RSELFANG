@@ -35,7 +35,7 @@ namespace RSELFANG.BO
                     afi_info = daosucacer.GetInfoSSuCacAA(ter_coda, emp_codi);
 
                     if (afi_info == null)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
 
                     int apo_cont = afi_info.apo_cont;
                     int afi_cont = afi_info.afi_cont;
@@ -49,7 +49,7 @@ namespace RSELFANG.BO
                     afi_info = daosucacer.GetInfoSSuCacDT(ter_coda, emp_codi);
 
                     if (afi_info == null)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
                                        
                     int afi_cont = afi_info.afi_cont;
 
@@ -62,7 +62,7 @@ namespace RSELFANG.BO
                     afi_info = daosucacer.GetInfoSSuCacAT(ter_coda, emp_codi);
 
                     if (afi_info == null)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
 
                     int afi_cont = afi_info.afi_cont;
 
@@ -75,7 +75,7 @@ namespace RSELFANG.BO
                     afi_info = daosucacer.GetInfoSSuCacTD(ter_coda, emp_codi);
 
                     if (afi_info == null)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
 
                     int afi_cont = afi_info.afi_cont;
                     sf = getTrabajadorDesafiliado(afi_cont, emp_codi);
@@ -87,7 +87,7 @@ namespace RSELFANG.BO
                     afi_info = daosucacer.GetInfoSSuCacDH(ter_coda, emp_codi);
 
                     if (afi_info == null)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
 
                     int afi_cont = afi_info.afi_cont;
                     int apo_cont = afi_info.apo_cont;
@@ -100,20 +100,26 @@ namespace RSELFANG.BO
                     afi_info = daosucacer.GetInfoSSuCaCBE(ter_coda, emp_codi);
 
                     if (afi_info == null)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
 
                     int afi_cont = afi_info.afi_cont;
                     int apo_cont = afi_info.apo_cont;
                     sf = getBeneficiarios(apo_cont, afi_cont, emp_codi);
                 }
                 else if (reporte == "SSuCacNA")
-                {
+                {                                                         
                     DAOSucacer daosucacer = new DAOSucacer();
+                    ToSucacer afi_info = new ToSucacer();
+                    afi_info = daosucacer.GetInfoSSuCacNA(ter_coda, emp_codi);
+
+                    if (afi_info == null)
+                        throw new Exception("Se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
+                    
                     int prc_cont = 0;
                     prc_cont = daosucacer.setInfoTnAfi(emp_codi, tna_docu, tna_nomb);
 
                     if (prc_cont == 0)
-                        throw new Exception("No es posible generar certificado para la identificación: " + ter_coda);
+                        throw new Exception("No se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
                                        
                     sf = getNoAfiliado(prc_cont, emp_codi);
                 }
@@ -227,6 +233,21 @@ namespace RSELFANG.BO
             sf.Append("{SU_TNAFI.PRC_CONT} = " + prc_cont);
             sf.Append(" AND {GN_EMPRE.EMP_CODI} = " + emp_codi);
             return sf.ToString();
+        }
+
+        public TOTransaction<List<ToSuperca>> getInfoBeneficiarios(int emp_codi, string ter_coda)
+        {
+            try
+            {
+                DAOSucacer dao = new DAOSucacer();
+                List<ToSuperca> result = new List<ToSuperca>();
+                result = dao.getInfoBeneficiarios(emp_codi,ter_coda);
+                return new TOTransaction<List<ToSuperca>>() { objTransaction = result, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<ToSuperca>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
         }
     }
 }

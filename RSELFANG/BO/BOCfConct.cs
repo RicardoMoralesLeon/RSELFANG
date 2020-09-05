@@ -22,9 +22,8 @@ namespace RSELFANG.BO
 
                 if (result == null)
                 {
-                    result = new TOCfConct();
-                    result.bon_sald = "0";
-                    result.dim_fech = "";
+                    result = daoCfConct.GetInfoFechSald(ter_coda, emp_codi);
+                    result.dim_fech = string.IsNullOrEmpty(result.dim_fech) ? "" : Convert.ToDateTime(result.dim_fech).ToString("dd/MM/yyyy");
                 }                  
                 else
                 {

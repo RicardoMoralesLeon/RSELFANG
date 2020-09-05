@@ -19,7 +19,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
             sql.Append(" SELECT *  ");
             sql.Append(" FROM ( ");
-            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DRS_PREG,DRS_CLAS,EEN.SEC_CONT,DRS_ORDE,0 DDP_CONT,0 DRP_CONT,'' DPP_OPCI,0 DSP_ORDE , EEN.RSE_CONT, DRS_CONT ");
+            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DRS_PREG,DRS_CLAS,EEN.SEC_CONT,DRS_ORDE,0 DDP_CONT,0 DRP_CONT,'' DPP_OPCI,0 DSP_ORDE , EEN.RSE_CONT, DRS_CONT, DRE_SECC ");
             sql.Append(" FROM   EE_RELES REL ");
             sql.Append("       INNER JOIN EE_DRELE ELE ");
             sql.Append("            ON  REL.EMP_CODI = ELE.EMP_CODI ");
@@ -35,7 +35,7 @@ namespace RSELFANG.DAO
             sql.Append("            AND SEE.RSE_CONT = EEN.RSE_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT ");
             sql.Append(" UNION ");
-            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_SECC,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,DDP_CONT,PRC.DRP_CONT,PRC.DPP_OPCI,PRC.DPP_ORDE DSP_ORDE,  0 RSE_CONT , 0 DRS_CONT ");
+            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,DDP_CONT,PRC.DRP_CONT,PRC.DPP_OPCI,PRC.DPP_ORDE DSP_ORDE,  0 RSE_CONT , 0 DRS_CONT, DRE_SECC ");
             sql.Append(" FROM   EE_RELES REL ");
             sql.Append("       INNER JOIN EE_DRELE ELE ");
             sql.Append("            ON  REL.EMP_CODI = ELE.EMP_CODI ");
@@ -51,7 +51,7 @@ namespace RSELFANG.DAO
             sql.Append(" 		   AND PRC.DRP_CONT = RCS.DRP_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT ");
             sql.Append(" ) A WHERE A.DRS_CLAS IN ('A','M','P')");
-            sql.Append(" ORDER BY A.DRE_ORDE, DRS_ORDE ");
+            sql.Append(" ORDER BY DRE_ORDE ");
             sqlparams.Add(new SQLParams("REL_CONT", rel_cont));
             return new DbConnection().GetDataSet(sql.ToString(), sqlparams);
         }
