@@ -110,11 +110,18 @@ namespace RSELFANG.BO
                 {                                                         
                     DAOSucacer daosucacer = new DAOSucacer();
                     ToSucacer afi_info = new ToSucacer();
-                    afi_info = daosucacer.GetInfoSSuCacNA(ter_coda, emp_codi);
+                    afi_info = daosucacer.GetInfoSSuCacNA(tna_docu, emp_codi);
 
-                    if (afi_info == null)
-                        throw new Exception("Se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
-                    
+                    if (afi_info != null)
+                    {
+                        int afi_cont = afi_info.afi_cont;
+                        afi_info = new ToSucacer();
+                        afi_info = daosucacer.GetInfoSutrayeSSuCacNA(afi_cont, emp_codi);
+
+                        if (afi_info != null)
+                            throw new Exception("Se encuentra información correspondiente a la Identificación consultada. Verifique por favor.");
+                    }
+                                        
                     int prc_cont = 0;
                     prc_cont = daosucacer.setInfoTnAfi(emp_codi, tna_docu, tna_nomb);
 

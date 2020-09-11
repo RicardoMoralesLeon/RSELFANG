@@ -9,8 +9,8 @@
   	 <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=PDA;</connectionString>
     <providerName>SQL</providerName>-->
 
-    <!--<connectionString>Server=138.121.202.173;User ID=SevenERP;Password=S3v3nERP2019;Database=sevencapa;App=wpqinpqr2;</connectionString>
-    <providerName>SQL</providerName>-->
+    <connectionString>Server=138.121.202.173;User ID=SevenERP;Password=S3v3nERP2019;Database=sevencapa;App=wpqinpqr2;</connectionString>
+    <providerName>SQL</providerName>
 
     <!--<connectionString>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=TESTINGS)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=CALIDAD)));User Id=Testing;Password=SISTEMAS16;</connectionString>
   <providerName>ORA</providerName>-->
@@ -18,8 +18,8 @@
     <!--<connectionString>Server=sql2014\sevendc;User ID=consultoria;Password=Sistemas15;Database=replicas;App=WPQINPQR;</connectionString>
     <providerName>SQL</providerName>-->
     
-    <connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>
-    <providerName>SQL</providerName>
+    <!--<connectionString>Server=testings;User ID=Testing;Password=S11stemas15;Database=Testing;App=WPQINPQR;</connectionString>
+    <providerName>SQL</providerName>-->
     
     <!--<connectionString>Server=cerezo;User ID=desarrollo;Password=Desarrollo2018;Database=sevenDesarrollo;App=wpqinpqr2;</connectionString>
     <providerName>SQL</providerName>-->

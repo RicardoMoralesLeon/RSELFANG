@@ -3,6 +3,7 @@ using RSELFANG.TO;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -66,6 +67,8 @@ namespace RSELFANG.BO
         {
             try
             {
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("es-CO");
+
                 string usu_codi = ConfigurationManager.AppSettings["usu_codi"].ToString();
                 string reportPublic = ConfigurationManager.AppSettings["reportPublic"].ToString();
                 string dinamicReport = ConfigurationManager.AppSettings["dinamicReport"].ToString();

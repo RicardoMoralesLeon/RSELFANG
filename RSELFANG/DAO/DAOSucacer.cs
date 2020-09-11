@@ -184,7 +184,23 @@ namespace RSELFANG.DAO
             sql.Append(" FROM  SU_AFILI ");
             sql.Append(" WHERE SU_AFILI.EMP_CODI = @EMP_CODI ");
             sql.Append(" AND SU_AFILI.AFI_DOCU = @TER_CODA ");
+            sql.Append(" AND SU_AFILI.AFI_ESTA = 'A' ");
             sqlparams.Add(new SQLParams("TER_CODA", ter_coda));
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            return new DbConnection().Get<ToSucacer>(sql.ToString(), sqlparams);
+        }
+
+        public ToSucacer GetInfoSutrayeSSuCacNA(int afi_cont, int emp_codi)
+        {
+            DataSet ds = new DataSet();
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sql.Append(" SELECT * ");
+            sql.Append(" FROM  SU_TRAYE ");
+            sql.Append(" WHERE AFI_CONT = @AFI_CONT ");
+            sql.Append("  AND EMP_CODI =  @EMP_CODI ");
+            sql.Append("  AND TRA_ESTA = 'A' ");
+            sqlparams.Add(new SQLParams("AFI_CONT", afi_cont));
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             return new DbConnection().Get<ToSucacer>(sql.ToString(), sqlparams);
         }
