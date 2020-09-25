@@ -33,7 +33,7 @@ namespace RSELFANG.DAO
             return new DbConnection().GetList<EeMedsa>(sql.ToString(), sqlparams);
         }
 
-        public List<EeSaSec> getInfoSatisfaccion()
+        public List<EeSaSec> getInfoSatisfaccion(int ser_cont, DateTime fini, DateTime ffin)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
@@ -53,7 +53,18 @@ namespace RSELFANG.DAO
             sql.Append(" AND EE_RESEN.RSE_CONT = EE_DRSEE.RSE_CONT ");
             sql.Append(" AND EE_RESEN.DRS_CONT = EE_DRSEE.DRS_CONT ");
             sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT ");
-            sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' ");
+            sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' AND INP_CONT = 0 AND ISNUMERIC(RES_VALO) = 1");
+            sql.Append(" AND CONVERT(DATE, EE_REMES.REM_FECH) >= @FEC_INIC ");
+            sql.Append(" AND CONVERT(DATE, EE_REMES.REM_FECH) <= @FEC_FINA ");
+
+            if (ser_cont != 0)
+            {
+                sqlparams.Add(new SQLParams("SER_CONT", ser_cont));
+                sql.Append(" AND CAST(EE_REMES.ITE_SERV AS FLOAT) = @SER_CONT");
+            }
+
+            sqlparams.Add(new SQLParams("FEC_INIC", fini));
+            sqlparams.Add(new SQLParams("FEC_FINA", ffin));
             sql.Append(" GROUP BY  EE_SECCE.SEC_CONT, EE_SECCE.SEC_CODI, EE_SECCE.SEC_NOMB ");
             sql.Append(" ) A ");
             return new DbConnection().GetList<EeSaSec>(sql.ToString(), sqlparams);
@@ -81,7 +92,7 @@ namespace RSELFANG.DAO
             sql.Append(" AND EE_RESEN.DRS_CONT = EE_DRSEE.DRS_CONT ");
             sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = EE_REMES.ITE_SERV ");
-            sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' ");
+            sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' AND INP_CONT = 0 AND ISNUMERIC(RES_VALO) = 1");
             sql.Append(" AND EE_SECCE.SEC_CONT = @SEC_CONT ");
             sql.Append(" GROUP BY  EE_DRSEE.DRS_CONT, EE_DRSEE.DRS_PREG ");
             sql.Append(" ) A ");
@@ -89,7 +100,7 @@ namespace RSELFANG.DAO
             return new DbConnection().GetList<EeDeSec>(sql.ToString(), sqlparams);
         }
 
-        public List<EeSaSer> getInfoOportunidad(int ser_cont)
+        public List<EeSaSer> getInfoOportunidad(int ser_cont, DateTime fini, DateTime ffin)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
@@ -110,7 +121,9 @@ namespace RSELFANG.DAO
             sql.Append(" AND EE_RESEN.DRS_CONT = EE_DRSEE.DRS_CONT ");
             sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = EE_REMES.ITE_SERV ");
-            sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' ");
+            sql.Append(" WHERE EE_DRSEE.DRS_CLAS = 'P' AND INP_CONT = 0 AND ISNUMERIC(RES_VALO) = 1 ");
+            sql.Append(" AND CONVERT(DATE, EE_REMES.REM_FECH) >= @FEC_INIC ");
+            sql.Append(" AND CONVERT(DATE, EE_REMES.REM_FECH) <= @FEC_FINA ");
 
             if (ser_cont != 0)
             {
@@ -120,6 +133,9 @@ namespace RSELFANG.DAO
 
             sql.Append(" GROUP BY  GN_ITEMS.ITE_CODI, GN_ITEMS.ITE_NOMB ");
             sql.Append(" ) A ");
+
+            sqlparams.Add(new SQLParams("FEC_INIC", fini));
+            sqlparams.Add(new SQLParams("FEC_FINA", ffin));
             return new DbConnection().GetList<EeSaSer>(sql.ToString(), sqlparams);
         }
     }

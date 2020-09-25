@@ -16,7 +16,7 @@ namespace RSELFANG.BO
         string alias = ConfigurationManager.AppSettings["alias"].ToString();
         SSfForpo.SSfForpoDMR ws = new SSfForpo.SSfForpoDMR();
 
-        public TOTransaction<sfforpo> InsertSfForpo(SfForpo sffovis)
+        public TOTransaction<sfforpo> InsertSfForpo(SfFovis sffovis)
         {
             sfforpo result = new sfforpo();
           
@@ -35,17 +35,17 @@ namespace RSELFANG.BO
 
                 object objSalida;
                 List<object> LEntrada = new List<object>();
-                LEntrada.Add(sffovis.InfoAportante.emp_codi);
-                LEntrada.Add(sffovis.InfoAportante.mod_cont);
-                LEntrada.Add(sffovis.InfoAportante.rad_nume);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.tip_codi);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.afi_docu);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.for_cond);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.ite_codi_oc);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.ite_codi_tp);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.for_sala);
-                LEntrada.Add(sffovis.InfoAportante.InfoAportante.for_tdat);
-                
+                LEntrada.Add(sffovis.emp_codi);
+                LEntrada.Add(sffovis.mod_cont);
+                LEntrada.Add(0);
+                LEntrada.Add(sffovis.postulante.tip_codi);
+                LEntrada.Add(sffovis.postulante.afi_docu);
+                LEntrada.Add(sffovis.postulante.for_cond);
+                LEntrada.Add(sffovis.postulante.ite_codi);
+                LEntrada.Add(0);
+                LEntrada.Add(sffovis.postulante.for_sala);
+                LEntrada.Add(sffovis.for_tdat);
+
                 if (ws.InsertarSFFORPO(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
                     salida.retorno = 1;
@@ -56,7 +56,7 @@ namespace RSELFANG.BO
                     var retorno = (object[])objSalida;
                     result.for_cont = int.Parse(retorno[0].ToString());
                     result.for_nume = int.Parse(retorno[1].ToString());
-                    msgError = insertarDetallePostulante(sffovis.InfoAportante.emp_codi, result.for_cont, sffovis);
+                    msgError = insertarDetallePostulante(sffovis.emp_codi, result.for_cont, sffovis);
 
                     if (msgError != "")
                         throw new Exception(msgError);
@@ -69,30 +69,30 @@ namespace RSELFANG.BO
             {
                 salida.retorno = 1;
                 salida.txtRetorno = err.Message;
-                deletePropo(sffovis.InfoAportante.emp_codi, result.for_cont);
+                deletePropo(sffovis.emp_codi, result.for_cont);
             }
 
             return salida;
         }
 
-        private string insertarDetallePostulante(int emp_codi, int for_cont, SfForpo sffovis)
+        private string insertarDetallePostulante(int emp_codi, int for_cont, SfFovis sffovis)
         {
             string msgError = "";
 
             try
             {
-                msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.InfoHogar);
+                msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.infoHogar);
 
                 if (msgError == "")
                 {
-                    msgError = InsertSfDfomh(emp_codi, for_cont, sffovis.InfoAportante.InfoConyuge, "C");  // -->> insertar información del conyuge
+                   // msgError = InsertSfDfomh(emp_codi, for_cont, sffovis.InfoAportante.InfoConyuge, "C");  // -->> insertar información del conyuge
 
                     if (msgError == "")
                     {
                         if (sffovis.InfoSfDfomhP != null)
                         {
                             msgError = InsertSfDfomh(emp_codi, for_cont, sffovis.InfoSfDfomhP, "P");  // -->> insertar información personas a cargo
-                        }                        
+                        }
 
                         if (msgError == "")
                         {
@@ -115,7 +115,7 @@ namespace RSELFANG.BO
             return msgError;
         }
 
-        private string InsertSfDfoih(int emp_codi, int _for_cont, InfoHogar sfdfoih)
+        private string InsertSfDfoih(int emp_codi, int _for_cont, InfoDfoih sfdfoih)
         {   
             int for_cont = _for_cont;
 
@@ -189,7 +189,7 @@ namespace RSELFANG.BO
                 LEntrada.Add(sfdfomh.for_sala);
                 LEntrada.Add(sfdfomh.ite_codi_tp);
                 LEntrada.Add(sfdfomh.ite_pare);
-                LEntrada.Add(sfdfomh.ite_codi_oc);
+                LEntrada.Add(sfdfomh.ite_codi);
 
                 if (ws.InsertarSFDFOMH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
@@ -233,7 +233,7 @@ namespace RSELFANG.BO
                     LEntrada.Add(perca.for_sala);
                     LEntrada.Add(perca.ite_codi_tp);
                     LEntrada.Add(perca.ite_pare);
-                    LEntrada.Add(perca.ite_codi_oc);
+                    LEntrada.Add(perca.ite_codi);
 
                     if (ws.InsertarSFDFOMH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                     {

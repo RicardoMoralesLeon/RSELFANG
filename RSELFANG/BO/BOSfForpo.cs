@@ -2,27 +2,13 @@
 using RSELFANG.TO;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Text;
 
 namespace RSELFANG.BO
 {
     public class BOSfForpo
-    {
-        public TOTransaction<SfFovis> GetInitialDataSf(int emp_codi)
-        {   
-            DAOSfForpo daoSfForpo = new DAOSfForpo();
-            
-            try
-            {
-                SfFovis fovis = new SfFovis();
-                fovis.par_feab = daoSfForpo.GetSfParam(emp_codi);
-                return new TOTransaction<SfFovis>() { objTransaction = fovis, txtRetorno = "", retorno = 0 };
-            }
-            catch (Exception ex)
-            {
-                return new TOTransaction<SfFovis>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
-            }
-        }
-
+    {  
         public TOTransaction<List<SfFovisInfo>> GetInfoModalidad(int emp_codi)
         {
             DAOSfForpo daoSfForpo = new DAOSfForpo();
@@ -55,67 +41,73 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<List<SfPostu>> GetInfoIdPostulante(int emp_codi)
+        public TOTransaction<SfPostu> GetInfoIdPostulante(int emp_codi, string afi_docu)
         {
             DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             try
             {
-                List<SfPostu> sfradic = new List<SfPostu>();
-                sfradic = daoSfForpo.GetInfoIdPostulante(emp_codi);                                
-                return new TOTransaction<List<SfPostu>>() { objTransaction = sfradic, txtRetorno = "", retorno = 0 };
+                SfPostu sfradic = new SfPostu();
+                sfradic = daoSfForpo.GetInfoIdPostulante(emp_codi, afi_docu);                                
+                return new TOTransaction<SfPostu>() { objTransaction = sfradic, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
             {
-                return new TOTransaction<List<SfPostu>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+                return new TOTransaction<SfPostu>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
 
-        public TOTransaction<SfFovis> GetInfoPostulante(int emp_codi, int afi_cont, bool validTope)
-        {
-            SfFovis sffovis = new SfFovis();
-            DAOSfForpo daoSfForpo = new DAOSfForpo();
-            Gnmasal InfoGnMasal = new Gnmasal();
-            InfoAportante suconyu = new InfoAportante();
-            InfoEmpresa InfoEmpre = new InfoEmpresa();
+        //public TOTransaction<SfFovis> GetInfoPostulante(int emp_codi, int afi_cont, bool validTope)
+        //{
+        //    SfFovis sffovis = new SfFovis();
+        //    DAOSfForpo daoSfForpo = new DAOSfForpo();
+        //    Gnmasal InfoGnMasal = new Gnmasal();
+        //    InfoAportante suconyu = new InfoAportante();
+        //    List<InfoEmpresa> InfoEmpre = new List<InfoEmpresa>();
             
-            try
-            {
-                InfoAportante sfafili = new InfoAportante();
-                sfafili = daoSfForpo.getInfoAportante(emp_codi, afi_cont);                
-                sfafili.for_cond = "";
+        //    try
+        //    {
+        //        InfoAportante sfafili = new InfoAportante();
+        //        sfafili = daoSfForpo.getInfoAportante(emp_codi, afi_cont);                
+        //        sfafili.for_cond = "";
 
-                InfoGnMasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
-                sfafili.afi_ipil = daoSfForpo.getSalarioPostul(emp_codi, afi_cont);
+        //        InfoGnMasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
+        //        sfafili.for_ipil = daoSfForpo.getSalarioPostul(emp_codi, afi_cont);
 
-                if (validTope)
-                {
-                    if (sfafili.afi_ipil > InfoGnMasal.mas_vrsm)
-                    {
-                        throw new Exception("El postulante superal el tope salarial");
-                    }
-                }
+        //        if(sfafili.for_ipil == 0)
+        //            sfafili.for_ipil = daoSfForpo.getSalarioTraye(emp_codi, afi_cont);
+
+        //        if (validTope)
+        //        {
+        //            if (sfafili.for_ipil > InfoGnMasal.mas_vrsm)
+        //            {
+        //                throw new Exception("El postulante superal el tope salarial");
+        //            }
+        //        }
             
-                if (afi_cont != 0)
-                {
-                    suconyu = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
-                    var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+        //        if (afi_cont != 0)
+        //        {
+        //            suconyu = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
+        //            var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
 
-                    if (_InfoEmpre != null)
-                        InfoEmpre = _InfoEmpre;
-                }
+        //            if (_InfoEmpre != null)
+        //                InfoEmpre = _InfoEmpre;
 
-                sffovis.InfoAportante = sfafili;
-                sffovis.InfoConyuge = suconyu;
-                sffovis.InfoGnmasal = InfoGnMasal;
-                sffovis.InfoEmpresa = InfoEmpre;
-                return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
-            }
-            catch (Exception ex)
-            {
-                return new TOTransaction<SfFovis>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
-            }
-        }
+        //            if(suconyu   == null)
+        //                suconyu = new InfoAportante();
+        //        }
+
+        //        sffovis.postulante = sfafili;
+        //        sffovis.conyuge = suconyu;
+        //        sffovis.InfoGnmasal = InfoGnMasal;
+        //        sffovis.InfoEmpresa = InfoEmpre;
+        //        return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new TOTransaction<SfFovis>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+        //    }
+        //}
         
         public TOTransaction<sfforpo> GetValidInfoPostulante(int emp_codi, int afi_cont)
         {
@@ -132,95 +124,7 @@ namespace RSELFANG.BO
                 return new TOTransaction<sfforpo>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
-                
-        public TOTransaction<SfFovis> GetInfoAportante(int emp_codi, int rad_nume, int for_cont)
-        {
-            DAOSfForpo daoSfForpo = new DAOSfForpo();
-            SfFovis sffovis = new SfFovis();
-            rnradic rnradic = new rnradic();
-            InfoAportante suafili = new InfoAportante();
-            InfoAportante suconyu = new InfoAportante();
-            List<InfoNovedades> novedad = new List<InfoNovedades>();
-            List<InfoTrayectoria> trayect = new List<InfoTrayectoria>();
-            List<InfoSuPerca> superca = new List<InfoSuPerca>();
-            List<InfoOtrosMiembros> otrosM = new List<InfoOtrosMiembros>();
-            sfdmodv InfoModvi = new sfdmodv();
-            Gnmasal InfoGnMasal = new Gnmasal();
-            InfoEmpresa InfoEmpre = new InfoEmpresa();
-
-            try
-            {
-                rnradic = daoSfForpo.GetInfoRnRadi(emp_codi, rad_nume);
-
-                if (rnradic != null)
-                {
-                    int for_nume = 0;
-                    for_nume = daoSfForpo.GetInfoForpo(emp_codi, rnradic.afi_cont);
-
-                    if(for_nume != 0)
-                    {
-                        throw new Exception("El afiliado tiene registros de postulación en estado diferente a Rechazado o Retiro voluntario. Formulario Número: " + for_nume);
-                    }
-                    
-                    InfoGnMasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
-                    sffovis.drp_salab = daoSfForpo.getSalarioPostul(emp_codi, rnradic.afi_cont);
-
-                    //if (sffovis.drp_salab > InfoGnMasal.mas_vrsm)
-                    //{
-                    //    throw new Exception("El postulante superal el tope salarial");
-                    //}
-
-                    suafili = daoSfForpo.getInfoAportante(emp_codi, rnradic.afi_cont);
-
-                    if (suafili != null)
-                    {
-                        suafili.rad_nume = rad_nume;
-                        sffovis.rad_nume = rad_nume;
-                        sffovis.InfoAportante = suafili;                        
-
-                        if (sffovis.mod_cont != null)
-                            InfoModvi = daoSfForpo.getInfoModvi(emp_codi, sffovis.mod_cont);
-
-                        var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
-
-                        if (_InfoEmpre != null)
-                            InfoEmpre = _InfoEmpre;
-                    }
-
-                    if (for_cont != 0)
-                    {
-                        suconyu = daoSfForpo.getInfoConyugeFromForpo(emp_codi, for_cont);
-                        novedad = daoSfForpo.getInfoNovedades(emp_codi, for_cont);
-                        trayect = daoSfForpo.getInfoTrayectorias(emp_codi, for_cont);
-                        superca = daoSfForpo.getInfoSuPerca(emp_codi, for_cont);
-                        otrosM = daoSfForpo.getInfoMiembros(emp_codi, for_cont);
-                    }
-                    else
-                    {
-                        if (suafili.afi_cont != 0)
-                        {
-                            suconyu = daoSfForpo.getInfoConyu(emp_codi, suafili.afi_cont);
-                            var _InfoEmpre = daoSfForpo.getInfoEmpre(emp_codi, suafili.afi_cont);
-
-                            if (_InfoEmpre != null)
-                                InfoEmpre = _InfoEmpre;
-
-                        }
-                    }
-
-                    sffovis.InfoConyuge = suconyu;                  
-                    sffovis.InfoModvi = InfoModvi;
-                    sffovis.InfoGnmasal = InfoGnMasal;
-                    sffovis.InfoEmpresa = InfoEmpre;
-                }                
-
-                return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
-            }
-            catch (Exception ex)
-            {
-                return new TOTransaction<SfFovis>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
-            }
-        }
+           
 
         public TOTransaction<List<GnItems>> GetGnItems(int tit_cont)
         {
@@ -302,14 +206,23 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<InfoAportante> GetInfoOtrosM(int emp_codi, int afi_trab, int afi_cont, string afi_docu)
+        public TOTransaction<InfoAportante> GetInfoOtrosM(int emp_codi, int afi_trab, string afi_docu)
         {
             InfoAportante otrosM = new InfoAportante();
             DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             try
             {
-                otrosM = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
+                SfPostu afiOtro = new SfPostu();
+                afiOtro = daoSfForpo.GetInfoIdPostulante(emp_codi, afi_docu);
+
+                if (afiOtro != null)
+                    otrosM = daoSfForpo.getInfoAfiliSuPercaOtros(emp_codi, afiOtro.AFI_CONT);
+                else
+                {
+                    otrosM = new InfoAportante();                   
+                }
+
                 return new TOTransaction<InfoAportante>() { objTransaction = otrosM, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -318,19 +231,19 @@ namespace RSELFANG.BO
             }
         }
                 
-        public TOTransaction<sfdmodv> GetInfoIngresos(int emp_codi, int mod_cont, double for_sala)
+        public TOTransaction<InfoDfoih> GetInfoIngresos(int emp_codi, int mod_cont, double for_sala)
         {
-            sfdmodv modvi = new sfdmodv();
+            InfoDfoih modvi = new InfoDfoih();
             DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             try
             {
                 modvi = daoSfForpo.GetInfoIngresos(emp_codi, mod_cont, for_sala);
-                return new TOTransaction<sfdmodv>() { objTransaction = modvi, txtRetorno = "", retorno = 0 };
+                return new TOTransaction<InfoDfoih>() { objTransaction = modvi, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
             {
-                return new TOTransaction<sfdmodv>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+                return new TOTransaction<InfoDfoih>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
 
@@ -349,5 +262,215 @@ namespace RSELFANG.BO
                 return new TOTransaction<List<sfconec>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
+
+        public TOTransaction<string> GetTratamiento(int emp_codi)
+        {
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+
+            try
+            {
+                string par_ppdt = "";
+                par_ppdt = daoSfForpo.GetTratamiento(emp_codi);
+                return new TOTransaction<string>() { objTransaction = par_ppdt, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<string>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<Sfparam> GetSfParam(int emp_codi)
+        {
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+
+            try
+            {               
+                var result = daoSfForpo.GetSfParam(emp_codi);
+                return new TOTransaction<Sfparam>() { objTransaction = result, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<Sfparam>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<GnTipdo>> GetTipDocumento(int emp_codi)
+        {
+            DAOGnTipdo daoGnTipDo = new DAOGnTipdo();
+
+            try
+            {
+                List<GnTipdo> GnTipdo = daoGnTipDo.getListGnTipdo();
+                return new TOTransaction<List<GnTipdo>>() { objTransaction = GnTipdo, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<GnTipdo>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<string> GetNomenclatura()
+        {
+            DAOSfForpo daosfforpo = new DAOSfForpo();
+
+            try
+            {
+                string SGN000008 = daosfforpo.getDigflag("SGN000008");
+                return new TOTransaction<string>() { objTransaction = SGN000008, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<string>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<PoPvdor>>GetPoPvdor(int emp_codi)
+        {
+            DAOSfForpo daosfforpo = new DAOSfForpo();
+
+            try
+            {
+                List<PoPvdor> Popvdor = daosfforpo.GetPoPvdor(emp_codi);
+                return new TOTransaction<List<PoPvdor>>() { objTransaction = Popvdor, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<PoPvdor>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<SfFovis> GetInfoForpo(int emp_codi, int for_cont, int afi_cont)
+        {            
+            DAOSfForpo daoSfForpo = new DAOSfForpo();           
+            SfFovis sffovis = new SfFovis();            
+                                   
+            try
+            {
+                sffovis = daoSfForpo.getInfoForpo(emp_codi, for_cont);
+
+                if (sffovis.for_esta == "U" || sffovis.for_esta == "N" || sffovis.for_esta == "R" || sffovis.for_esta == "V")
+                    sffovis.for_insf = "P";
+                else
+                    sffovis.for_insf = "A";
+
+                sffovis.postulante = daoSfForpo.getInfoPostulanteForpo(emp_codi, for_cont);
+                sffovis.conyuge = daoSfForpo.getInfoConyugeForpo(emp_codi, for_cont);
+                sffovis.InfoSfDfomhP = daoSfForpo.getInfoForpoSuPerca(emp_codi, for_cont, "P");
+                sffovis.InfoSfDfomhO = daoSfForpo.getInfoForpoSuPerca(emp_codi, for_cont, "O");
+                sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
+                sffovis.infoHogar = daoSfForpo.GetInfoIngresos(emp_codi, afi_cont);
+                sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+
+                if (sffovis.conyuge == null)
+                    sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
+                if (sffovis.conyuge == null)
+                    sffovis.conyuge  = new InfoAportante();
+
+                if (sffovis.InfoSfDfomhP == null)
+                    sffovis.InfoSfDfomhP = new List<InfoAportante>();
+
+                if (sffovis.InfoSfDfomhO == null)
+                    sffovis.InfoSfDfomhO = new List<InfoAportante>();
+
+                if (sffovis.Infodfore == null)
+                    sffovis.Infodfore = new List<SfDfore>();
+
+                if (sffovis.Infoddfor == null)
+                    sffovis.Infoddfor = new List<SfDdfor>();
+
+                return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<SfFovis>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<SfFovis> GetInfoPostulante(int emp_codi, int afi_cont)
+        {
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+            SfFovis sffovis = new SfFovis();
+            List<InfoEmpresa> InfoEmpre = new List<InfoEmpresa>();
+
+            try
+            {
+                sffovis.for_insf = "P";
+                sffovis.postulante = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
+                sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
+                sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
+                sffovis.infoHogar = daoSfForpo.GetInfoIngresos(emp_codi, afi_cont);
+                sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+
+                if (sffovis.InfoSfDfomhP == null)
+                    sffovis.InfoSfDfomhP = new List<InfoAportante>();
+
+                if (sffovis.InfoSfDfomhO == null)
+                    sffovis.InfoSfDfomhO = new List<InfoAportante>();
+
+               
+                return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<SfFovis>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<string> printReport(string ter_coda, int emp_codi, string reporte, string tna_docu = "", string tna_nomb = "")
+        {
+            try
+            {
+                string usu_codi = ConfigurationManager.AppSettings["usu_codi"].ToString();
+                string reportPublic = ConfigurationManager.AppSettings["reportPublic"].ToString();
+                string dinamicReport = ConfigurationManager.AppSettings["dinamicReport"].ToString();
+                StringBuilder sf = new StringBuilder();
+                string url = "";
+                string urlReporte = ConfigurationManager.AppSettings["UrlReport"];
+                
+                reporte = "SSfForpo";
+                List<string> Params = new List<string>();
+                Params.Add("emp_codi");
+                Params.Add("emp_nomb");
+                Params.Add(usu_codi);
+                Params.Add("dd/mm/yyyy");
+                Params.Add("0"); // DESDE
+                Params.Add("2"); // HASTA
+                Params.Add("40"); // VALOR SFV
+                Params.Add("35112120"); // VALOR SUBSIDIO SOLICITADO
+
+                sf.Append("{SF_FORPO.FOR_CONT} = " + 64 );
+                sf.Append(" AND {AR_SUCUR.SUC_PRIC} = 'S' ");
+                sf.Append(" AND {SF_FORPO.EMP_CODI} = " + emp_codi);
+                sf.Append(" AND {SF_FORPO.FOR_NUME} <> 0 ");
+
+                url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
+                return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<string>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public string GetURLReporte(string reporte, List<string> parametros, string sf, string urlreport)
+        {
+            string servidor = urlreport;
+            string formatofecha = ConfigurationManager.AppSettings["formatoFecha"].ToString();
+
+            string urlreporte = servidor;
+
+            urlreporte += "?" + "nombrerpt=" + reporte;
+            int i = 0;
+
+            foreach (var item in parametros)
+            {
+                urlreporte += "&promptex" + i + "=" + item.ToString().Replace(" ", "%20");
+                i++;
+            }
+
+            urlreporte += "&sf=" + sf.Replace(" ", "%20");
+            return urlreporte;
+        }
+
     }
 }

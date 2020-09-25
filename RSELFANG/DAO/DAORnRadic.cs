@@ -22,9 +22,8 @@ namespace RSELFANG.DAO
         public List<ArApovo> getListArApovo()
         {
             StringBuilder sql = new StringBuilder();
-
             sql.Append(" SELECT TA.TIA_CONT,TA.TIA_CODI,TA.TIA_NOMB,TD.TIP_CODI,TD.TIP_NOMB, ");
-            sql.Append(" AP.EMP_CODI, AP.APO_CONT,AP.APO_CODA,AP.APO_RAZS, AP.APO_ESTD ");
+            sql.Append(" AP.EMP_CODI, AP.APO_CONT,AP.APO_CODA,AP.APO_RAZS, AP.APO_ESTD");
             sql.Append(" FROM AR_APOVO AP ");
             sql.Append(" INNER JOIN AR_TIAPO TA ON TA.EMP_CODI = AP.EMP_CODI ");
             sql.Append(" AND TA.TIA_CONT = AP.TIA_CONT ");
@@ -45,11 +44,11 @@ namespace RSELFANG.DAO
             return new DbConnection().GetList<RnGrura>(sql.ToString(), sqlparams);
         }
 
-        public List<RnCraco> getListRnCraco(int gru_cont, int emp_codi)
+        public List<RnCraco> getListRnCraco(int gru_cont, int emp_codi, string acr_apor, string acr_afil)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT RN_CRACO.CRA_CONT, RN_CRACO.CRA_CODI, RN_CRACO.CRA_NOMB, ");
-            sql.Append(" GN_ITEMS.ITE_CODI, GN_ITEMS.ITE_NOMB,RN_CRACO.CRA_DEST, RN_CRACO.CRA_CLAR, RN_CRACO.CRA_PRIM ");
+            sql.Append(" GN_ITEMS.ITE_CODI, GN_ITEMS.ITE_NOMB,RN_CRACO.CRA_DEST, RN_CRACO.CRA_CLAR, RN_CRACO.CRA_PRIM,CRA_AFIW ");
             sql.Append(" FROM RN_DGRUR, RN_CRACO, RN_GRURA, GN_ITEMS ");
             sql.Append(" WHERE RN_DGRUR.EMP_CODI = RN_CRACO.EMP_CODI ");
             sql.Append(" AND RN_DGRUR.CRA_CONT = RN_CRACO.CRA_CONT ");
@@ -57,7 +56,16 @@ namespace RSELFANG.DAO
             sql.Append(" AND RN_DGRUR.EMP_CODI = RN_GRURA.EMP_CODI ");
             sql.Append(" AND RN_DGRUR.GRU_CONT = RN_GRURA.GRU_CONT ");
             sql.Append(" AND RN_CRACO.CRA_ESTA = 'A' ");
+            sql.Append(" AND RN_CRACO.CRA_TIPR IN('W','A') ");
             sql.Append(" AND RN_GRURA.GRU_CONT = @GRU_CONT ");
+
+            if(acr_apor == "S" && acr_afil == "S")
+                sql.Append(" AND RN_CRACO.CRA_DEST IN('P','A','S','F','M') ");
+            else if (acr_apor == "S")
+                sql.Append(" AND RN_CRACO.CRA_DEST IN('P','A') ");
+            else if (acr_afil == "S")
+                sql.Append(" AND RN_CRACO.CRA_DEST IN('S','F','M') ");
+
             List <SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("GRU_CONT", gru_cont));
             return new DbConnection().GetList<RnCraco>(sql.ToString(), sqlparams);
@@ -82,7 +90,7 @@ namespace RSELFANG.DAO
             sql.Append(" SU_AFILI.AFI_FECN, SU_AFILI.AFI_TELE, SU_TRAYE.TRA_ESTA, SU_TRAYE.APO_CONT, ");
             sql.Append(" AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS, AR_APOVO.TIP_CODI TIP_CODA, ");
             sql.Append(" AR_APOVO.TIA_CONT, AR_APOVO.APO_ESTD, SU_TRAYE.TRA_FCHI,SU_TRAYE.TRA_PRIN, SU_TRAYE.TRA_FCHR, ");
-            sql.Append(" AR_TIAPO.TIA_CODI,SU_TRAYE.TRA_CONT ");
+            sql.Append(" AR_TIAPO.TIA_CODI,SU_TRAYE.TRA_CONT, AR_APOVO.APO_ORIG ");
             sql.Append(" FROM SU_AFILI, GN_TIPDO, SU_TRAYE ");
             sql.Append(" INNER JOIN AR_APOVO ON AR_APOVO.EMP_CODI = SU_TRAYE.EMP_CODI AND AR_APOVO.APO_CONT = SU_TRAYE.APO_CONT ");
             sql.Append(" INNER JOIN AR_TIAPO ON AR_APOVO.EMP_CODI = AR_TIAPO.EMP_CODI AND AR_APOVO.TIA_CONT = AR_TIAPO.TIA_CONT ");
@@ -224,7 +232,7 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
             sql.Append(" SELECT GN_ITEMS.ITE_CONT,GN_ITEMS.ITE_CODI,GN_ITEMS.ITE_NOMB, 0 DDO_ESIS , 0 DDO_RECB, '' DDO_OBSE ");
-             sql.Append(" FROM GN_ITEMS,GN_TITEM,RN_DRDOC,RN_RDOCL,RN_CRACO ");
+            sql.Append(" FROM GN_ITEMS,GN_TITEM,RN_DRDOC,RN_RDOCL,RN_CRACO ");
             sql.Append(" WHERE GN_ITEMS.TIT_CONT = GN_TITEM.TIT_CONT ");
             sql.Append(" AND GN_ITEMS.TIT_CONT = 332 ");
             sql.Append(" AND RN_DRDOC.ITE_DOCU = GN_ITEMS.ITE_CONT ");
@@ -246,6 +254,24 @@ namespace RSELFANG.DAO
             sql.Append(" WHERE RAD_CONT = @RAD_CONT ");
             sqlparams.Add(new SQLParams("RAD_CONT", rad_cont));
             return new DbConnection().GetDataSet(sql.ToString(), sqlparams).Tables[0].Rows[0]["RAD_NUME"].ToString();
+        }
+
+        public string isAport(string ter_coda, int emp_codi, string campo)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sql.Append(" SELECT " + campo);
+            sql.Append(" FROM GN_ACROL ");
+            sql.Append(" INNER JOIN GN_DACRO ON GN_DACRO.ACR_CONT = GN_ACROL.ACR_CONT ");
+            sql.Append(" AND GN_DACRO.ACR_CONT = GN_ACROL.ACR_CONT ");
+            sql.Append(" WHERE GN_ACROL.TER_CODA = @TER_CODA ");
+            sql.Append(" AND GN_DACRO.EMP_CODI = @EMP_CODI ");
+            sqlparams.Add(new SQLParams("TER_CODA", ter_coda));
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            var result = new DbConnection().ExecuteScalar(sql.ToString(), sqlparams);
+            if (result == null)
+                return "";
+            return (string)result;
         }
     }
 }

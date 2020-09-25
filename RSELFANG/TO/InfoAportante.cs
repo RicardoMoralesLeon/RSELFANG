@@ -7,8 +7,7 @@ namespace RSELFANG.TO
         public string ite_tipp { get; set; }
         public string ite_ocup { get; set; }
         public int for_sala { get; set; }
-        public string for_cond { get; set; }
-        public int for_post { get; set; }
+        public string for_cond { get; set; }        
         public string mod_nomb { get; set; }
         public int tip_codi { get; set; }
         public int afi_cont { get; set; }
@@ -23,15 +22,15 @@ namespace RSELFANG.TO
         public string afi_cate { get; set; }
         public string afi_dire { get; set; }
         public string afi_gene { get; set; }
-        public int rad_nume { get; set; }
+       
         public string ite_codi_tp { get; set; }
         public string ite_nomb_tp { get; set; }
-        public string ite_codi_oc { get; set; }
-        public string ite_nomb_oc { get; set; }
+        public string ite_codi { get; set; }
+        public string ite_nomb { get; set; }
         public int tco_codi { get; set; }
         public string tco_nomb { get; set; }
         public string tco_zona { get; set; }
-        public double afi_ipil { get; set; }
+        public double for_ipil { get; set; }
         public string bar_nomb { get; set; }
         public string loc_nomb { get; set; }
         public string mun_nomb { get; set; }
@@ -47,7 +46,7 @@ namespace RSELFANG.TO
         public string afi_mail { get; set; }
         public string afi_tele { get; set; }
         public int afi_cony { get; set; }
-        public string for_tdat { get; set; }
+        
         public double for_ting { get; set; }
         public int for_nmie { get; set; }
         public double for_apr { get; set; }
@@ -76,6 +75,7 @@ namespace RSELFANG.TO
         public string mun_codi { get; set; }
         public string mun_nomb { get; set; }
         public string dsu_dire { get; set; }
+        public string tra_prin { get; set; }
 
         public InfoEmpresa() {
             apo_coda = "";
@@ -87,6 +87,7 @@ namespace RSELFANG.TO
             mun_codi = "";
             mun_nomb = "";
             dsu_dire = "";
+            tra_prin = "";
         }
     }
 
@@ -168,17 +169,43 @@ namespace RSELFANG.TO
         public string ite_nomb_pa { get; set; }
     }
 
-    public class sfdmodv
+    public class InfoDfoih
     {
+        public int for_cont { get; set; }
         public int dmo_rsmd { get; set; }
         public int dmo_rsmh { get; set; }
         public decimal dmo_fsvs { get; set; }
-        public string mod_cspm { get; set; }
         public int dfo_vsol { get; set; }
+        public string pai_codi { get; set; }
+        public string reg_codi { get; set; }
+        public string dep_codi  { get; set; }
+        public string dep_nomb  { get; set; }
+        public string mun_codi  { get; set; }
+        public string mun_nomb  { get; set; }
+        public string bar_codi  { get; set; }
+        public string bar_nomb  { get; set; }
+        public string loc_codi { get; set; }
+        public string dfo_dire { get; set; }
+        public string dfo_tele { get; set; }
+        public int dfo_nitc { get; set; }
+        public DateTime dfo_fesc { get; set; }
+        public string dfo_matr { get; set; }
+        public string dfo_escr { get; set; }
+        public string dfo_lurb { get; set; }
+        public string dfo_nomc { get; set; }
+        public string dfo_nomp { get; set; }
+        public int dfo_vpre { get; set; }
+        public int dfo_vlot { get; set; }
+        public int dfo_vtvi { get; set; }
+        public int dfo_tota { get; set; }
+        public int for_ting { get; set; }
+        public string mod_cspm { get; set; }
+        public string tco_zona { get; set; }
 
-        public sfdmodv()
+        public InfoDfoih()
         {
             this.mod_cspm = "";
+            this.dfo_lurb = "N";
         }
     }
 

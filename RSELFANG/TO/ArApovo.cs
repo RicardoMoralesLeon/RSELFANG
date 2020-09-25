@@ -15,6 +15,6 @@ namespace RSELFANG.TO
         public int APO_CONT { get; set; }
         public string APO_CODA { get; set; }
         public string APO_RAZS { get; set; }
-        public string APO_ESTD { get; set; }
+        public string APO_ESTD { get; set; }        
     }
 }

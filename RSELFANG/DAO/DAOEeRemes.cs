@@ -133,7 +133,13 @@ namespace RSELFANG.DAO
             sql.Append(" WHERE CLI_CODA = @CLI_CODA ");
             sql.Append(" AND ITE_SERV = @ITE_SERV ");
             sql.Append(" AND EMP_CODI = @EMP_CODI ");
-            List<Parameter> parametros = new List<Parameter>();
+            sql.Append(" AND REM_CONT "); 
+            sql.Append(" IN (   ");
+            sql.Append("      SELECT REM_CONT FROM EE_RESEN WHERE EMP_CODI = @EMP_CODI ");
+            sql.Append("      UNION ");
+            sql.Append("      SELECT REM_CONT FROM EE_RESEM WHERE EMP_CODI = @EMP_CODI ");
+            sql.Append(" ) ");
+            List <Parameter> parametros = new List<Parameter>();
             parametros.Add(new Parameter("@CLI_CODA", cli_coda));
             parametros.Add(new Parameter("@EMP_CODI", emp_codi));
             parametros.Add(new Parameter("@ITE_SERV", ite_serv));

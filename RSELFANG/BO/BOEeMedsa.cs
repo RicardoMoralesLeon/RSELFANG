@@ -25,14 +25,14 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<List<EeSaSec>> GetInfoSatisfaccion()
+        public TOTransaction<List<EeSaSec>> GetInfoSatisfaccion(int ser_cont, DateTime fini, DateTime ffin)
         {
             DAOEeMedsa daoEeMedsa = new DAOEeMedsa();
 
             try
             {
                 List<EeSaSec> result = new List<EeSaSec>();
-                result = daoEeMedsa.getInfoSatisfaccion();
+                result = daoEeMedsa.getInfoSatisfaccion(ser_cont, fini, ffin);
                 return new TOTransaction<List<EeSaSec>>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -57,14 +57,14 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<List<EeSaSer>> GetInfoOportunidad(int ser_cont)
+        public TOTransaction<List<EeSaSer>> GetInfoOportunidad(int ser_cont, DateTime fini, DateTime ffin)
         {
             DAOEeMedsa daoEeMedsa = new DAOEeMedsa();
 
             try
             {
                 List<EeSaSer> result = new List<EeSaSer>();
-                result = daoEeMedsa.getInfoOportunidad(ser_cont);
+                result = daoEeMedsa.getInfoOportunidad(ser_cont, fini, ffin);
                 return new TOTransaction<List<EeSaSer>>() { objTransaction = result, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)

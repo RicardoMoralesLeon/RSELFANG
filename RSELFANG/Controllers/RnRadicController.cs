@@ -34,11 +34,11 @@ namespace RSELFANG.Controllers
         }
 
         [Route("api/RnRadic/RnCracoLoad")]
-        public TOTransaction<List<RnCraco>> Get(int gru_cont,int emp_codi)
+        public TOTransaction<List<RnCraco>> Get(int gru_cont,int emp_codi, string ter_coda)
         {
             BoRnRadic bo = new BoRnRadic();
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
-            return bo.GetClasificacion(gru_cont,emp_codi);
+            return bo.GetClasificacion(gru_cont,emp_codi, ter_coda);
         }
 
         [Route("api/RnRadic/InserRnRadic")]

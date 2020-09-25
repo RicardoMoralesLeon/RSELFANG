@@ -250,6 +250,7 @@
     <Compile Include="BO\BOSfFovis.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BoSucacer.cs" />
+    <Compile Include="BO\BoSuconsu.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
     <Compile Include="BO\BOXbAuliq.cs" />
     <Compile Include="BO\BOXbPceca.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="Controllers\SoCoxcnController.cs" />
     <Compile Include="Controllers\SuAfiliController.cs" />
     <Compile Include="Controllers\SucacerController.cs" />
+    <Compile Include="Controllers\SuConsuController.cs" />
     <Compile Include="Controllers\SuTrayeController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
@@ -366,6 +368,7 @@
     <Compile Include="DAO\DAOSoDscfp.cs" />
     <Compile Include="DAO\DAOSoSbene.cs" />
     <Compile Include="DAO\DAOSucacer.cs" />
+    <Compile Include="DAO\DAOSuConsu.cs" />
     <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
     <Compile Include="DAO\DAOWfCdocu.cs" />
@@ -445,6 +448,7 @@
     <Compile Include="TO\Gn_Terce.cs" />
     <Compile Include="TO\InfoAportante.cs" />
     <Compile Include="TO\Mail.cs" />
+    <Compile Include="TO\PoPvdor.cs" />
     <Compile Include="TO\PqDinPq.cs" />
     <Compile Include="TO\PQEncue.cs" />
     <Compile Include="TO\PqEstad.cs" />
@@ -465,6 +469,7 @@
     <Compile Include="TO\SfFovis.cs" />
     <Compile Include="TO\SfFovisInfo.cs" />
     <Compile Include="TO\SfForpo.cs" />
+    <Compile Include="TO\Sfparam.cs" />
     <Compile Include="TO\TOCfConct.cs" />
     <Compile Include="TO\TORnRadic.cs" />
     <Compile Include="TO\SuAfili.cs" />
@@ -480,6 +485,7 @@
     <Compile Include="TO\TOPqParam.cs" />
     <Compile Include="TO\TORevPr.cs" />
     <Compile Include="TO\ToSucacer.cs" />
+    <Compile Include="TO\TOSuconsu.cs" />
     <Compile Include="TO\ToSuDimco.cs" />
     <Compile Include="TO\TOTransacion.cs" />
     <Compile Include="TO\TOWfCdocu.cs" />

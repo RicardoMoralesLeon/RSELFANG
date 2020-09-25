@@ -28,6 +28,14 @@ namespace RSELFANG.TO
         /// Parentesco
         /// </summary>
         public List<SuMpare> SuMpare { get; set; }
+        /// <summary>
+        /// Profesion
+        /// </summary>
+        public List<GnItem> gnprofe { get; set; }
+        /// <summary>
+        /// Condicion especial
+        /// </summary>
+        public List<GnItem> gnconde { get; set; }
         ///// <summary>
         ///// Afiliados
         ///// </summary>

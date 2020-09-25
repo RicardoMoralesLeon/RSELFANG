@@ -19,6 +19,7 @@ namespace RSELFANG.BO
             BOGnPaise boPaise = new BOGnPaise();
             DAOGnTipdo daoGnTipDo = new DAOGnTipdo();
             List<string> GN_DIGFL = new List<string>();
+            BOGnItems boItems = new BOGnItems();
 
             try
             {
@@ -30,13 +31,17 @@ namespace RSELFANG.BO
                 List<ArApovo> ArApovo = daoRadic.getListArApovo();
                 List<RnGrura> RnGrura = daoRadic.getListRnGrura(emp_codi);
                 List<SuMpare> SuMpare = daoRadic.getListSumPare(emp_codi);
-               
+                List<GnItem> gnprofe = boItems.GetGnItems(351);
+                List<GnItem> gnconde = boItems.GetGnItems(339);
+
                 result.artiapo = ArTiapo;
                 result.GnPaise = GnPaise;
                 result.GnTipdo = GnTipdo;
                 result.arapovo = ArApovo;
                 result.rngrura = RnGrura;
-                result.SuMpare = SuMpare;                
+                result.SuMpare = SuMpare;
+                result.gnprofe = gnprofe;
+                result.gnconde = gnconde;
                 result.SRN000001 = daoRadic.getDigflag("SRN000001");
                 result.SRN000002 = daoRadic.getDigflag("SRN000002");
                 result.cen_codi = daoRadic.getInfoFudCe(emp_codi, usu_codi);
@@ -77,15 +82,20 @@ namespace RSELFANG.BO
                 return new TOTransaction<SuAfili>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
-
-
-        public TOTransaction<List<RnCraco>> GetClasificacion(int gru_cont, int emp_codi)
+        
+        public TOTransaction<List<RnCraco>> GetClasificacion(int gru_cont, int emp_codi, string ter_coda)
         {
             DAORnRadic daoRadic = new DAORnRadic();
 
             try
             {
-                List<RnCraco> RnCraco = daoRadic.getListRnCraco(gru_cont, emp_codi);
+                string acr_apor = "";
+                acr_apor = daoRadic.isAport(ter_coda, emp_codi, "ACR_APOR");
+
+                string acr_afil = "";
+                acr_afil = daoRadic.isAport(ter_coda, emp_codi, "ACR_AFIL");
+
+                List<RnCraco> RnCraco = daoRadic.getListRnCraco(gru_cont, emp_codi, acr_apor, acr_afil);
                 return new TOTransaction<List<RnCraco>>() { objTransaction = RnCraco, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)

@@ -22,7 +22,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<List<EeSaSec>> Get(int ser_cont, DateTime fini, DateTime ffin, bool opc1 = false)
         {
             BOEeMedsa bo = new BOEeMedsa();
-            return bo.GetInfoSatisfaccion();
+            return bo.GetInfoSatisfaccion(ser_cont, fini, ffin);
         }
 
         [Route("api/EeMedsa/InfoDetalleSatis")]
@@ -36,7 +36,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<List<EeSaSer>> Get(int ser_cont, DateTime fini, DateTime ffin, int rem_cont, bool opc1 = false)
         {
             BOEeMedsa bo = new BOEeMedsa();
-            return bo.GetInfoOportunidad(ser_cont);
+            return bo.GetInfoOportunidad(ser_cont, fini, ffin);
         }
     }
 }

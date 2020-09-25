@@ -15,5 +15,6 @@ namespace RSELFANG.TO
         public string CRA_DEST { get; set; }
         public string CRA_CLAR { get; set; }
         public string CRA_PRIM { get; set; }
+        public string CRA_AFIW { get; set; }
     }
 }

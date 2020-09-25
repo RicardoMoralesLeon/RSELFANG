@@ -7,12 +7,11 @@ namespace RSELFANG.Controllers
     public class SfFovisController : ApiController
     {
         [Route("api/Fovis/SfForpoSaveInfo")]
-        public TOTransaction<sfforpo> Post(SfForpo sffovis)
+        public TOTransaction<sfforpo> Post(SfFovis sffovis)
         {
             BOSfFovis bo = new BOSfFovis();
-            sffovis.InfoAportante.emp_codi = new tools.General().GetEmpCodi(sffovis.InfoAportante.emp_codi);
+           // sffovis.InfoAportante.emp_codi = new tools.General().GetEmpCodi(sffovis.InfoAportante.emp_codi);
             return bo.InsertSfForpo(sffovis);
         }
-
     }
 }

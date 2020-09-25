@@ -89,6 +89,7 @@ namespace RSELFANG.TO
 
     public class sfforpo
     {
+        public string for_esta { get; set; }
         public int for_cont { get; set; }
         public int for_nume { get; set; }
     }

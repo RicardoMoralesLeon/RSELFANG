@@ -15,6 +15,7 @@ namespace RSELFANG.TO
         public string AFI_APE2 { get; set; }
         public string APO_CODA { get; set; }
         public string APO_RAZS { get; set; }
+        public string APO_ORIG { get; set; }
         public DateTime AFI_FECN { get; set; }
         public string AFI_TELE { get; set; }
         public string TIP_NOMA { get; set; }
