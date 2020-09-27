@@ -37,12 +37,12 @@ namespace RSELFANG.BO
                 List<object> LEntrada = new List<object>();
                 LEntrada.Add(sffovis.emp_codi);
                 LEntrada.Add(sffovis.mod_cont);
-                LEntrada.Add(0);
+                LEntrada.Add(0); // Número Radicado, Si no hay radicado se envia cero
                 LEntrada.Add(sffovis.postulante.tip_codi);
                 LEntrada.Add(sffovis.postulante.afi_docu);
                 LEntrada.Add(sffovis.postulante.for_cond);
                 LEntrada.Add(sffovis.postulante.ite_codi);
-                LEntrada.Add(0);
+                LEntrada.Add(0); // Item Tipo Postulante
                 LEntrada.Add(sffovis.postulante.for_sala);
                 LEntrada.Add(sffovis.for_tdat);
 
@@ -81,11 +81,14 @@ namespace RSELFANG.BO
 
             try
             {
-                msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.infoHogar);
+                if(sffovis.infoHogar.mod_cspm == "S")
+                {
+                    msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.infoHogar);
+                }                
 
                 if (msgError == "")
                 {
-                   // msgError = InsertSfDfomh(emp_codi, for_cont, sffovis.InfoAportante.InfoConyuge, "C");  // -->> insertar información del conyuge
+                   msgError = InsertSfDfomh(emp_codi, for_cont, sffovis.conyuge, "C");  // -->> insertar información del conyuge
 
                     if (msgError == "")
                     {
@@ -102,7 +105,12 @@ namespace RSELFANG.BO
                             }
                         }
 
-                        msgError = InsertSfDfore(emp_codi, for_cont, sffovis.Infodfore, sffovis.Infoddfor);
+                        msgError = InsertSfDfore(emp_codi, for_cont, sffovis.InfodforeA);
+
+                        if (msgError == "")
+                        {
+                            msgError = InsertSfDfore(emp_codi, for_cont, sffovis.InfodforeR);
+                        }
                     }
                 }
 
@@ -150,7 +158,7 @@ namespace RSELFANG.BO
                 if (ws.InsertarSFDFOIH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
                     throw new Exception(txtError);
-                }                
+                }
             }
             catch (Exception err)
             {                
@@ -184,12 +192,12 @@ namespace RSELFANG.BO
                 LEntrada.Add(DateTime.Parse(sfdfomh.afi_fecn));
                 LEntrada.Add(sfdfomh.afi_esci);
                 LEntrada.Add(sfdfomh.afi_gene);
-                LEntrada.Add(sfdfomh.afi_cond);
+                LEntrada.Add(sfdfomh.for_cond);
                 LEntrada.Add(sfdfomh.apo_razs);
                 LEntrada.Add(sfdfomh.for_sala);
                 LEntrada.Add(sfdfomh.ite_codi_tp);
                 LEntrada.Add(sfdfomh.ite_pare);
-                LEntrada.Add(sfdfomh.ite_codi);
+                LEntrada.Add(sfdfomh.ite_codi); // ocupacion
 
                 if (ws.InsertarSFDFOMH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
@@ -250,7 +258,7 @@ namespace RSELFANG.BO
             return "";
         }
 
-        private string InsertSfDfore(int emp_codi, int _for_cont, List<SfDfore> sfdfore, List<SfDdfor> sfddfor)
+        private string InsertSfDfore(int emp_codi, int _for_cont, List<SfDfore> sfdfore)
         {
         
             int for_cont = _for_cont;
@@ -280,7 +288,26 @@ namespace RSELFANG.BO
                         dfo_cont = int.Parse(retorno[0].ToString());
 
                         if (dfo_cont != 0)
-                            error= InsertSfDdfor(emp_codi, for_cont, dfo_cont, dfore.con_codi, sfddfor);
+                        {
+                            foreach (SfDdfor ddfor in dfore.Infoddfor)
+                            {                               
+                                LEntrada = new List<object>();
+                                LEntrada.Add(emp_codi);
+                                LEntrada.Add(for_cont);
+                                LEntrada.Add(dfo_cont);
+                                LEntrada.Add(ddfor.ddf_entc);
+                                LEntrada.Add(ddfor.ddf_entd);
+                                LEntrada.Add(ddfor.ddf_numc);
+                                LEntrada.Add(ddfor.ddf_feca);
+                                LEntrada.Add(ddfor.ddf_feci);
+                                LEntrada.Add(ddfor.ddf_fecc);
+
+                                if (ws.InsertarSFDDFOR(LEntrada.ToArray(), out objSalida, out txtError) != 0)
+                                {
+                                    throw new Exception(txtError);
+                                }
+                            }
+                        }
                     }
 
                     if (error != "")
@@ -294,45 +321,7 @@ namespace RSELFANG.BO
             }
 
             return "";
-        }
-
-        private string InsertSfDdfor(int emp_codi, int _for_cont, int dfo_cont, int con_codi ,List<SfDdfor> sfddfor)
-        {          
-            int for_cont = _for_cont;
-
-            try
-            {
-                string txtError = "";               
-                var sfdfforFil = sfddfor.Where(s => s.con_codi == con_codi).ToList();
-
-                foreach (SfDdfor ddfor in sfdfforFil)
-                {
-                    object objSalida;
-                    List<object> LEntrada = new List<object>();
-                    LEntrada.Add(emp_codi);
-                    LEntrada.Add(for_cont);
-                    LEntrada.Add(dfo_cont);
-                    LEntrada.Add(ddfor.ddf_entc);
-                    LEntrada.Add(ddfor.ddf_entd);
-                    LEntrada.Add(ddfor.ddf_numc);
-                    LEntrada.Add(ddfor.ddf_feca);
-                    LEntrada.Add(ddfor.ddf_feci);
-                    LEntrada.Add(ddfor.ddf_fecc);
-
-                    if (ws.InsertarSFDDFOR(LEntrada.ToArray(), out objSalida, out txtError) != 0)
-                    {
-                        throw new Exception(txtError);
-                    }                    
-                }
-            }
-            catch (Exception err)
-            {
-                deletePropo(emp_codi, for_cont);
-                return err.Message;
-            }
-
-            return "";
-        }
+        }       
 
         public TOTransaction<CtRevDoSalida> deletePropo(int emp_codi, int for_cont)
         {
@@ -349,7 +338,90 @@ namespace RSELFANG.BO
             }
         }
 
-      
+        public TOTransaction<sfforpo> updateAllSfForpo(SfFovis sffovis)
+        {
+            sfforpo result = new sfforpo();
+            TOTransaction<sfforpo> salida = new TOTransaction<sfforpo>();
+            
+            try
+            {
+                object varSali;
+                string txtError;
+                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
+                int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
+                              
+                List<object> lentrada = new List<object>();
+                object p_salida = new object();
+
+                lentrada.Add("ActualizarSfForpo");
+                lentrada.Add(sffovis.emp_codi);
+                lentrada.Add(sffovis.for_cont);
+                lentrada.Add(DateTime.Now); // lDtFor_fech 
+                lentrada.Add(sffovis.for_esta);
+                lentrada.Add(DateTime.Now); // lDtFor_fvig 
+                lentrada.Add(DateTime.Now); // lDtFor_fpro 
+                lentrada.Add(sffovis.mod_cont);
+                lentrada.Add(sffovis.postulante.for_cond);
+                lentrada.Add(sffovis.postulante.afi_cont);
+                lentrada.Add(sffovis.for_insf);
+                lentrada.Add(0);
+                lentrada.Add(DateTime.Now); // lDtFor_fasi 
+                lentrada.Add(sffovis.postulante.ite_tipp);
+                lentrada.Add(sffovis.postulante.ite_ocup);
+                lentrada.Add(sffovis.postulante.for_sala);
+                lentrada.Add(sffovis.postulante.for_ipil);
+                lentrada.Add(sffovis.for_tdat);
+                lentrada.Add(0); // lInFor_post 
+                lentrada.Add(sffovis.postulante.for_ting);
+                lentrada.Add(sffovis.postulante.for_nmie);
+                lentrada.Add(sffovis.postulante.for_tapr);
+                lentrada.Add("");  // lStFor_obse
+
+                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                    throw new Exception("Error Actualizando Solicitud :" + txtError);
+               
+                if (txtError == null)
+                {
+                    lentrada = new List<object>();
+                    p_salida = new object();
+
+                    lentrada.Add("ActualizarSfDfomh");
+                    lentrada.Add(sffovis.emp_codi);
+                    lentrada.Add(sffovis.for_cont);
+                    lentrada.Add(sffovis.conyuge.dfo_cont);
+                    lentrada.Add(sffovis.conyuge.afi_cont);
+                    lentrada.Add("C");
+                    lentrada.Add(sffovis.conyuge.afi_docu);
+                    lentrada.Add(sffovis.conyuge.afi_nom1);
+                    lentrada.Add(sffovis.conyuge.afi_nom2);
+                    lentrada.Add(sffovis.conyuge.afi_ape1);
+                    lentrada.Add(sffovis.conyuge.afi_ape2);
+                    lentrada.Add(sffovis.conyuge.afi_gene);
+                    lentrada.Add(sffovis.conyuge.afi_fecn);
+                    lentrada.Add(sffovis.conyuge.ite_pare); 
+                    lentrada.Add(sffovis.conyuge.afi_esci);
+                    lentrada.Add(sffovis.conyuge.for_cond);
+                    lentrada.Add(sffovis.conyuge.apo_cont);
+                    lentrada.Add(sffovis.conyuge.ite_tipp);
+                    lentrada.Add(sffovis.conyuge.ite_ocup);
+                    lentrada.Add(sffovis.conyuge.for_sala);
+                    lentrada.Add(sffovis.conyuge.for_ipil);
+                    lentrada.Add(sffovis.conyuge.apo_razs);
+                    lentrada.Add(sffovis.conyuge.ite_pare);
+                    lentrada.Add(sffovis.conyuge.tip_codi);
+                    
+                    if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                        throw new Exception("Error Actualizando Solicitud :" + txtError);
+                }
+            }
+            catch (Exception err)
+            {
+                salida.retorno = 1;
+                salida.txtRetorno = err.Message;               
+            }
+
+            return salida;
+        }
 
 
     }

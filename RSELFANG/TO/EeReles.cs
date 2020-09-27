@@ -8,6 +8,7 @@ namespace RSELFANG.TO
             Secciones = new List<EeDrele>();
         }
 
+        public string red_encu { get; set; }
         public int num_preg { get; set; }
         public int rel_cont { get; set; }
         public string rel_nomb { get; set; }

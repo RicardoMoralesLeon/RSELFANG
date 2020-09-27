@@ -2,6 +2,7 @@
 using RSELFANG.TO;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 
@@ -22,7 +23,8 @@ namespace RSELFANG.BO
                                
                 if (result.Tables[0].Rows.Count == 0)
                     throw new Exception("No se encontró parametrización para la encuesta especificada.");
-                                
+
+                objReles.red_encu = ConfigurationManager.AppSettings["redEnc"].ToString();
                 objReles.rel_cont = Int32.Parse(result.Tables[0].Rows[0]["REL_CONT"].ToString());
                 objReles.rel_nomb = result.Tables[0].Rows[0]["REL_NOMB"].ToString();
 
@@ -154,6 +156,8 @@ namespace RSELFANG.BO
             }
         }
 
+
+
         public TOTransaction<TOPqParam> GetInfoEerelesService(int rel_serv ,int emp_codi)
         {
             DAOEeReles daoEeReles = new DAOEeReles();
@@ -166,6 +170,25 @@ namespace RSELFANG.BO
             catch (Exception ex)
             {
                 return new TOTransaction<TOPqParam>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction GetInfoValidEeReles(int rem_cont, int rel_serv)
+        {
+            DAOEeReles daoEeReles = new DAOEeReles();
+
+            try
+            {
+                bool  enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
+
+                if (enc)
+                    throw new Exception("La encuesta ya fue diligenciada");
+
+                return new TOTransaction() { retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
             }
         }
     }

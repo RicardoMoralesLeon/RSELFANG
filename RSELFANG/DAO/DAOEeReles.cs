@@ -225,5 +225,35 @@ namespace RSELFANG.DAO
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             return  new DbConnection().Get<TOPqParam>(sql.ToString(), sqlparams);            
         }
+
+        public bool infoValidEereles(int rem_cont,int rel_serv)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            DataSet ds = new DataSet();
+            sql.Append(" SELECT * ");
+            sql.Append(" FROM EE_RESEN");
+            sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT");
+            sql.Append(" WHERE EE_REMES.REM_CONT = @REM_CONT");
+            sql.Append(" AND ITE_SERV = @REL_SERV");
+            sql.Append(" UNION");
+            sql.Append(" SELECT *");
+            sql.Append(" FROM EE_RESEM");
+            sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEM.REM_CONT");
+            sql.Append(" WHERE EE_REMES.REM_CONT = @REM_CONT");
+            sql.Append(" AND ITE_SERV = @REL_SERV");
+            sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
+            sqlparams.Add(new SQLParams("REL_SERV", rel_serv));            
+            ds = new DbConnection().GetDataSet(sql.ToString(), sqlparams);
+
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }           
+        }
     }
 }

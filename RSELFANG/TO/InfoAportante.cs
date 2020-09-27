@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RSELFANG.TO
 {
     public class InfoAportante
     {
+        public int dfo_cont { get; set; }
         public string ite_tipp { get; set; }
         public string ite_ocup { get; set; }
         public int for_sala { get; set; }
@@ -54,10 +56,11 @@ namespace RSELFANG.TO
         public string afi_cond { get; set; }
         public string mpa_codi { get; set; }
         public string mpa_nomb { get; set; }
+        public int apo_cont { get; set; }
         public string apo_razs { get; set; }
         public int ite_pare { get; set; }
-
-
+        public double for_tapr { get; set; }
+        
         public InfoAportante()
         {
             this.for_ting = 0;
@@ -199,6 +202,7 @@ namespace RSELFANG.TO
         public int dfo_vtvi { get; set; }
         public int dfo_tota { get; set; }
         public int for_ting { get; set; }
+        public int for_nmie { get; set; }
         public string mod_cspm { get; set; }
         public string tco_zona { get; set; }
 
@@ -249,7 +253,6 @@ namespace RSELFANG.TO
         public string dfo_matr { get; set; }
         public string dfo_escr { get; set; }
         public string dfo_lurb { get; set; }
-
         public int dfo_nitc { get; set; }
         public string dfo_nomc { get; set; }
         public string dfo_nomp { get; set; }
@@ -257,15 +260,18 @@ namespace RSELFANG.TO
 
     public class SfDfore
     {
+        public int dfo_cont { get; set; }
         public string dfo_tipo { get; set; }
         public double dfo_sald { get; set; }
         public int con_cont { get; set; }
         public int con_codi { get; set; }
         public string con_nomb { get; set; }
+        public List<SfDdfor> Infoddfor { get; set; }
     }
 
     public class SfDdfor
     {
+        public int dfo_cont { get; set; }
         public string dfo_tipo { get; set; }
         public int con_codi { get; set; }
         public string ddf_entc { get; set; }

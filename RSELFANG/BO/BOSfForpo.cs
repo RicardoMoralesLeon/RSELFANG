@@ -117,6 +117,13 @@ namespace RSELFANG.BO
             {
                 sfforpo sfforpo = new sfforpo();
                 sfforpo = daoSfForpo.GetValidInfoPostulante(emp_codi, afi_cont);
+
+                if (sfforpo == null)
+                {
+                    sfforpo = new sfforpo();
+                    sfforpo.for_esta = "";
+                }
+                
                 return new TOTransaction<sfforpo>() { objTransaction = sfforpo, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -360,9 +367,31 @@ namespace RSELFANG.BO
                 sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
                 sffovis.infoHogar = daoSfForpo.GetInfoIngresos(emp_codi, afi_cont);
                 sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+                sffovis.InfodforeA = daoSfForpo.getInfoDforeForpo(emp_codi, for_cont, "A");
 
-                if (sffovis.conyuge == null)
-                    sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
+                foreach (SfDfore dfore in sffovis.InfodforeA)
+                {
+                    List<SfDdfor> ddfor = new List<SfDdfor>();
+                    ddfor = daoSfForpo.getInfoDdforForpo(emp_codi, for_cont, dfore.dfo_cont);
+
+                    if (ddfor != null)
+                        dfore.Infoddfor = ddfor;
+                }
+
+                sffovis.InfodforeR = daoSfForpo.getInfoDforeForpo(emp_codi, for_cont, "R");
+
+                foreach (SfDfore dfore in sffovis.InfodforeR)
+                {
+                    List<SfDdfor> ddfor = new List<SfDdfor>();
+                    ddfor = daoSfForpo.getInfoDdforForpo(emp_codi, for_cont, dfore.dfo_cont);
+
+                    if (ddfor != null)
+                        dfore.Infoddfor = ddfor;
+                }
+
+                if (sffovis.infoHogar == null)
+                    sffovis.infoHogar = new InfoDfoih();             
+
                 if (sffovis.conyuge == null)
                     sffovis.conyuge  = new InfoAportante();
 
@@ -372,11 +401,11 @@ namespace RSELFANG.BO
                 if (sffovis.InfoSfDfomhO == null)
                     sffovis.InfoSfDfomhO = new List<InfoAportante>();
 
-                if (sffovis.Infodfore == null)
-                    sffovis.Infodfore = new List<SfDfore>();
+                if (sffovis.InfodforeA == null)
+                    sffovis.InfodforeA = new List<SfDfore>();
 
-                if (sffovis.Infoddfor == null)
-                    sffovis.Infoddfor = new List<SfDdfor>();
+                if (sffovis.InfodforeR == null)
+                    sffovis.InfodforeR = new List<SfDfore>();
 
                 return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
             }
@@ -395,11 +424,18 @@ namespace RSELFANG.BO
             try
             {
                 sffovis.for_insf = "P";
+                sffovis.for_tdat = "N";
                 sffovis.postulante = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
                 sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
                 sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
                 sffovis.infoHogar = daoSfForpo.GetInfoIngresos(emp_codi, afi_cont);
                 sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
+
+                if (sffovis.conyuge == null)
+                    sffovis.conyuge = new InfoAportante();
+
+                if (sffovis.infoHogar == null)
+                    sffovis.infoHogar = new InfoDfoih();
 
                 if (sffovis.InfoSfDfomhP == null)
                     sffovis.InfoSfDfomhP = new List<InfoAportante>();
@@ -407,7 +443,18 @@ namespace RSELFANG.BO
                 if (sffovis.InfoSfDfomhO == null)
                     sffovis.InfoSfDfomhO = new List<InfoAportante>();
 
-               
+                if (sffovis.InfoSfDfomhP == null)
+                    sffovis.InfoSfDfomhP = new List<InfoAportante>();
+
+                if (sffovis.InfoSfDfomhO == null)
+                    sffovis.InfoSfDfomhO = new List<InfoAportante>();
+
+                if (sffovis.InfodforeA == null)
+                    sffovis.InfodforeA = new List<SfDfore>();
+
+                if (sffovis.InfodforeR == null)
+                    sffovis.InfodforeR = new List<SfDfore>();
+
                 return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -429,8 +476,8 @@ namespace RSELFANG.BO
                 
                 reporte = "SSfForpo";
                 List<string> Params = new List<string>();
-                Params.Add("emp_codi");
-                Params.Add("emp_nomb");
+                Params.Add("102");
+                Params.Add("prueba");
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
                 Params.Add("0"); // DESDE
@@ -440,7 +487,7 @@ namespace RSELFANG.BO
 
                 sf.Append("{SF_FORPO.FOR_CONT} = " + 64 );
                 sf.Append(" AND {AR_SUCUR.SUC_PRIC} = 'S' ");
-                sf.Append(" AND {SF_FORPO.EMP_CODI} = " + emp_codi);
+                sf.Append(" AND {SF_FORPO.EMP_CODI} = 102" );
                 sf.Append(" AND {SF_FORPO.FOR_NUME} <> 0 ");
 
                 url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);

@@ -25,8 +25,7 @@ namespace RSELFANG.TO
         public List<InfoAportante> InfoSfDfomhO { get; set; }
         public Gnmasal InfoGnmasal { get; set; }
 
-        public List<SfDfore> Infodfore { get; set; }
-        public List<SfDdfor> Infoddfor { get; set; }
-
+        public List<SfDfore> InfodforeA { get; set; }
+        public List<SfDfore> InfodforeR { get; set; }
     }
 }
