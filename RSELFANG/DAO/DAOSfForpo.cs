@@ -299,7 +299,7 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT SF_DDFOR.AUD_ESTA,SF_DDFOR.AUD_USUA,SF_DDFOR.AUD_UFAC,SF_DDFOR.EMP_CODI,SF_DDFOR.FOR_CONT, ");
             sql.Append("        SF_DDFOR.DFO_CONT,SF_DDFOR.DDF_CONT,SF_DDFOR.DDF_ENTC,SF_DDFOR.DDF_ENTD,SF_DDFOR.DDF_NUMC,");
-            sql.Append(" 	   SF_DDFOR.DDF_FECA,SF_DDFOR.DDF_FECI,SF_DDFOR.DDF_FECC,SF_DFORE.DFO_TIPO,CON_CODI");
+            sql.Append(" 	   SF_DDFOR.DDF_FECA,SF_DDFOR.DDF_FECI,SF_DDFOR.DDF_FECC,SF_DFORE.DFO_TIPO,CON_CODI,SF_DDFOR.DDF_CONT ");
             sql.Append(" FROM SF_DDFOR");
             sql.Append(" INNER JOIN SF_DFORE ON SF_DFORE.DFO_CONT = SF_DDFOR.DFO_CONT");
             sql.Append(" AND SF_DFORE.FOR_CONT = SF_DDFOR.FOR_CONT");
@@ -666,7 +666,7 @@ namespace RSELFANG.DAO
         public Sfparam GetSfParam(int emp_codi)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT PAR_JURA, PAR_PPDT, ITE_CODI ITE_CONT ");
+            sql.Append(" SELECT PAR_JURA, PAR_PPDT, GN_ITEMS.ITE_CONT, SF_PARAM.PAR_SMVR ");
             sql.Append(" FROM SF_PARAM");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = SF_PARAM.ITE_CONT");
             sql.Append(" AND GN_ITEMS.TIT_CONT = 486");
@@ -738,74 +738,53 @@ namespace RSELFANG.DAO
             return new DbConnection().Get<InfoAportante>(sql.ToString(), sqlparams);
         }
 
-        public InfoDfoih GetInfoIngresos(int emp_codi, int afi_cont)
+        public InfoDfoih GetInfoHogar(int emp_codi, int for_cont)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT SF_FORPO.AUD_ESTA,SF_FORPO.AUD_USUA,SF_FORPO.AUD_UFAC, SF_FORPO.EMP_CODI,SF_FORPO.FOR_CONT,");
-            sql.Append(" SF_FORPO.FOR_NUME, SF_FORPO.FOR_FECH,SF_FORPO.FOR_ESTA,SF_FORPO.FOR_FVIG,");
-            sql.Append(" SF_FORPO.FOR_FPRO,SF_FORPO.MOD_CONT,SF_FORPO.FOR_INSF, SF_FORPO.FOR_NECH,");
-            sql.Append(" SF_FORPO.FOR_ANOP,SF_FORPO.FOR_MESP,SF_FORPO.FOR_DIAP, SF_FORPO.RAD_CONT,");
-            sql.Append(" SF_FORPO.FOR_FASI,SF_FORPO.ITE_TIPP,SF_FORPO.ITE_OCUP,SF_FORPO.FOR_SALA,");
-            sql.Append(" SF_FORPO.FOR_COND,SF_FORPO.FOR_POST,SF_MODVI.MOD_NOMB,SU_AFILI.TIP_CODI,");
-            sql.Append(" SF_FORPO.AFI_CONT,SU_AFILI.AFI_DOCU,GN_TIPDO.TIP_NOMB,SU_AFILI.AFI_NOM1, SU_AFILI.AFI_NOM2,");
-            sql.Append(" SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2,SU_AFILI.AFI_FECN,SU_AFILI.AFI_ESCI,SU_AFILI.AFI_CATE,");
-            sql.Append(" SU_AFILI.AFI_DIRE, SU_AFILI.AFI_GENE,RN_RADIC.RAD_NUME,ITEMS_TP.ITE_CODI ITE_CODI_TP,");
-            sql.Append(" ITEMS_TP.ITE_NOMB ITE_NOMB_TP,ITEMS_OC.ITE_CODI ITE_CODI_OC, ITEMS_OC.ITE_NOMB ITE_NOMB_OC,SF_TCONV.TCO_CODI,SF_TCONV.TCO_NOMB,");
-            sql.Append(" SF_TCONV.TCO_ZONA,SF_FORPO.FOR_IPIL,GN_LOCAL.LOC_NOMB,GN_MUNIC.MUN_NOMB, GN_DEPAR.DEP_NOMB,GN_REGIO.REG_NOMB,GN_PAISE.PAI_NOMB,");
-            sql.Append(" SU_AFILI.PAI_CODI, SU_AFILI.REG_CODI,SU_AFILI.DEP_CODI,SU_AFILI.MUN_CODI,SU_AFILI.LOC_CODI, SU_AFILI.AFI_MAIL,SU_AFILI.AFI_TELE,");
-            sql.Append(" GN_BARRI.BAR_CODI, GN_BARRI.BAR_NOMB,SU_CONYU.AFI_CONT AFI_CONY,SF_MODVI.MOD_CSPM,SF_FORPO.FOR_TDAT,");
-            sql.Append(" SF_MODVI.MOD_TVIS,ITEMS_TP.TIT_CONT TIT_CONT_TP,ITEMS_OC.TIT_CONT TIT_CONT_OC,");
-            sql.Append(" SF_FORPO.FOR_TING,SF_FORPO.FOR_NMIE,SF_FORPO.FOR_TAPR,SF_FORPO.FOR_OBSE,");
-            sql.Append(" SF_DMODV.DMO_RSMD,SF_DMODV.DMO_RSMH,SF_DMODV.DMO_OPER,SF_DMODV.DMO_FSVS");
-            sql.Append(" FROM SF_FORPO");
-            sql.Append(" LEFT OUTER JOIN RN_RADIC ON SF_FORPO.EMP_CODI = RN_RADIC.EMP_CODI");
-            sql.Append(" AND SF_FORPO.RAD_CONT = RN_RADIC.RAD_CONT");
-            sql.Append(" LEFT OUTER JOIN GN_ITEMS ITEMS_TP ON SF_FORPO.ITE_TIPP = ITEMS_TP.ITE_CONT");
-            sql.Append(" LEFT OUTER JOIN SU_CONYU ON SF_FORPO.EMP_CODI = SU_CONYU.EMP_CODI");
-            sql.Append(" AND SF_FORPO.AFI_CONT = SU_CONYU.AFI_TRAB");
-            sql.Append(" AND SU_CONYU.CON_PERM = 'S',GN_TIPDO,SU_AFILI,SF_MODVI,");
-            sql.Append(" SF_TCONV,GN_ITEMS ITEMS_OC,GN_LOCAL,GN_MUNIC,");
-            sql.Append(" GN_DEPAR,GN_REGIO,GN_PAISE,GN_BARRI,SF_DMODV");
-            sql.Append(" WHERE SF_FORPO.EMP_CODI = SF_MODVI.EMP_CODI AND SF_FORPO.MOD_CONT = SF_MODVI.MOD_CONT");
-            sql.Append(" AND SF_TCONV.EMP_CODI = SF_MODVI.EMP_CODI AND SF_TCONV.TCO_CONT = SF_MODVI.TCO_CONT");
-            sql.Append(" AND SF_FORPO.ITE_OCUP = ITEMS_OC.ITE_CONT AND SU_AFILI.TIP_CODI = GN_TIPDO.TIP_CODI");
-            sql.Append(" AND SF_FORPO.EMP_CODI = SU_AFILI.EMP_CODI AND SF_FORPO.AFI_CONT = SU_AFILI.AFI_CONT");
-            sql.Append(" AND SU_AFILI.PAI_CODI = GN_PAISE.PAI_CODI AND SU_AFILI.REG_CODI = GN_REGIO.REG_CODI");
-            sql.Append(" AND SU_AFILI.PAI_CODI = GN_REGIO.PAI_CODI AND SU_AFILI.DEP_CODI = GN_DEPAR.DEP_CODI");
-            sql.Append(" AND SU_AFILI.REG_CODI = GN_DEPAR.REG_CODI AND SU_AFILI.PAI_CODI = GN_DEPAR.PAI_CODI");
-            sql.Append(" AND SU_AFILI.MUN_CODI = GN_MUNIC.MUN_CODI AND SU_AFILI.DEP_CODI = GN_MUNIC.DEP_CODI");
-            sql.Append(" AND SU_AFILI.REG_CODI = GN_MUNIC.REG_CODI AND SU_AFILI.PAI_CODI = GN_MUNIC.PAI_CODI");
-            sql.Append(" AND SU_AFILI.LOC_CODI = GN_LOCAL.LOC_CODI AND SU_AFILI.MUN_CODI = GN_LOCAL.MUN_CODI");
-            sql.Append(" AND SU_AFILI.DEP_CODI = GN_LOCAL.DEP_CODI AND SU_AFILI.REG_CODI = GN_LOCAL.REG_CODI");
-            sql.Append(" AND SU_AFILI.PAI_CODI = GN_LOCAL.PAI_CODI AND SU_AFILI.LOC_CODI = GN_BARRI.LOC_CODI");
-            sql.Append(" AND SU_AFILI.MUN_CODI = GN_BARRI.MUN_CODI AND SU_AFILI.DEP_CODI = GN_BARRI.DEP_CODI");
-            sql.Append(" AND SU_AFILI.REG_CODI = GN_BARRI.REG_CODI AND SU_AFILI.PAI_CODI = GN_BARRI.PAI_CODI");
-            sql.Append(" AND SU_AFILI.BAR_CODI = GN_BARRI.BAR_CODI");
-            sql.Append(" AND SF_MODVI.EMP_CODI = SF_DMODV.EMP_CODI");
-            sql.Append(" AND SF_MODVI.MOD_CONT = SF_DMODV.MOD_CONT");
-            sql.Append(" AND SF_FORPO.EMP_CODI = SF_MODVI.EMP_CODI AND SF_FORPO.MOD_CONT = SF_MODVI.MOD_CONT");
-            sql.Append(" AND SF_TCONV.EMP_CODI = SF_MODVI.EMP_CODI AND SF_TCONV.TCO_CONT = SF_MODVI.TCO_CONT");
-            sql.Append(" AND SU_AFILI.AFI_CONT = @AFI_CONT");
-            sql.Append(" AND SF_FORPO.EMP_CODI = @EMP_CODI");
-            sql.Append(" AND FOR_IPIL BETWEEN SF_DMODV.DMO_RSMD AND SF_DMODV.DMO_RSMH");
+            sql.Append(" SELECT SF_DFOIH.AUD_ESTA,SF_DFOIH.AUD_USUA,SF_DFOIH.AUD_UFAC, ");
+            sql.Append(" SF_DFOIH.EMP_CODI,SF_DFOIH.FOR_CONT,SF_DFOIH.PAI_CODI, ");
+            sql.Append(" SF_DFOIH.REG_CODI,SF_DFOIH.DEP_CODI,SF_DFOIH.MUN_CODI, ");
+            sql.Append(" SF_DFOIH.LOC_CODI,SF_DFOIH.BAR_CODI,SF_DFOIH.DFO_DIRE, ");
+            sql.Append(" SF_DFOIH.DFO_VSOL,SF_DFOIH.APO_CONT,SF_DFOIH.DFO_DIEM, ");
+            sql.Append(" SF_DFOIH.DFO_VPRE,SF_DFOIH.DFO_VLOT,SF_DFOIH.DFO_FESC, ");
+            sql.Append(" SF_DFOIH.DFO_MATR,SF_DFOIH.DFO_ESCR, ");
+            sql.Append(" SF_DFOIH.DFO_LURB,SF_DFOIH.DFO_VTVI, ");
+            sql.Append(" SF_DFOIH.PVD_CODI,PO_PVDOR.PVD_CODA DFO_NITC,PO_PVDOR.PVR_NOCO DFO_NOMC, ");
+            sql.Append(" SF_DFOIH.DFO_NOMP, SF_DFOIH.DFO_TELE ");
+            sql.Append(" FROM SF_DFOIH,PO_PVDOR,AR_APOVO,AR_TIAPO ");
+            sql.Append(" WHERE SF_DFOIH.EMP_CODI = AR_APOVO.EMP_CODI ");
+            sql.Append(" AND SF_DFOIH.APO_CONT = AR_APOVO.APO_CONT ");
+            sql.Append(" AND AR_APOVO.EMP_CODI = AR_TIAPO.EMP_CODI ");
+            sql.Append(" AND AR_APOVO.TIA_CONT = AR_TIAPO.TIA_CONT ");
+            sql.Append(" AND SF_DFOIH.EMP_CODI = PO_PVDOR.EMP_CODI ");
+            sql.Append(" AND SF_DFOIH.PVD_CODI = PO_PVDOR.PVD_CODI ");
+            sql.Append(" AND SF_DFOIH.EMP_CODI = @EMP_CODI		   ");
+            sql.Append(" AND SF_DFOIH.FOR_CONT = @FOR_CONT		   ");
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
-            sqlparams.Add(new SQLParams("AFI_CONT", afi_cont));        
+            sqlparams.Add(new SQLParams("FOR_CONT", for_cont));        
             return new DbConnection().Get<InfoDfoih>(sql.ToString(), sqlparams);
         }
 
         public InfoDfoih GetInfoIngresos(int emp_codi, int mod_cont, double for_sala)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT SF_DMODV.DMO_RSMD,SF_DMODV.DMO_RSMH,SF_DMODV.DMO_OPER,SF_DMODV.DMO_FSVS,SF_MODVI.MOD_CSPM, ");
-            sql.Append(" CONVERT(INT,MAS_VRSM * SF_DMODV.DMO_FSVS) DFO_VSOL ");
-            sql.Append(" FROM SF_MODVI,SF_DMODV, GN_MASAL ");
-            sql.Append(" WHERE SF_MODVI.EMP_CODI = SF_DMODV.EMP_CODI ");
-            sql.Append("   AND SF_MODVI.MOD_CONT = SF_DMODV.MOD_CONT ");
-            sql.Append("   AND SF_MODVI.EMP_CODI = @EMP_CODI ");
-            sql.Append("   AND SF_MODVI.MOD_CONT = @MOD_CONT ");
-            sql.Append("   AND @FOR_SALA BETWEEN SF_DMODV.DMO_RSMD AND SF_DMODV.DMO_RSMH ");
-            sql.Append("   AND MAS_ANOP = @MAS_ANOP ");
+            sql.Append(" SELECT SF_DMODV.DMO_RSMD,SF_DMODV.DMO_RSMH,SF_DMODV.DMO_OPER,SF_DMODV.DMO_FSVS,SF_MODVI.MOD_CSPM,  ");
+            sql.Append(" CONVERT(INT,MAS_VRSM * SF_DMODV.DMO_FSVS) DFO_VSOL,SF_TCONV.TCO_CODI,  SF_TCONV.TCO_NOMB, MOD_CSPM,TCO_ZONA");
+            sql.Append(" FROM SF_MODVI,SF_DMODV, GN_MASAL,SF_CONVE,SF_DCONV,SF_TCONV");
+            sql.Append(" WHERE SF_MODVI.EMP_CODI = SF_DMODV.EMP_CODI  ");
+            sql.Append(" AND SF_MODVI.MOD_CONT = SF_DMODV.MOD_CONT  ");
+            sql.Append(" AND SF_MODVI.EMP_CODI = @EMP_CODI");
+            sql.Append(" AND SF_MODVI.MOD_CONT = @MOD_CONT");
+            sql.Append(" AND @FOR_SALA BETWEEN SF_DMODV.DMO_RSMD AND SF_DMODV.DMO_RSMH  ");
+            sql.Append(" AND MAS_ANOP = @MAS_ANOP ");
+            sql.Append(" AND SF_CONVE.TCO_CONT = SF_MODVI.TCO_CONT  ");
+            sql.Append(" AND SF_CONVE.EMP_CODI = SF_MODVI.EMP_CODI  ");
+            sql.Append(" AND SF_DCONV.CON_CONT = SF_CONVE.CON_CONT  ");
+            sql.Append(" AND SF_DCONV.EMP_CODI = SF_CONVE.EMP_CODI  ");
+            sql.Append(" AND SF_DCONV.DCO_ESTA = 'A' ");
+            sql.Append(" AND SF_MODVI.TCO_CONT = SF_TCONV.TCO_CONT ");
+            sql.Append(" AND SF_MODVI.EMP_CODI = SF_TCONV.EMP_CODI ");
             List <SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("MOD_CONT", mod_cont));
@@ -960,7 +939,7 @@ namespace RSELFANG.DAO
             sql.Append(" DFO_SALA FOR_SALA, DFO_COND FOR_COND, GN_TIPDO.TIP_CODI, TIP_NOMB, AFI_CONT, DFO_DOCU AFI_DOCU,");
             sql.Append("     SF_DFOMH.DFO_NOM1 AFI_NOM1, SF_DFOMH.DFO_NOM2 AFI_NOM2, SF_DFOMH.DFO_APE1 AFI_APE1, SF_DFOMH.DFO_APE2 AFI_APE2,");
             sql.Append("     CONVERT(VARCHAR, DFO_FECN, 103) AFI_FECN, DFO_ESCI AFI_ESCI, DFO_GENE AFI_GENE, DFO_COND AFI_COND, DFO_IPIL FOR_IPIL,");
-            sql.Append(" DFO_SALA FOR_SALA, ITEMS_OC.ITE_CODI, ITEMS_OC.ITE_NOMB, APO_RAZS");
+            sql.Append(" DFO_SALA FOR_SALA, ITEMS_OC.ITE_CODI, ITEMS_OC.ITE_NOMB, APO_RAZS, DFO_CONT,APO_CONT ");
             sql.Append(" FROM SF_DFOMH");
             sql.Append(" LEFT OUTER JOIN SU_MPARE ON SF_DFOMH.EMP_CODI = SU_MPARE.EMP_CODI AND SF_DFOMH.MPA_CONT = SU_MPARE.MPA_CONT");
             sql.Append(" LEFT OUTER JOIN GN_ITEMS ITEMS_TP ON SF_DFOMH.ITE_TIPP = ITEMS_TP.ITE_CONT");
@@ -973,6 +952,29 @@ namespace RSELFANG.DAO
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("FOR_CONT", for_cont));
             return new DbConnection().Get<InfoAportante>(sql.ToString(), sqlparams);
+        }
+
+        public bool validInsert(string tabla, int emp_codi, int for_cont, string filter = "")
+        {
+            DataSet ds = new DataSet();
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT * ");           
+            sql.Append(" FROM " + tabla);
+            sql.Append(" WHERE EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND   FOR_CONT = @FOR_CONT ");
+
+            if (filter != "")
+                sql.Append(filter);
+    ;
+            List<SQLParams> sqlparams = new List<SQLParams>();            
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("FOR_CONT", for_cont));
+            ds= new DbConnection().GetDataSet(sql.ToString(), sqlparams);
+
+            if (ds.Tables[0].Rows.Count == 0)
+                return true;
+            else
+                return false;
         }
     }
 }

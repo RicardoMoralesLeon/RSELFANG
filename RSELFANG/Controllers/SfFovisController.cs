@@ -13,19 +13,18 @@ namespace RSELFANG.Controllers
             return bo.InsertSfForpo(sffovis);
         }
 
-        [Route("api/Fovis/SfForpoUpdateAllInfo")]
+        [Route("api/Fovis/SfForpoUpdateInfo")]
         public TOTransaction<sfforpo> Post(SfFovis sffovis, bool upt = true)
         {
             BOSfFovis bo = new BOSfFovis();           
-            return bo.updateAllSfForpo(sffovis);
+            return bo.updateSfForpo(sffovis);
         }
 
-        //[Route("api/Fovis/SfForpoUpdateAInfo")]
-        //public TOTransaction<sfforpo> Post(SfFovis sffovis, string a = "")
-        //{
-        //    BOSfFovis bo = new BOSfFovis();
-        //    // sffovis.InfoAportante.emp_codi = new tools.General().GetEmpCodi(sffovis.InfoAportante.emp_codi);
-        //    return bo.updateSfForpo(sffovis);
-        //}
+        [Route("api/Fovis/SfForpoUpdateInfoRecursos")]
+        public TOTransaction<sfforpo> Post(SfFovis sffovis, bool upt = true, bool upt2 = true)
+        {
+            BOSfFovis bo = new BOSfFovis();
+            return bo.updateSfForpoRecursos(sffovis);
+        }
     }
 }

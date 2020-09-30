@@ -6,8 +6,8 @@ namespace RSELFANG.TO
     public class InfoAportante
     {
         public int dfo_cont { get; set; }
-        public string ite_tipp { get; set; }
-        public string ite_ocup { get; set; }
+        public int ite_tipp { get; set; }
+        public int ite_ocup { get; set; }
         public int for_sala { get; set; }
         public string for_cond { get; set; }        
         public string mod_nomb { get; set; }
@@ -19,14 +19,11 @@ namespace RSELFANG.TO
         public string afi_nom2 { get; set; }
         public string afi_ape1 { get; set; }
         public string afi_ape2 { get; set; }
-        public string afi_fecn { get; set; }
+        public DateTime afi_fecn { get; set; }
         public string afi_esci { get; set; }
         public string afi_cate { get; set; }
         public string afi_dire { get; set; }
         public string afi_gene { get; set; }
-       
-        public string ite_codi_tp { get; set; }
-        public string ite_nomb_tp { get; set; }
         public string ite_codi { get; set; }
         public string ite_nomb { get; set; }
         public int tco_codi { get; set; }
@@ -54,6 +51,7 @@ namespace RSELFANG.TO
         public double for_apr { get; set; }
         public int afi_edad { get; set; }
         public string afi_cond { get; set; }
+        public int mpa_cont { get; set; }
         public string mpa_codi { get; set; }
         public string mpa_nomb { get; set; }
         public int apo_cont { get; set; }
@@ -69,13 +67,16 @@ namespace RSELFANG.TO
 
     public class InfoEmpresa
     {
+        public int apo_cont { get; set; }
         public string apo_coda { get; set; }
         public string apo_razs { get; set; }
-        public string tia_codi { get; set; }
+        public int tia_codi { get; set; }
         public string tia_nomb { get; set; }
-        public string dep_codi { get; set; }
+        public int pai_codi { get; set; }
+        public int reg_codi { get; set; }
+        public int dep_codi { get; set; }        
         public string dep_nomb { get; set; }
-        public string mun_codi { get; set; }
+        public int mun_codi { get; set; }
         public string mun_nomb { get; set; }
         public string dsu_dire { get; set; }
         public string tra_prin { get; set; }
@@ -83,11 +84,11 @@ namespace RSELFANG.TO
         public InfoEmpresa() {
             apo_coda = "";
             apo_razs = "";
-            tia_codi = "";
+            tia_codi = 0;
             tia_nomb = "";
-            dep_codi = "";
+            dep_codi = 0;
             dep_nomb = "";
-            mun_codi = "";
+            mun_codi = 0;
             mun_nomb = "";
             dsu_dire = "";
             tra_prin = "";
@@ -205,7 +206,8 @@ namespace RSELFANG.TO
         public int for_nmie { get; set; }
         public string mod_cspm { get; set; }
         public string tco_zona { get; set; }
-
+        public int pvd_codi { get; set; }
+       
         public InfoDfoih()
         {
             this.mod_cspm = "";
@@ -267,11 +269,17 @@ namespace RSELFANG.TO
         public int con_codi { get; set; }
         public string con_nomb { get; set; }
         public List<SfDdfor> Infoddfor { get; set; }
+
+        public SfDfore()
+        {
+            Infoddfor = new List<SfDdfor>();
+        }
     }
 
     public class SfDdfor
     {
         public int dfo_cont { get; set; }
+        public int ddf_cont { get; set; }
         public string dfo_tipo { get; set; }
         public int con_codi { get; set; }
         public string ddf_entc { get; set; }

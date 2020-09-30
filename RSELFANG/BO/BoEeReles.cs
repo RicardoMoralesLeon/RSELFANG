@@ -9,18 +9,20 @@ using System.Linq;
 namespace RSELFANG.BO
 {
     public class BoEeReles
-    {        
-        public TOTransaction<EeReles> GetInfoDataEeReles(int rel_cont)
+    {
+        public TOTransaction<EeReles> GetInfoDataEeReles(int rel_cont, int rem_cont,int rel_serv)
         {
-            DAOEeReles daoEeReles= new DAOEeReles();
+            DAOEeReles daoEeReles = new DAOEeReles();
 
             try
             {
+                bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
+
                 DataSet result = new DataSet();
                 EeReles objReles = new EeReles();
                 int countPreg = 0;
-                result = daoEeReles.getEeReles(rel_cont);
-                               
+                result = daoEeReles.getEeReles(rel_cont, rem_cont);
+
                 if (result.Tables[0].Rows.Count == 0)
                     throw new Exception("No se encontró parametrización para la encuesta especificada.");
 
@@ -37,23 +39,30 @@ namespace RSELFANG.BO
 
                     if (!objReles.Secciones.Exists(x => x.sec_nomb == objDrele.sec_nomb))
                     {
-                        objReles.Secciones.Add(objDrele);                        
+                        objReles.Secciones.Add(objDrele);
                     }
-                        
+
                     foreach (DataRow drr in result.Tables[0].Rows)
                     {
                         EeDrsee objDrsee = new EeDrsee();
                         objDrsee.drs_preg = drr["DRS_PREG"].ToString();
-                        objDrsee.drs_clas = drr["DRS_CLAS"].ToString();                        
+                        objDrsee.drs_clas = drr["DRS_CLAS"].ToString();
                         objDrsee.sec_cont = Convert.ToInt32(drr["SEC_CONT"].ToString());
                         objDrsee.drs_orde = Convert.ToInt32(drr["DRS_ORDE"].ToString());
                         objDrsee.rse_cont = Convert.ToInt32(drr["RSE_CONT"].ToString());
                         objDrsee.drs_cont = Convert.ToInt32(drr["DRS_CONT"].ToString());
                         objDrsee.drp_cont = Convert.ToInt32(drr["DRP_CONT"].ToString());
+                        objDrsee.res_valo = drr["RES_VALO"].ToString();
 
-                        if (!objDrele.Preguntas.Exists(x => x.drs_preg == objDrsee.drs_preg) && objDrele.dre_secc.Equals(objDrsee.sec_cont))
+                        if (enc == false)
                         {
-                            objDrele.Preguntas.Add(objDrsee);                            
+                            if (!objDrele.Preguntas.Exists(x => x.drs_preg == objDrsee.drs_preg) && objDrele.dre_secc.Equals(objDrsee.sec_cont))
+                                objDrele.Preguntas.Add(objDrsee);
+                        }
+                        else
+                        {
+                            if (!objDrele.Preguntas.Exists(x => x.drs_preg == objDrsee.drs_preg) && objDrele.dre_secc.Equals(objDrsee.sec_cont) && objDrsee.res_valo != "")
+                                objDrele.Preguntas.Add(objDrsee);
                         }
 
                         foreach (DataRow drrr in result.Tables[0].Rows)
@@ -65,13 +74,13 @@ namespace RSELFANG.BO
                                 objDdprc.drp_cont = Convert.ToInt32(drrr["DRP_CONT"].ToString());
                                 objDdprc.ddp_opci = drrr["DPP_OPCI"].ToString();
                                 objDdprc.dsp_orde = Convert.ToInt32(drrr["DSP_ORDE"].ToString());
-
+                              
                                 if (!objDrsee.Respuestas.Exists(x => x.ddp_opci == objDdprc.ddp_opci) && objDrele.dre_secc.Equals(objDrsee.sec_cont)
                                     && !objDrsee.Respuestas.Exists(x => x.ddp_cont == objDdprc.ddp_cont) && objDdprc.drp_cont.Equals(objDrsee.drp_cont))
                                     objDrsee.Respuestas.Add(objDdprc);
                             }
                         }
-                    }                                           
+                    }
                 }
 
 
@@ -79,7 +88,7 @@ namespace RSELFANG.BO
                 {
                     countPreg += objReles.Secciones[i].Preguntas.Count;
                 }
-                                
+
                 objReles.num_preg = countPreg;
                 return new TOTransaction<EeReles>() { objTransaction = objReles, retorno = 0, txtRetorno = "" };
             }
@@ -100,8 +109,8 @@ namespace RSELFANG.BO
                 PqInpqr pqr = pqrList.FirstOrDefault();
 
                 if (pqr == null)
-                    throw new Exception("No se encontraron datos con los parámetros especificados");   
-                
+                    throw new Exception("No se encontraron datos con los parámetros especificados");
+
                 pqr.seguimientos = daoDinpq.getpqDinPq(inp_cont, emp_codi);
                 return new TOTransaction<PqInpqr>() { objTransaction = pqr, retorno = 0, txtRetorno = "" };
 
@@ -117,7 +126,7 @@ namespace RSELFANG.BO
             DAOPqParam daoPqParam = new DAOPqParam();
             try
             {
-                TOPqParam pqrList = daoPqParam.GetMailParam(emp_codi);                
+                TOPqParam pqrList = daoPqParam.GetMailParam(emp_codi);
                 return new TOTransaction<TOPqParam>() { objTransaction = pqrList, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
@@ -158,7 +167,7 @@ namespace RSELFANG.BO
 
 
 
-        public TOTransaction<TOPqParam> GetInfoEerelesService(int rel_serv ,int emp_codi)
+        public TOTransaction<TOPqParam> GetInfoEerelesService(int rel_serv, int emp_codi)
         {
             DAOEeReles daoEeReles = new DAOEeReles();
 
@@ -179,7 +188,7 @@ namespace RSELFANG.BO
 
             try
             {
-                bool  enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
+                bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
 
                 if (enc)
                     throw new Exception("La encuesta ya fue diligenciada");
@@ -189,6 +198,36 @@ namespace RSELFANG.BO
             catch (Exception ex)
             {
                 return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<EeResen>> getInfoEeresen(int rem_cont, int emp_codi)
+        {
+            DAOEeReles daoEeReles = new DAOEeReles();
+
+            try
+            {
+                var infoResen = daoEeReles.getInfoEeresen(rem_cont, emp_codi);                
+                return new TOTransaction<List<EeResen>> { retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<EeResen>> { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<EeResem>> getInfoEeresem(int rem_cont, int emp_codi)
+        {
+            DAOEeReles daoEeReles = new DAOEeReles();
+
+            try
+            {
+                var infoResem = daoEeReles.getInfoEeresem(rem_cont, emp_codi);
+                return new TOTransaction<List<EeResem>> { retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<EeResem>> { retorno = 1, txtRetorno = ex.Message };
             }
         }
     }

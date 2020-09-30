@@ -81,10 +81,7 @@ namespace RSELFANG.BO
 
             try
             {
-                if(sffovis.infoHogar.mod_cspm == "S")
-                {
-                    msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.infoHogar);
-                }                
+                msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.infoHogar);
 
                 if (msgError == "")
                 {
@@ -109,7 +106,7 @@ namespace RSELFANG.BO
 
                         if (msgError == "")
                         {
-                            msgError = InsertSfDfore(emp_codi, for_cont, sffovis.InfodforeR);
+                           updateSfForpoRecursos(sffovis);
                         }
                     }
                 }
@@ -135,12 +132,12 @@ namespace RSELFANG.BO
                 List<object> LEntrada = new List<object>();
                 LEntrada.Add(emp_codi);
                 LEntrada.Add(for_cont);
-                LEntrada.Add(sfdfoih.pai_codi);
-                LEntrada.Add(sfdfoih.reg_codi);
-                LEntrada.Add(sfdfoih.dep_codi);
-                LEntrada.Add(sfdfoih.mun_codi);
-                LEntrada.Add(sfdfoih.loc_codi);
-                LEntrada.Add(sfdfoih.bar_codi);
+                LEntrada.Add(null);
+                LEntrada.Add(null);
+                LEntrada.Add(null);
+                LEntrada.Add(null);
+                LEntrada.Add(null);
+                LEntrada.Add(null);
                 LEntrada.Add(sfdfoih.dfo_dire);
                 LEntrada.Add(sfdfoih.dfo_tele);
                 LEntrada.Add(sfdfoih.dfo_vsol);
@@ -151,9 +148,8 @@ namespace RSELFANG.BO
                 LEntrada.Add(sfdfoih.dfo_matr);
                 LEntrada.Add(sfdfoih.dfo_escr);
                 LEntrada.Add(sfdfoih.dfo_lurb);
-                LEntrada.Add(sfdfoih.dfo_nitc);
-                LEntrada.Add(sfdfoih.dfo_nomc);
                 LEntrada.Add(sfdfoih.dfo_nomp);
+                LEntrada.Add(sfdfoih.pvd_codi); 
 
                 if (ws.InsertarSFDFOIH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
@@ -189,15 +185,32 @@ namespace RSELFANG.BO
                 LEntrada.Add(sfdfomh.afi_nom2);
                 LEntrada.Add(sfdfomh.afi_ape1);
                 LEntrada.Add(sfdfomh.afi_ape2);
-                LEntrada.Add(DateTime.Parse(sfdfomh.afi_fecn));
+                LEntrada.Add(sfdfomh.afi_fecn);
                 LEntrada.Add(sfdfomh.afi_esci);
                 LEntrada.Add(sfdfomh.afi_gene);
                 LEntrada.Add(sfdfomh.for_cond);
                 LEntrada.Add(sfdfomh.apo_razs);
                 LEntrada.Add(sfdfomh.for_sala);
-                LEntrada.Add(sfdfomh.ite_codi_tp);
-                LEntrada.Add(sfdfomh.ite_pare);
-                LEntrada.Add(sfdfomh.ite_codi); // ocupacion
+                LEntrada.Add(sfdfomh.ite_tipp);
+
+                if (dfo_tipo == "O")
+                {
+                    LEntrada.Add(sfdfomh.ite_pare);
+                    LEntrada.Add(0);
+                }
+                else if (dfo_tipo == "C")
+                {
+                    LEntrada.Add(0);
+                    LEntrada.Add(0); 
+                }
+                else
+                {
+                    LEntrada.Add(0);
+                    LEntrada.Add(sfdfomh.ite_pare);
+                }
+
+                LEntrada.Add(sfdfomh.ite_ocup); // ocupacion
+                LEntrada.Add(sfdfomh.tip_codi);
 
                 if (ws.InsertarSFDFOMH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
@@ -233,15 +246,32 @@ namespace RSELFANG.BO
                     LEntrada.Add(perca.afi_nom2);
                     LEntrada.Add(perca.afi_ape1);
                     LEntrada.Add(perca.afi_ape2);
-                    LEntrada.Add(DateTime.Parse(perca.afi_fecn));
+                    LEntrada.Add(perca.afi_fecn);
                     LEntrada.Add(perca.afi_esci);
                     LEntrada.Add(perca.afi_gene);
-                    LEntrada.Add(perca.afi_cond);
-                    LEntrada.Add(perca.apo_razs);
+                    LEntrada.Add(perca.for_cond);
+                    LEntrada.Add(""); // apo_razs
                     LEntrada.Add(perca.for_sala);
-                    LEntrada.Add(perca.ite_codi_tp);
-                    LEntrada.Add(perca.ite_pare);
-                    LEntrada.Add(perca.ite_codi);
+                    LEntrada.Add(perca.ite_tipp); // tipo postulante cont
+
+                    if (dfo_tipo == "O")
+                    {
+                        LEntrada.Add(perca.ite_pare);
+                        LEntrada.Add(0);
+                    }
+                    else if (dfo_tipo == "C")
+                    {
+                        LEntrada.Add(0);
+                        LEntrada.Add(0);
+                    }
+                    else
+                    {
+                        LEntrada.Add(0);
+                        LEntrada.Add(perca.ite_pare);
+                    }
+
+                    LEntrada.Add(perca.ite_ocup);
+                    LEntrada.Add(perca.tip_codi);
 
                     if (ws.InsertarSFDFOMH(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                     {
@@ -258,71 +288,6 @@ namespace RSELFANG.BO
             return "";
         }
 
-        private string InsertSfDfore(int emp_codi, int _for_cont, List<SfDfore> sfdfore)
-        {
-        
-            int for_cont = _for_cont;
-            string error = "";
-
-            try
-            {
-                string txtError = "";
-              
-                foreach (SfDfore dfore in sfdfore)
-                {
-                    object objSalida;
-                    List<object> LEntrada = new List<object>();
-                    LEntrada.Add(emp_codi);
-                    LEntrada.Add(for_cont);
-                    LEntrada.Add(dfore.con_codi);
-                    LEntrada.Add(dfore.dfo_sald);
-
-                    if (ws.InsertarSFDFORE(LEntrada.ToArray(), out objSalida, out txtError) != 0)
-                    {
-                        throw new Exception(txtError);
-                    }
-                    else
-                    {
-                        int dfo_cont = 0;
-                        var retorno = (object[])objSalida;
-                        dfo_cont = int.Parse(retorno[0].ToString());
-
-                        if (dfo_cont != 0)
-                        {
-                            foreach (SfDdfor ddfor in dfore.Infoddfor)
-                            {                               
-                                LEntrada = new List<object>();
-                                LEntrada.Add(emp_codi);
-                                LEntrada.Add(for_cont);
-                                LEntrada.Add(dfo_cont);
-                                LEntrada.Add(ddfor.ddf_entc);
-                                LEntrada.Add(ddfor.ddf_entd);
-                                LEntrada.Add(ddfor.ddf_numc);
-                                LEntrada.Add(ddfor.ddf_feca);
-                                LEntrada.Add(ddfor.ddf_feci);
-                                LEntrada.Add(ddfor.ddf_fecc);
-
-                                if (ws.InsertarSFDDFOR(LEntrada.ToArray(), out objSalida, out txtError) != 0)
-                                {
-                                    throw new Exception(txtError);
-                                }
-                            }
-                        }
-                    }
-
-                    if (error != "")
-                        throw new Exception(error);
-                }
-
-            }
-            catch (Exception err)
-            {
-                return err.Message;
-            }
-
-            return "";
-        }       
-
         public TOTransaction<CtRevDoSalida> deletePropo(int emp_codi, int for_cont)
         {
             DAOSfForpo daoSfForpo = new DAOSfForpo();
@@ -338,81 +303,80 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<sfforpo> updateAllSfForpo(SfFovis sffovis)
+        public TOTransaction<sfforpo> updateSfForpo(SfFovis sffovis)
         {
             sfforpo result = new sfforpo();
             TOTransaction<sfforpo> salida = new TOTransaction<sfforpo>();
-            
+            string txtError = "";
+            DAOSfForpo daosfforpo = new DAOSfForpo();
+
             try
             {
-                object varSali;
-                string txtError;
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
-                int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
-                              
-                List<object> lentrada = new List<object>();
-                object p_salida = new object();
+                txtError = ActualizarSfForpo(sffovis);
 
-                lentrada.Add("ActualizarSfForpo");
-                lentrada.Add(sffovis.emp_codi);
-                lentrada.Add(sffovis.for_cont);
-                lentrada.Add(DateTime.Now); // lDtFor_fech 
-                lentrada.Add(sffovis.for_esta);
-                lentrada.Add(DateTime.Now); // lDtFor_fvig 
-                lentrada.Add(DateTime.Now); // lDtFor_fpro 
-                lentrada.Add(sffovis.mod_cont);
-                lentrada.Add(sffovis.postulante.for_cond);
-                lentrada.Add(sffovis.postulante.afi_cont);
-                lentrada.Add(sffovis.for_insf);
-                lentrada.Add(0);
-                lentrada.Add(DateTime.Now); // lDtFor_fasi 
-                lentrada.Add(sffovis.postulante.ite_tipp);
-                lentrada.Add(sffovis.postulante.ite_ocup);
-                lentrada.Add(sffovis.postulante.for_sala);
-                lentrada.Add(sffovis.postulante.for_ipil);
-                lentrada.Add(sffovis.for_tdat);
-                lentrada.Add(0); // lInFor_post 
-                lentrada.Add(sffovis.postulante.for_ting);
-                lentrada.Add(sffovis.postulante.for_nmie);
-                lentrada.Add(sffovis.postulante.for_tapr);
-                lentrada.Add("");  // lStFor_obse
+                if (txtError != null && txtError != "")
+                    throw new Exception(txtError);
 
-                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
-                    throw new Exception("Error Actualizando Solicitud :" + txtError);
-               
-                if (txtError == null)
+                bool validInsertConyuge = daosfforpo.validInsert("SF_DFOMH", sffovis.emp_codi, sffovis.for_cont, "AND DFO_TIPO = 'C'");
+                
+                if (validInsertConyuge)
                 {
-                    lentrada = new List<object>();
-                    p_salida = new object();
-
-                    lentrada.Add("ActualizarSfDfomh");
-                    lentrada.Add(sffovis.emp_codi);
-                    lentrada.Add(sffovis.for_cont);
-                    lentrada.Add(sffovis.conyuge.dfo_cont);
-                    lentrada.Add(sffovis.conyuge.afi_cont);
-                    lentrada.Add("C");
-                    lentrada.Add(sffovis.conyuge.afi_docu);
-                    lentrada.Add(sffovis.conyuge.afi_nom1);
-                    lentrada.Add(sffovis.conyuge.afi_nom2);
-                    lentrada.Add(sffovis.conyuge.afi_ape1);
-                    lentrada.Add(sffovis.conyuge.afi_ape2);
-                    lentrada.Add(sffovis.conyuge.afi_gene);
-                    lentrada.Add(sffovis.conyuge.afi_fecn);
-                    lentrada.Add(sffovis.conyuge.ite_pare); 
-                    lentrada.Add(sffovis.conyuge.afi_esci);
-                    lentrada.Add(sffovis.conyuge.for_cond);
-                    lentrada.Add(sffovis.conyuge.apo_cont);
-                    lentrada.Add(sffovis.conyuge.ite_tipp);
-                    lentrada.Add(sffovis.conyuge.ite_ocup);
-                    lentrada.Add(sffovis.conyuge.for_sala);
-                    lentrada.Add(sffovis.conyuge.for_ipil);
-                    lentrada.Add(sffovis.conyuge.apo_razs);
-                    lentrada.Add(sffovis.conyuge.ite_pare);
-                    lentrada.Add(sffovis.conyuge.tip_codi);
-                    
-                    if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
-                        throw new Exception("Error Actualizando Solicitud :" + txtError);
+                    txtError = InsertSfDfomh(sffovis.emp_codi, sffovis.for_cont, sffovis.conyuge, "C");
                 }
+                else
+                {
+                    txtError = ActualizarSfDfomh(sffovis.conyuge, sffovis.emp_codi, sffovis.for_cont);
+                }
+
+                if (txtError != null && txtError != "")
+                    throw new Exception(txtError);
+                
+                bool validInsertPerca = daosfforpo.validInsert("SF_DFOMH", sffovis.emp_codi, sffovis.for_cont, "AND DFO_TIPO = 'P'");
+
+                if (validInsertConyuge)
+                {
+                    txtError = InsertSfDfomh(sffovis.emp_codi, sffovis.for_cont, sffovis.InfoSfDfomhP, "P");
+                }
+                else
+                {
+                    txtError = ActualizarSfDfomhP(sffovis.InfoSfDfomhP, sffovis.emp_codi, sffovis.for_cont);
+                }
+
+                if (txtError != null && txtError != "")
+                    throw new Exception(txtError);
+
+                bool validInsertPercaOtro = daosfforpo.validInsert("SF_DFOMH", sffovis.emp_codi, sffovis.for_cont, "AND DFO_TIPO = 'O'");
+
+                if (validInsertPercaOtro)
+                {
+                    txtError = InsertSfDfomh(sffovis.emp_codi, sffovis.for_cont, sffovis.InfoSfDfomhO, "O");
+                }
+                else
+                {
+                    txtError = ActualizarSfDfomhO(sffovis.InfoSfDfomhO, sffovis.emp_codi, sffovis.for_cont);
+                }
+
+                if (txtError != null && txtError !="")
+                    throw new Exception(txtError);
+
+                bool validInsertInfoHogar = daosfforpo.validInsert("SF_DFOIH", sffovis.emp_codi, sffovis.for_cont);
+
+                if (validInsertInfoHogar)
+                {
+                    txtError =  InsertSfDfoih(sffovis.emp_codi, sffovis.for_cont, sffovis.infoHogar);
+                }
+                else
+                {
+                    txtError = ActualizarSfDfoih(sffovis);
+                }
+
+                if (txtError != null && txtError != "")
+                    throw new Exception(txtError);
+
+                updateSfForpoRecursos(sffovis);
+                          
+                salida.retorno = 0;
+                salida.txtRetorno = "";
             }
             catch (Exception err)
             {
@@ -423,6 +387,346 @@ namespace RSELFANG.BO
             return salida;
         }
 
+        public string ActualizarSfForpo(SfFovis sffovis)
+        {
+            object varSali;
+            string txtError;
+            object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
+            int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
 
+            List<object> lentrada = new List<object>();
+            object p_salida = new object();
+
+            lentrada.Add("ActualizarSfForpo");
+            lentrada.Add(sffovis.emp_codi);
+            lentrada.Add(sffovis.for_cont);
+            lentrada.Add(null); // lDtFor_fech 
+            lentrada.Add(sffovis.for_esta);
+            lentrada.Add(null); // lDtFor_fvig 
+            lentrada.Add(null); // lDtFor_fpro 
+            lentrada.Add(sffovis.mod_cont);
+            lentrada.Add(sffovis.postulante.for_cond);
+            lentrada.Add(sffovis.postulante.afi_cont);
+            lentrada.Add(sffovis.for_insf);
+            lentrada.Add(null); //Radicado
+            lentrada.Add(null); // lDtFor_fasi 
+            lentrada.Add(sffovis.postulante.ite_tipp);
+            lentrada.Add(sffovis.postulante.ite_ocup);
+            lentrada.Add(sffovis.postulante.for_sala);
+            lentrada.Add(sffovis.postulante.for_ipil);
+            lentrada.Add(sffovis.for_tdat);
+            lentrada.Add(null); // lInFor_post 
+            lentrada.Add(sffovis.infoHogar.for_ting);
+            lentrada.Add(sffovis.infoHogar.for_nmie);
+            lentrada.Add(0); // for_tapr
+            lentrada.Add(null);  // lStFor_obse
+
+            if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                throw new Exception("Error Actualizando Solicitud :" + txtError);
+
+            return txtError;
+        }
+
+        public string ActualizarSfDfomh(InfoAportante conyuge,int emp_codi, int for_cont)
+        {            
+            string txtError;                       
+            List<object> lentrada = new List<object>();
+            object p_salida = new object();
+
+            lentrada.Add("ActualizarSfDfomh");
+            lentrada.Add(emp_codi);
+            lentrada.Add(for_cont);
+            lentrada.Add(conyuge.dfo_cont);
+            lentrada.Add(conyuge.afi_cont);
+            lentrada.Add("C");
+            lentrada.Add(conyuge.afi_docu);
+            lentrada.Add(conyuge.afi_nom1);
+            lentrada.Add(conyuge.afi_nom2);
+            lentrada.Add(conyuge.afi_ape1);
+            lentrada.Add(conyuge.afi_ape2);
+            lentrada.Add(conyuge.afi_gene);
+            lentrada.Add(conyuge.afi_fecn);
+            lentrada.Add(conyuge.ite_pare);
+            lentrada.Add(conyuge.afi_esci);
+            lentrada.Add(conyuge.for_cond);
+            lentrada.Add(conyuge.apo_cont);
+            lentrada.Add(conyuge.ite_tipp);
+            lentrada.Add(conyuge.ite_ocup);
+            lentrada.Add(conyuge.for_sala);
+            lentrada.Add(conyuge.for_ipil);
+            lentrada.Add(conyuge.apo_razs);
+            lentrada.Add(conyuge.ite_pare);
+            lentrada.Add(conyuge.tip_codi);
+            
+            if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                throw new Exception("Error Actualizando Solicitud :" + txtError);
+
+            return txtError;
+        }
+
+        public string ActualizarSfDfomhP(List<InfoAportante> Infoperca, int emp_codi, int for_cont)
+        {
+            string txtError = "";
+
+            if (Infoperca.Count == 0)
+                return null;
+
+            foreach (InfoAportante perc in Infoperca)
+            {
+                if (perc.afi_gene == "Masculino")
+                    perc.afi_gene = "M";
+                else
+                    perc.afi_gene = "F";
+
+                List<object> lentrada = new List<object>();
+                object p_salida = new object();
+
+                lentrada.Add("ActualizarSfDfomh");
+                lentrada.Add(emp_codi);
+                lentrada.Add(for_cont);
+                lentrada.Add(perc.dfo_cont);
+                lentrada.Add(perc.afi_cont);
+                lentrada.Add("P");
+                lentrada.Add(perc.afi_docu);
+                lentrada.Add(perc.afi_nom1);
+                lentrada.Add(perc.afi_nom2);
+                lentrada.Add(perc.afi_ape1);
+                lentrada.Add(perc.afi_ape2);
+                lentrada.Add(perc.afi_gene);
+                lentrada.Add(perc.afi_fecn);
+                lentrada.Add(perc.ite_pare);
+                lentrada.Add(perc.afi_esci);
+                lentrada.Add(perc.for_cond);
+                lentrada.Add(perc.apo_cont);
+                lentrada.Add(perc.ite_tipp);
+                lentrada.Add(perc.ite_ocup);
+                lentrada.Add(perc.for_sala);
+                lentrada.Add(perc.for_ipil);
+                lentrada.Add(perc.apo_razs);
+                lentrada.Add(perc.ite_pare);
+                lentrada.Add(perc.tip_codi);
+                
+                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                    throw new Exception("Error Actualizando Solicitud :" + txtError);
+            }           
+
+            return txtError;
+        }
+
+        public string ActualizarSfDfomhO(List<InfoAportante> InfoOtraperca, int emp_codi, int for_cont)
+        {
+            string txtError = "";
+
+            if (InfoOtraperca.Count == 0)
+                return null;
+
+            foreach (InfoAportante perc in InfoOtraperca)
+            {
+                if (perc.afi_gene == "Masculino")
+                    perc.afi_gene = "M";
+                else
+                    perc.afi_gene = "F";
+
+                List<object> lentrada = new List<object>();
+                object p_salida = new object();
+
+                lentrada.Add("ActualizarSfDfomh");
+                lentrada.Add(emp_codi);
+                lentrada.Add(for_cont);
+                lentrada.Add(perc.dfo_cont);
+                lentrada.Add(perc.afi_cont);
+                lentrada.Add("O");
+                lentrada.Add(perc.afi_docu);
+                lentrada.Add(perc.afi_nom1);
+                lentrada.Add(perc.afi_nom2);
+                lentrada.Add(perc.afi_ape1);
+                lentrada.Add(perc.afi_ape2);
+                lentrada.Add(perc.afi_gene);
+                lentrada.Add(perc.afi_fecn);
+                lentrada.Add(perc.ite_pare);
+                lentrada.Add(perc.afi_esci);
+                lentrada.Add(perc.for_cond);
+                lentrada.Add(perc.apo_cont);
+                lentrada.Add(perc.ite_tipp);
+                lentrada.Add(perc.ite_ocup);
+                lentrada.Add(perc.for_sala);
+                lentrada.Add(perc.for_ipil);
+                lentrada.Add(perc.apo_razs);
+                lentrada.Add(perc.ite_pare);
+                lentrada.Add(perc.tip_codi);
+
+                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                    throw new Exception("Error Actualizando Solicitud :" + txtError);
+            }
+
+            return txtError;
+        }
+
+        public string ActualizarSfDfoih(SfFovis sffovis)
+        {
+            string txtError;
+            List<object> lentrada = new List<object>();
+            object p_salida = new object();
+
+            lentrada.Add("ActualizarSfDfoih");
+            lentrada.Add(sffovis.emp_codi);
+            lentrada.Add(sffovis.for_cont);
+            lentrada.Add(sffovis.infoHogar.pai_codi);
+            lentrada.Add(sffovis.infoHogar.reg_codi);
+            lentrada.Add(sffovis.infoHogar.dep_codi);
+            lentrada.Add(sffovis.infoHogar.mun_codi);
+            lentrada.Add(sffovis.infoHogar.loc_codi);
+            lentrada.Add(sffovis.infoHogar.bar_codi);
+            lentrada.Add(sffovis.infoHogar.dfo_dire);
+            lentrada.Add(sffovis.infoHogar.dfo_vsol);
+            lentrada.Add(sffovis.infoHogar.dfo_tele); // telefono 2
+            lentrada.Add(sffovis.InfoEmpresa[0].apo_cont);
+            lentrada.Add(sffovis.InfoEmpresa[0].pai_codi);
+            lentrada.Add(sffovis.InfoEmpresa[0].reg_codi);
+            lentrada.Add(sffovis.InfoEmpresa[0].dep_codi);
+            lentrada.Add(sffovis.InfoEmpresa[0].mun_codi);
+            lentrada.Add(sffovis.InfoEmpresa[0].dsu_dire);
+            lentrada.Add(sffovis.infoHogar.dfo_vpre);
+            lentrada.Add(sffovis.infoHogar.dfo_vlot);
+            lentrada.Add(sffovis.infoHogar.dfo_fesc);
+            lentrada.Add(sffovis.infoHogar.dfo_matr);
+            lentrada.Add(sffovis.infoHogar.dfo_escr);
+            lentrada.Add(sffovis.infoHogar.dfo_lurb);
+            lentrada.Add(sffovis.infoHogar.dfo_vtvi);
+            lentrada.Add(sffovis.infoHogar.dfo_nomp);
+            lentrada.Add(sffovis.infoHogar.pvd_codi); // pvd_codi // contructora
+
+            if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                throw new Exception("Error Actualizando Solicitud :" + txtError);
+
+            return txtError;
+        }
+        
+        public TOTransaction<sfforpo> updateSfForpoRecursos(SfFovis sffovis)
+        {            
+            TOTransaction<sfforpo> salida = new TOTransaction<sfforpo>();
+            string txtError = "";
+           
+            try
+            {
+                object varSali;                
+                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
+                int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
+
+                if (retorno != 0)
+                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+
+                txtError = InsertSfDfore(sffovis.emp_codi, sffovis.for_cont, sffovis.InfodforeA);
+                               
+                if (txtError != null && txtError != "")
+                    throw new Exception(txtError);
+
+                txtError = InsertSfDfore(sffovis.emp_codi, sffovis.for_cont, sffovis.InfodforeR);
+
+                if (txtError != null && txtError != "")
+                    throw new Exception(txtError);
+
+                salida.retorno = 0;
+                salida.txtRetorno = "";
+            }
+            catch (Exception err)
+            {
+                salida.retorno = 1;
+                salida.txtRetorno = err.Message;
+            }
+
+            return salida;
+        }
+
+        private string InsertSfDfore(int emp_codi, int for_cont, List<SfDfore> sfdfore)
+        {  
+            try
+            {
+                string txtError = "";
+
+                foreach (SfDfore dfore in sfdfore)
+                {
+                    if (dfore.dfo_cont == 0)
+                    {
+                        object objSalida;
+                        List<object> LEntrada = new List<object>();
+                        LEntrada.Add(emp_codi);
+                        LEntrada.Add(for_cont);
+                        LEntrada.Add(dfore.con_codi);
+                        LEntrada.Add(dfore.dfo_sald);
+
+                        if (ws.InsertarSFDFORE(LEntrada.ToArray(), out objSalida, out txtError) != 0)
+                            throw new Exception(txtError);
+
+                        var ret = (object[])objSalida;
+                        dfore.dfo_cont = int.Parse(ret[0].ToString());
+                    }
+                    else
+                    {
+                        List<object> lentrada = new List<object>();
+                        object p_salida = new object();                        
+                        lentrada.Add("ActualizarSfDfore");
+                        lentrada.Add(emp_codi);
+                        lentrada.Add(for_cont);
+                        lentrada.Add(dfore.dfo_cont);
+                        lentrada.Add(dfore.dfo_tipo);
+                        lentrada.Add(dfore.con_cont);
+                        lentrada.Add(dfore.dfo_sald);
+
+                        if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                             throw new Exception("Error Actualizando Solicitud :" + txtError);
+                    }
+
+                    foreach(SfDdfor ddfor in dfore.Infoddfor)
+                    {
+                        if (ddfor.ddf_cont == 0)
+                        {
+                            object objSalida;
+                            List<object> LEntrada = new List<object>();
+                            LEntrada = new List<object>();
+                            LEntrada.Add(emp_codi);
+                            LEntrada.Add(for_cont);
+                            LEntrada.Add(dfore.dfo_cont);
+                            LEntrada.Add(ddfor.ddf_entc);
+                            LEntrada.Add(ddfor.ddf_entd);
+                            LEntrada.Add(ddfor.ddf_numc);
+                            LEntrada.Add(ddfor.ddf_feca);
+                            LEntrada.Add(ddfor.ddf_feci);
+                            LEntrada.Add(ddfor.ddf_fecc);
+
+                            if (ws.InsertarSFDDFOR(LEntrada.ToArray(), out objSalida, out txtError) != 0)
+                            {
+                                throw new Exception(txtError);
+                            }
+                        }
+                        else
+                        {
+                            List<object> lentrada = new List<object>();
+                            object p_salida = new object();
+                            lentrada.Add("ActualizarSfDdfor");
+                            lentrada.Add(emp_codi);
+                            lentrada.Add(for_cont);
+                            lentrada.Add(ddfor.dfo_cont);
+                            lentrada.Add(ddfor.ddf_cont);
+                            lentrada.Add(ddfor.ddf_entc);
+                            lentrada.Add(ddfor.ddf_entd);
+                            lentrada.Add(ddfor.ddf_numc);
+                            lentrada.Add(ddfor.ddf_feca);
+                            lentrada.Add(ddfor.ddf_feci);
+                            lentrada.Add(ddfor.ddf_fecc);
+
+                            if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                                throw new Exception("Error Actualizando Solicitud :" + txtError);
+                        }
+                    }
+                }               
+            }            
+            catch (Exception err)
+            {
+                return err.Message;
+            }
+
+            return "";
+        }
     }
 }

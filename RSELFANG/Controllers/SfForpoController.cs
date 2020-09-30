@@ -151,13 +151,12 @@ namespace RSELFANG.Controllers
             return bo.GetInfoPostulante(emp_codi, afi_cont);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Fovis/SfForpoPrintReporte")]
-        public TOTransaction<string> printCertificado(string ter_coda, int emp_codi, string reporte)
+        public TOTransaction<string> printCertificado(sfprint forpoPrint)
         {
-            BOSfForpo bo = new BOSfForpo();
-            emp_codi = new tools.General().GetEmpCodi(emp_codi);
-            return bo.printReport(ter_coda, emp_codi, reporte);
+            BOSfForpo bo = new BOSfForpo();           
+            return bo.printReport(forpoPrint);
         }
     }
 }

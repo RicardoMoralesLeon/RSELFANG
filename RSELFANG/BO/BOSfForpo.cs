@@ -365,9 +365,12 @@ namespace RSELFANG.BO
                 sffovis.InfoSfDfomhP = daoSfForpo.getInfoForpoSuPerca(emp_codi, for_cont, "P");
                 sffovis.InfoSfDfomhO = daoSfForpo.getInfoForpoSuPerca(emp_codi, for_cont, "O");
                 sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
-                sffovis.infoHogar = daoSfForpo.GetInfoIngresos(emp_codi, afi_cont);
+                sffovis.infoHogar = daoSfForpo.GetInfoHogar(emp_codi, for_cont);
                 sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
                 sffovis.InfodforeA = daoSfForpo.getInfoDforeForpo(emp_codi, for_cont, "A");
+
+                if (sffovis.InfodforeA == null)
+                    sffovis.InfodforeA = new List<SfDfore>();
 
                 foreach (SfDfore dfore in sffovis.InfodforeA)
                 {
@@ -379,6 +382,9 @@ namespace RSELFANG.BO
                 }
 
                 sffovis.InfodforeR = daoSfForpo.getInfoDforeForpo(emp_codi, for_cont, "R");
+
+                if (sffovis.InfodforeR == null)
+                    sffovis.InfodforeR = new List<SfDfore>();
 
                 foreach (SfDfore dfore in sffovis.InfodforeR)
                 {
@@ -401,12 +407,6 @@ namespace RSELFANG.BO
                 if (sffovis.InfoSfDfomhO == null)
                     sffovis.InfoSfDfomhO = new List<InfoAportante>();
 
-                if (sffovis.InfodforeA == null)
-                    sffovis.InfodforeA = new List<SfDfore>();
-
-                if (sffovis.InfodforeR == null)
-                    sffovis.InfodforeR = new List<SfDfore>();
-
                 return new TOTransaction<SfFovis>() { objTransaction = sffovis, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -428,7 +428,7 @@ namespace RSELFANG.BO
                 sffovis.postulante = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
                 sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
                 sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
-                sffovis.infoHogar = daoSfForpo.GetInfoIngresos(emp_codi, afi_cont);
+                sffovis.infoHogar = daoSfForpo.GetInfoHogar(emp_codi, afi_cont);
                 sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
 
                 if (sffovis.conyuge == null)
@@ -450,7 +450,7 @@ namespace RSELFANG.BO
                     sffovis.InfoSfDfomhO = new List<InfoAportante>();
 
                 if (sffovis.InfodforeA == null)
-                    sffovis.InfodforeA = new List<SfDfore>();
+                    sffovis.InfodforeA = new List<SfDfore>();              
 
                 if (sffovis.InfodforeR == null)
                     sffovis.InfodforeR = new List<SfDfore>();
@@ -463,7 +463,7 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<string> printReport(string ter_coda, int emp_codi, string reporte, string tna_docu = "", string tna_nomb = "")
+        public TOTransaction<string> printReport(sfprint forpoPrint)
         {
             try
             {
@@ -474,23 +474,22 @@ namespace RSELFANG.BO
                 string url = "";
                 string urlReporte = ConfigurationManager.AppSettings["UrlReport"];
                 
-                reporte = "SSfForpo";
                 List<string> Params = new List<string>();
-                Params.Add("102");
-                Params.Add("prueba");
+                Params.Add(forpoPrint.emp_codi.ToString());
+                Params.Add(forpoPrint.emp_nomb);
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
-                Params.Add("0"); // DESDE
-                Params.Add("2"); // HASTA
-                Params.Add("40"); // VALOR SFV
-                Params.Add("35112120"); // VALOR SUBSIDIO SOLICITADO
+                Params.Add(forpoPrint.dmo_rsmd.ToString()); // DESDE
+                Params.Add(forpoPrint.dmo_rsmh.ToString()); // HASTA
+                Params.Add(forpoPrint.dmo_fsvs.ToString()); // VALOR SFV
+                Params.Add(forpoPrint.dfo_vsol.ToString()); // VALOR SUBSIDIO SOLICITADO
 
-                sf.Append("{SF_FORPO.FOR_CONT} = " + 64 );
+                sf.Append("{SF_FORPO.FOR_CONT} = " + forpoPrint.for_cont );
                 sf.Append(" AND {AR_SUCUR.SUC_PRIC} = 'S' ");
-                sf.Append(" AND {SF_FORPO.EMP_CODI} = 102" );
+                sf.Append(" AND {SF_FORPO.EMP_CODI} = " + forpoPrint.emp_codi );
                 sf.Append(" AND {SF_FORPO.FOR_NUME} <> 0 ");
 
-                url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
+                url = GetURLReporte("SSfForpo", Params, sf.ToString(), urlReporte);
                 return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
@@ -517,7 +516,7 @@ namespace RSELFANG.BO
 
             urlreporte += "&sf=" + sf.Replace(" ", "%20");
             return urlreporte;
-        }
+        }    
 
     }
 }

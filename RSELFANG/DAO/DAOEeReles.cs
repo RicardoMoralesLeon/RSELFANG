@@ -13,46 +13,57 @@ namespace RSELFANG.DAO
 {
     public class DAOEeReles
     {
-        public DataSet getEeReles(int rel_cont)
+        public DataSet getEeReles(int rel_cont, int rem_cont)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
-            sql.Append(" SELECT *  ");
-            sql.Append(" FROM ( ");
-            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DRS_PREG,DRS_CLAS,EEN.SEC_CONT,DRS_ORDE,0 DDP_CONT,0 DRP_CONT,'' DPP_OPCI,0 DSP_ORDE , EEN.RSE_CONT, DRS_CONT, DRE_SECC ");
-            sql.Append(" FROM   EE_RELES REL ");
-            sql.Append("       INNER JOIN EE_DRELE ELE ");
-            sql.Append("            ON  REL.EMP_CODI = ELE.EMP_CODI ");
-            sql.Append("            AND REL.REL_CONT = ELE.REL_CONT ");
-            sql.Append("       INNER JOIN EE_SECCE CCE			  ");
-            sql.Append("            ON  ELE.EMP_CODI = CCE.EMP_CODI ");
-            sql.Append("            AND CCE.SEC_CONT = ELE.DRE_SECC ");
-            sql.Append("       LEFT JOIN EE_RSEEN EEN				  ");
-            sql.Append("            ON  EEN.EMP_CODI = CCE.EMP_CODI ");
-            sql.Append("            AND EEN.SEC_CONT = CCE.SEC_CONT ");
-            sql.Append("       INNER JOIN EE_DRSEE SEE			  ");
-            sql.Append("            ON  SEE.EMP_CODI = EEN.EMP_CODI ");
-            sql.Append("            AND SEE.RSE_CONT = EEN.RSE_CONT ");
-            sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT ");
-            sql.Append(" UNION ");
-            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,DDP_CONT,PRC.DRP_CONT,PRC.DPP_OPCI,PRC.DPP_ORDE DSP_ORDE,  0 RSE_CONT , 0 DRS_CONT, DRE_SECC ");
-            sql.Append(" FROM   EE_RELES REL ");
-            sql.Append("       INNER JOIN EE_DRELE ELE ");
-            sql.Append("            ON  REL.EMP_CODI = ELE.EMP_CODI ");
-            sql.Append("            AND REL.REL_CONT = ELE.REL_CONT ");
-            sql.Append("       INNER JOIN EE_SECCE CCE			  ");
-            sql.Append("            ON  ELE.EMP_CODI = CCE.EMP_CODI ");
-            sql.Append("            AND CCE.SEC_CONT = ELE.DRE_SECC ");
-            sql.Append(" 	  LEFT JOIN EE_DPRCS RCS ");
-            sql.Append(" 		   ON  RCS.EMP_CODI = CCE.EMP_CODI ");
-            sql.Append(" 		   AND RCS.SEC_CONT = CCE.SEC_CONT ");
-            sql.Append(" 	  INNER JOIN EE_DDPRC PRC ");
-            sql.Append(" 		   ON  PRC.EMP_CODI = RCS.EMP_CODI ");
-            sql.Append(" 		   AND PRC.DRP_CONT = RCS.DRP_CONT ");
-            sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT ");
-            sql.Append(" ) A WHERE A.DRS_CLAS IN ('A','M','P')");
-            sql.Append(" ORDER BY DRE_ORDE ");
+            sql.Append(" SELECT *   ");
+            sql.Append(" FROM (  ");
+            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DRS_PREG,DRS_CLAS,EEN.SEC_CONT,DRS_ORDE,");
+            sql.Append(" 0 DDP_CONT,0 DRP_CONT,'' DPP_OPCI,0 DSP_ORDE , EEN.RSE_CONT, SEE.DRS_CONT, DRE_SECC  , RES_VALO, RES_CONT");
+            sql.Append(" FROM   EE_RELES REL  ");
+            sql.Append("     INNER JOIN EE_DRELE ELE  ");
+            sql.Append("             ON  REL.EMP_CODI = ELE.EMP_CODI  ");
+            sql.Append("             AND REL.REL_CONT = ELE.REL_CONT  ");
+            sql.Append("     INNER JOIN EE_SECCE CCE			   	  ");
+            sql.Append("             ON  ELE.EMP_CODI = CCE.EMP_CODI  ");
+            sql.Append("             AND CCE.SEC_CONT = ELE.DRE_SECC  ");
+            sql.Append("     LEFT JOIN EE_RSEEN EEN				   	  ");
+            sql.Append("             ON  EEN.EMP_CODI = CCE.EMP_CODI  ");
+            sql.Append("             AND EEN.SEC_CONT = CCE.SEC_CONT  ");
+            sql.Append("     INNER JOIN EE_DRSEE SEE			   	  ");
+            sql.Append("             ON  SEE.EMP_CODI = EEN.EMP_CODI  ");
+            sql.Append("             AND SEE.RSE_CONT = EEN.RSE_CONT  ");
+            sql.Append(" 	LEFT JOIN EE_RESEN ON EE_RESEN.REL_CONT= ELE.REL_CONT");
+            sql.Append(" 	AND EE_RESEN.RSE_CONT = EEN.RSE_CONT");
+            sql.Append(" 	AND EE_RESEN.DRS_CONT = SEE.DRS_CONT");
+            sql.Append(" 	AND REM_CONT = @REM_CONT ");
+            sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
+            sql.Append(" UNION  ");
+            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,");
+            sql.Append(" PRC.DDP_CONT,PRC.DRP_CONT,PRC.DPP_OPCI,PRC.DPP_ORDE DSP_ORDE,  0 RSE_CONT , 0 DRS_CONT, DRE_SECC, RES_VALO, RES_CONT  ");
+            sql.Append(" FROM   EE_RELES REL  ");
+            sql.Append("     INNER JOIN EE_DRELE ELE  ");
+            sql.Append("             ON  REL.EMP_CODI = ELE.EMP_CODI  ");
+            sql.Append("             AND REL.REL_CONT = ELE.REL_CONT  ");
+            sql.Append("     INNER JOIN EE_SECCE CCE			   	  ");
+            sql.Append("             ON  ELE.EMP_CODI = CCE.EMP_CODI  ");
+            sql.Append("             AND CCE.SEC_CONT = ELE.DRE_SECC  ");
+            sql.Append("   	LEFT JOIN EE_DPRCS RCS  				  ");
+            sql.Append("   		ON  RCS.EMP_CODI = CCE.EMP_CODI  	  ");
+            sql.Append("   		AND RCS.SEC_CONT = CCE.SEC_CONT  	  ");
+            sql.Append("   	INNER JOIN EE_DDPRC PRC  				  ");
+            sql.Append("   		ON  PRC.EMP_CODI = RCS.EMP_CODI  	  ");
+            sql.Append("   		AND PRC.DRP_CONT = RCS.DRP_CONT 	  ");
+            sql.Append(" LEFT JOIN EE_RESEM ON EE_RESEM.REL_CONT= ELE.REL_CONT");
+            sql.Append(" 	AND EE_RESEM.DRP_CONT = PRC.DRP_CONT");
+            sql.Append(" 	AND EE_RESEM.DDP_CONT = PRC.DDP_CONT");
+            sql.Append(" 	AND REM_CONT = @REM_CONT ");
+            sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
+            sql.Append(" ) A WHERE A.DRS_CLAS IN ('A','M','P')  ");
+            sql.Append(" ORDER BY DRE_ORDE   ");
             sqlparams.Add(new SQLParams("REL_CONT", rel_cont));
+            sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
             return new DbConnection().GetDataSet(sql.ToString(), sqlparams);
         }
 
@@ -254,6 +265,32 @@ namespace RSELFANG.DAO
             {
                 return true;
             }           
+        }
+
+        public List<EeResen> getInfoEeresen(int rem_cont, int emp_codi)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sql.Append(" SELECT INP_CONT, REL_CONT, RSE_CONT, DRS_CONT, RES_VALO, REM_CONT ");
+            sql.Append(" FROM EE_RESEN ");
+            sql.Append(" WHERE REM_CONT = @REM_CONT ");
+            sql.Append(" AND EMP_CODI = @EMP_CODI ");
+            sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            return new DbConnection().GetList<EeResen>(sql.ToString(), sqlparams);
+        }
+
+        public List<EeResem> getInfoEeresem(int rem_cont, int emp_codi)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sql.Append(" SELECT INP_CONT, REL_CONT, DRP_CONT,DDP_CONT,RES_VALO, REM_CONT ");
+            sql.Append(" FROM EE_RESEM ");
+            sql.Append(" WHERE REM_CONT = @REM_CONT ");
+            sql.Append(" AND EMP_CODI = @EMP_CODI ");
+            sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            return new DbConnection().GetList<EeResem>(sql.ToString(), sqlparams);
         }
     }
 }

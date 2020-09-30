@@ -93,4 +93,16 @@ namespace RSELFANG.TO
         public int for_cont { get; set; }
         public int for_nume { get; set; }
     }
+
+    public class sfprint
+    {
+        public int emp_codi { get; set; }
+        public string emp_nomb { get; set; }
+        public int dmo_rsmd { get; set; }
+        public int dmo_rsmh { get; set; }
+        public int dmo_fsvs { get; set; }
+        public double dfo_vsol { get; set; }
+        public int for_cont { get; set; }
+
+    }
 }

@@ -9,6 +9,8 @@ namespace RSELFANG.TO
             Respuestas = new List<EeDdprc>();
         }
 
+        public int res_cont { get; set; }
+        public string res_valo { get; set; }
         public string drs_preg { get; set; }
         public string drs_clas { get; set; }
         public int sec_cont { get; set; }
