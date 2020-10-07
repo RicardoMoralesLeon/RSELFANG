@@ -139,7 +139,7 @@ namespace RSELFANG.DAO
             sql.Append(" SELECT FOR_NUME, FOR_CONT, FOR_ESTA FROM SF_FORPO ");
             sql.Append(" WHERE EMP_CODI = @EMP_CODI ");
             sql.Append("   AND AFI_CONT = @AFI_CONT ");
-            sql.Append(" ORDER BY FOR_FECH DESC ");
+            sql.Append(" ORDER BY FOR_FECH DESC, FOR_NUME DESC ");
             List <SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("AFI_CONT", afi_cont));
@@ -149,7 +149,7 @@ namespace RSELFANG.DAO
         public InfoAportante getInfoAportante(int emp_codi, int afi_cont)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT SU_AFILI.TIP_CODI,SU_AFILI.AFI_DOCU,SU_AFILI.AFI_NOM1, ");
+            sql.Append(" SELECT (CAST(DATEDIFF(DAY,AFI_FECN,GETDATE()) / 365.25 AS INT)) AFI_EDAD,SU_AFILI.TIP_CODI,SU_AFILI.AFI_DOCU,SU_AFILI.AFI_NOM1, ");
             sql.Append("        SU_AFILI.AFI_NOM2,SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2, ");
             sql.Append("        SU_AFILI.AFI_FECN,SU_AFILI.AFI_ESCI,SU_AFILI.AFI_CATE, ");
             sql.Append("        SU_AFILI.AFI_GENE,GN_TIPDO.TIP_NOMB,SU_AFILI.AFI_CONT, ");
@@ -631,11 +631,11 @@ namespace RSELFANG.DAO
         {
             StringBuilder sql = new StringBuilder();
             
-            sql.Append(" SELECT AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS,AR_TIAPO.TIA_CODI, ");
+            sql.Append(" SELECT DISTINCT AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS,AR_TIAPO.TIA_CODI, ");
             sql.Append("        AR_TIAPO.TIA_NOMB,  ");
             sql.Append("        GN_MUNIC.DEP_CODI, GN_DEPAR.DEP_NOMB, ");
             sql.Append("        GN_MUNIC.MUN_CODI, GN_MUNIC.MUN_NOMB, ");
-            sql.Append("        AR_DSUCU.DSU_DIRE, SU_TRAYE.TRA_PRIN ");
+            sql.Append("        SU_TRAYE.TRA_PRIN ");
             sql.Append(" FROM SU_TRAYE, AR_APOVO, AR_TIAPO,AR_SUCUR,AR_DSUCU,GN_MUNIC, GN_DEPAR ");
             sql.Append(" WHERE SU_TRAYE.EMP_CODI = AR_APOVO.EMP_CODI ");
             sql.Append("   AND SU_TRAYE.APO_CONT = AR_APOVO.APO_CONT ");
@@ -670,7 +670,7 @@ namespace RSELFANG.DAO
             sql.Append(" FROM SF_PARAM");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = SF_PARAM.ITE_CONT");
             sql.Append(" AND GN_ITEMS.TIT_CONT = 486");
-            sql.Append(" WHERE EMP_CODI = EMP_CODI");
+            sql.Append(" WHERE EMP_CODI = @EMP_CODI");
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             return new DbConnection().Get<Sfparam>(sql.ToString(), sqlparams);

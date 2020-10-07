@@ -173,6 +173,8 @@ namespace RSELFANG.BO
             {
                 List<SfPostu> sfradic = new List<SfPostu>();
                 sfradic = daoSfForpo.GetInfoIdConyuge(emp_codi, afi_cont);
+                if (sfradic == null)
+                    sfradic = new List<SfPostu>();
                 return new TOTransaction<List<SfPostu>>() { objTransaction = sfradic, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)
@@ -189,6 +191,8 @@ namespace RSELFANG.BO
             {
                 List<SfPostu> sfradic = new List<SfPostu>();
                 sfradic = daoSfForpo.GetInfoIdPerca(emp_codi, afi_cont);
+                if(sfradic==null)
+                    sfradic = new List<SfPostu>();
                 return new TOTransaction<List<SfPostu>>() { objTransaction = sfradic, txtRetorno = "", retorno = 0 };
             }
             catch (Exception ex)

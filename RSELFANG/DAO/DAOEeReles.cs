@@ -19,7 +19,7 @@ namespace RSELFANG.DAO
             List<SQLParams> sqlparams = new List<SQLParams>();
             sql.Append(" SELECT *   ");
             sql.Append(" FROM (  ");
-            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DRS_PREG,DRS_CLAS,EEN.SEC_CONT,DRS_ORDE,");
+            sql.Append(" SELECT REL.EMP_CODI,REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DRS_PREG,DRS_CLAS,EEN.SEC_CONT,DRS_ORDE,");
             sql.Append(" 0 DDP_CONT,0 DRP_CONT,'' DPP_OPCI,0 DSP_ORDE , EEN.RSE_CONT, SEE.DRS_CONT, DRE_SECC  , RES_VALO, RES_CONT");
             sql.Append(" FROM   EE_RELES REL  ");
             sql.Append("     INNER JOIN EE_DRELE ELE  ");
@@ -40,7 +40,7 @@ namespace RSELFANG.DAO
             sql.Append(" 	AND REM_CONT = @REM_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
             sql.Append(" UNION  ");
-            sql.Append(" SELECT REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,");
+            sql.Append(" SELECT REL.EMP_CODI,REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,");
             sql.Append(" PRC.DDP_CONT,PRC.DRP_CONT,PRC.DPP_OPCI,PRC.DPP_ORDE DSP_ORDE,  0 RSE_CONT , 0 DRS_CONT, DRE_SECC, RES_VALO, RES_CONT  ");
             sql.Append(" FROM   EE_RELES REL  ");
             sql.Append("     INNER JOIN EE_DRELE ELE  ");
@@ -60,7 +60,7 @@ namespace RSELFANG.DAO
             sql.Append(" 	AND EE_RESEM.DDP_CONT = PRC.DDP_CONT");
             sql.Append(" 	AND REM_CONT = @REM_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
-            sql.Append(" ) A WHERE A.DRS_CLAS IN ('A','M','P')  ");
+            sql.Append(" ) A LEFT JOIN AE_PARAM ON AE_PARAM.EMP_CODI = A.EMP_CODI WHERE A.DRS_CLAS IN ('A','M','P')  ");
             sql.Append(" ORDER BY DRE_ORDE   ");
             sqlparams.Add(new SQLParams("REL_CONT", rel_cont));
             sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
@@ -292,5 +292,6 @@ namespace RSELFANG.DAO
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             return new DbConnection().GetList<EeResem>(sql.ToString(), sqlparams);
         }
+
     }
 }

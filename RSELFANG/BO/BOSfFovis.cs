@@ -48,8 +48,7 @@ namespace RSELFANG.BO
 
                 if (ws.InsertarSFFORPO(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                 {
-                    salida.retorno = 1;
-                    salida.txtRetorno = txtError;
+                    throw new Exception(txtError);
                 }
                 else
                 {
@@ -61,8 +60,8 @@ namespace RSELFANG.BO
                     if (msgError != "")
                         throw new Exception(msgError);
 
-                    salida.retorno = 0;
                     salida.txtRetorno = "Registro guardado exitosamente, # Formulario: " + result.for_nume;
+                    return new TOTransaction<sfforpo>() { retorno = 0, txtRetorno = salida.txtRetorno, objTransaction = result };
                 }
             }
             catch (Exception err)
@@ -70,9 +69,8 @@ namespace RSELFANG.BO
                 salida.retorno = 1;
                 salida.txtRetorno = err.Message;
                 deletePropo(sffovis.emp_codi, result.for_cont);
-            }
-
-            return salida;
+                return new TOTransaction<sfforpo> { retorno = 1, txtRetorno = err.Message };
+            }            
         }
 
         private string insertarDetallePostulante(int emp_codi, int for_cont, SfFovis sffovis)
@@ -399,28 +397,21 @@ namespace RSELFANG.BO
 
             lentrada.Add("ActualizarSfForpo");
             lentrada.Add(sffovis.emp_codi);
-            lentrada.Add(sffovis.for_cont);
-            lentrada.Add(null); // lDtFor_fech 
-            lentrada.Add(sffovis.for_esta);
-            lentrada.Add(null); // lDtFor_fvig 
-            lentrada.Add(null); // lDtFor_fpro 
+            lentrada.Add(sffovis.for_cont);            
+            lentrada.Add(sffovis.for_esta);           
             lentrada.Add(sffovis.mod_cont);
             lentrada.Add(sffovis.postulante.for_cond);
             lentrada.Add(sffovis.postulante.afi_cont);
-            lentrada.Add(sffovis.for_insf);
-            lentrada.Add(null); //Radicado
-            lentrada.Add(null); // lDtFor_fasi 
+            lentrada.Add(sffovis.for_insf);            
             lentrada.Add(sffovis.postulante.ite_tipp);
             lentrada.Add(sffovis.postulante.ite_ocup);
             lentrada.Add(sffovis.postulante.for_sala);
             lentrada.Add(sffovis.postulante.for_ipil);
-            lentrada.Add(sffovis.for_tdat);
-            lentrada.Add(null); // lInFor_post 
+            lentrada.Add(sffovis.for_tdat);            
             lentrada.Add(sffovis.infoHogar.for_ting);
             lentrada.Add(sffovis.infoHogar.for_nmie);
             lentrada.Add(0); // for_tapr
-            lentrada.Add(null);  // lStFor_obse
-
+            
             if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
                 throw new Exception("Error Actualizando Solicitud :" + txtError);
 
@@ -570,22 +561,22 @@ namespace RSELFANG.BO
 
             lentrada.Add("ActualizarSfDfoih");
             lentrada.Add(sffovis.emp_codi);
-            lentrada.Add(sffovis.for_cont);
-            lentrada.Add(sffovis.infoHogar.pai_codi);
-            lentrada.Add(sffovis.infoHogar.reg_codi);
-            lentrada.Add(sffovis.infoHogar.dep_codi);
-            lentrada.Add(sffovis.infoHogar.mun_codi);
-            lentrada.Add(sffovis.infoHogar.loc_codi);
-            lentrada.Add(sffovis.infoHogar.bar_codi);
-            lentrada.Add(sffovis.infoHogar.dfo_dire);
+            lentrada.Add(sffovis.for_cont);           
             lentrada.Add(sffovis.infoHogar.dfo_vsol);
-            lentrada.Add(sffovis.infoHogar.dfo_tele); // telefono 2
+
+            lentrada.Add(sffovis.postulante.afi_cont); // afi_cont
+            lentrada.Add(sffovis.postulante.afi_dire); // direccion
+            lentrada.Add(sffovis.postulante.afi_mail); // email
+            lentrada.Add(sffovis.postulante.afi_tele); // telefono 1
+            lentrada.Add(sffovis.infoHogar.dfo_tele);  // telefono 2
+
             lentrada.Add(sffovis.InfoEmpresa[0].apo_cont);
             lentrada.Add(sffovis.InfoEmpresa[0].pai_codi);
             lentrada.Add(sffovis.InfoEmpresa[0].reg_codi);
             lentrada.Add(sffovis.InfoEmpresa[0].dep_codi);
             lentrada.Add(sffovis.InfoEmpresa[0].mun_codi);
             lentrada.Add(sffovis.InfoEmpresa[0].dsu_dire);
+
             lentrada.Add(sffovis.infoHogar.dfo_vpre);
             lentrada.Add(sffovis.infoHogar.dfo_vlot);
             lentrada.Add(sffovis.infoHogar.dfo_fesc);

@@ -29,6 +29,7 @@ namespace RSELFANG.BO
                 objReles.red_encu = ConfigurationManager.AppSettings["redEnc"].ToString();
                 objReles.rel_cont = Int32.Parse(result.Tables[0].Rows[0]["REL_CONT"].ToString());
                 objReles.rel_nomb = result.Tables[0].Rows[0]["REL_NOMB"].ToString();
+                objReles.par_rein = result.Tables[0].Rows[0]["PAR_REIN"].ToString();
 
                 foreach (DataRow dr in result.Tables[0].Rows)
                 {
@@ -88,7 +89,7 @@ namespace RSELFANG.BO
                 {
                     countPreg += objReles.Secciones[i].Preguntas.Count;
                 }
-
+               
                 objReles.num_preg = countPreg;
                 return new TOTransaction<EeReles>() { objTransaction = objReles, retorno = 0, txtRetorno = "" };
             }

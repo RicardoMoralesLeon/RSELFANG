@@ -15,8 +15,14 @@ namespace RSELFANG.BO
 
             try
             {
+
+                string redEnc = ConfigurationManager.AppSettings["redEnc"];
+
+                if (string.IsNullOrEmpty(redEnc))
+                    redEnc = "S";
+
                 Eeremes result = new Eeremes();
-                result = dao.GetInfoFaclien(emp_codi, cli_coda);
+                result = dao.GetInfoFaclien(emp_codi, cli_coda, redEnc);
 
                 if (result == null)
                     throw new Exception("Documento no encontrado.");
@@ -36,7 +42,11 @@ namespace RSELFANG.BO
             try
             {               
                 int emp_codi = int.Parse(ConfigurationManager.AppSettings["emp_codi"]);
-                int rem_cont = daoEeRemes.insertEeremes(eereenc, emp_codi);               
+                int rem_cont = daoEeRemes.insertEeremes(eereenc, emp_codi);
+
+                if (rem_cont == -1)
+                    throw new Exception("Se produjo un error, comuniquese con el administrador");
+
                 return new TOTransaction() { retorno = 0, txtRetorno = rem_cont.ToString() };
             }
             catch (Exception ex)
@@ -67,8 +77,13 @@ namespace RSELFANG.BO
 
             try
             {
+                string redEnc = ConfigurationManager.AppSettings["redEnc"];
+
+                if (string.IsNullOrEmpty(redEnc))
+                    redEnc = "S";
+
                 int rem_cont=0;
-                rem_cont = dao.GetInfoValidEnc(cli_coda, ite_serv, emp_codi);
+                rem_cont = dao.GetInfoValidEnc(cli_coda, ite_serv, emp_codi, redEnc);
 
                 if (rem_cont != 0)
                     throw new Exception("La encuesta ya fue realizada.");
@@ -98,6 +113,23 @@ namespace RSELFANG.BO
             catch (Exception ex)
             {
                 return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction GetInfoParam()
+        {
+            try
+            {
+                string redEnc = ConfigurationManager.AppSettings["redEnc"];
+
+                if (string.IsNullOrEmpty(redEnc))
+                    redEnc = "S";
+
+                return new TOTransaction() { retorno = 0, txtRetorno = redEnc };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction() { retorno = 1, txtRetorno = "S" };
             }
         }
     }

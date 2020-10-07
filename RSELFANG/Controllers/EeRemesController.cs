@@ -52,5 +52,12 @@ namespace RSELFANG.Controllers
             BoEeRemes bo = new BoEeRemes();
             return bo.GetInfoValidEncPqr(inp_cont, emp_codi);
         }
+
+        [Route("api/EeRemes/loadParamEncuesta")]
+        public TOTransaction Get()
+        {
+            BoEeRemes bo = new BoEeRemes();
+            return bo.GetInfoParam();
+        }
     }
 }

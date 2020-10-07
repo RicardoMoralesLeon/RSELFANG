@@ -12,13 +12,13 @@ namespace RSELFANG.DAO
 {
     public class DAOEeRemes
     {
-        public Eeremes GetInfoFaclien(int emp_codi, string cli_coda)
+        public Eeremes GetInfoFaclien(int emp_codi, string cli_coda, string redEnc)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT TIP_ABRE, TIP_NOMB, CLI_CODA, CLI_NOCO, TER_MAIL, TER_CELU, DATEDIFF(YEAR, TER_FENA, GETDATE()) CLI_EDAD, ");
             sql.Append(" CASE WHEN CLI_GENE = 'M' THEN 'Masculino' WHEN CLI_GENE = 'F' THEN 'Femenino' ELSE 'No Aplica' END CLI_GENE, ");
             sql.Append(" TER_NTEL, AFI_CATE, CASE WHEN AFI_ESTA = 'A' THEN 'Activo' WHEN AFI_ESTA = 'I' THEN 'Inactivo' WHEN AFI_ESTA='F' THEN 'Fallecido' ELSE '' END AFI_ESTA, ");
-            sql.Append(" GN_PARAM.PAR_PTDA, CASE WHEN GN_TERCE.TER_AUDP = 'S' THEN 1 ELSE 0 END TER_AUDP ");
+            sql.Append(" CONVERT(VARCHAR(50),GN_PARAM.PAR_PTDA) PAR_PTDA, CASE WHEN GN_TERCE.TER_AUDP = 'S' THEN 1 ELSE 0 END TER_AUDP ");
             sql.Append(" FROM FA_CLIEN ");
             sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = FA_CLIEN.TIP_CODI ");
             sql.Append(" INNER JOIN GN_TERCE ON GN_TERCE.TER_CODI = FA_CLIEN.TER_CODI ");
@@ -28,6 +28,58 @@ namespace RSELFANG.DAO
             sql.Append(" INNER JOIN GN_PARAM ON GN_PARAM.EMP_CODI = FA_CLIEN.EMP_CODI ");
             sql.Append(" WHERE FA_CLIEN.EMP_CODI = @EMP_CODI ");
             sql.Append(" AND FA_CLIEN.CLI_CODA = @CLI_CODA ");
+
+            if (redEnc == "N")
+            {
+                sql.Append(" UNION ");
+                sql.Append(" SELECT TIP_ABRE,TIP_NOMB,TER_CODA CLI_CODA, TER_NOCO CLI_NOCO, TER_MAIL, TER_CELU,0 CLI_EDAD,  ");
+                sql.Append(" '' CLI_GENE,   ");
+                sql.Append(" TER_NTEL, '' AFI_CATE,''AFI_ESTA,   ");
+                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+                sql.Append(" FROM GN_TERCE ");
+                sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = GN_TERCE.TIP_CODI   ");
+                sql.Append(" WHERE GN_TERCE.EMP_CODI = @EMP_CODI ");
+                sql.Append(" AND GN_TERCE.TER_CODA = @CLI_CODA  ");
+                sql.Append(" UNION  ");
+                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,RPA_CODI CLI_CODA, RPA_NOMB + ' ' + RPA_APEL CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
+                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+                sql.Append(" FROM SO_RPAUI   ");
+                sql.Append(" WHERE SO_RPAUI.EMP_CODI = @EMP_CODI ");
+                sql.Append(" AND SO_RPAUI.RPA_CODI = @CLI_CODA   ");
+                sql.Append(" UNION  ");
+                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,DLI_IDIN CLI_CODA,DLI_NOCO CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
+                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+                sql.Append(" FROM EC_LISEV ");
+                sql.Append(" WHERE EC_LISEV.EMP_CODI = @EMP_CODI ");
+                sql.Append(" AND EC_LISEV.DLI_IDIN = @CLI_CODA   ");
+                sql.Append(" UNION  ");
+                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,ASI_CODI CLI_CODA,ASI_NOMB + ' ' + ASI_APEL CLI_NOCO, ASI_MAIL TER_MAIL, ASI_TELE TER_CELU,0 CLI_EDAD,  ");
+                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+                sql.Append(" FROM EE_ASISE ");
+                sql.Append(" WHERE EE_ASISE.EMP_CODI = @EMP_CODI ");
+                sql.Append(" AND EE_ASISE.ASI_CODI = @CLI_CODA    ");
+                sql.Append(" UNION  ");
+                sql.Append(" SELECT TIP_ABRE, TIP_NOMB, DET_CODI CLI_CODA, DET_NOMB + ' ' + DET_APE1 + ' ' + DET_APE2 CLI_NOCO,  ");
+                sql.Append("  DET_CORR TER_MAIL, DET_CELU TER_CELU,0 CLI_EDAD,  ");
+                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+                sql.Append(" FROM AE_DETIN ");
+                sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = AE_DETIN.TIP_CODI   ");
+                sql.Append(" WHERE AE_DETIN.EMP_CODI = @EMP_CODI ");
+                sql.Append(" AND AE_DETIN.DET_CODI = @CLI_CODA  ");
+                sql.Append(" UNION  ");
+                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,INV_CODI CLI_CODA,INV_NOMB + ' ' + INV_APEL CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
+                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+                sql.Append(" FROM SO_INVIT ");
+                sql.Append(" WHERE SO_INVIT.EMP_CODI = @EMP_CODI ");
+                sql.Append(" AND SO_INVIT.INV_CODI = @CLI_CODA ");
+
+            }
+
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
@@ -58,7 +110,7 @@ namespace RSELFANG.DAO
             }
             catch (Exception ex)
             {
-                return 1;
+                return -1;
             }           
         }
 
@@ -125,9 +177,10 @@ namespace RSELFANG.DAO
             }
         }
 
-        public int GetInfoValidEnc(string cli_coda, int ite_serv, int emp_codi)
+        public int GetInfoValidEnc(string cli_coda, int ite_serv, int emp_codi, string redEnc)
         {
             StringBuilder sql = new StringBuilder();
+            List<Parameter> parametros = new List<Parameter>();
             sql.Append(" SELECT REM_CONT ");
             sql.Append(" FROM EE_REMES ");
             sql.Append(" WHERE CLI_CODA = @CLI_CODA ");
@@ -139,7 +192,12 @@ namespace RSELFANG.DAO
             sql.Append("      UNION ");
             sql.Append("      SELECT REM_CONT FROM EE_RESEM WHERE EMP_CODI = @EMP_CODI ");
             sql.Append(" ) ");
-            List <Parameter> parametros = new List<Parameter>();
+
+            if (redEnc == "N")
+            {
+                sql.Append(" AND CONVERT(VARCHAR,REM_FECH,103) = CONVERT(VARCHAR,GETDATE(),103) ");                
+            }
+                        
             parametros.Add(new Parameter("@CLI_CODA", cli_coda));
             parametros.Add(new Parameter("@EMP_CODI", emp_codi));
             parametros.Add(new Parameter("@ITE_SERV", ite_serv));
