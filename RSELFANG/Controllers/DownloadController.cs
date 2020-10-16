@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -82,14 +83,17 @@ namespace RSELFANG.Controllers
         {
             DAOGnRadju daoRadju = new DAOGnRadju();
             DAOGnAdju daoAdju = new DAOGnAdju();
+            DAOGnAdjFi daoAdjF = new DAOGnAdjFi();
+
             List<Digitalware.Apps.Utilities.TO.TOGnAdjun> adjun = new List<Digitalware.Apps.Utilities.TO.TOGnAdjun>();
+            List<TO.TOGnAdjFi> adjfi = new List<TO.TOGnAdjFi>();
 
             string download = HttpContext.Current.Server.MapPath("~/download/");
             string ftp = ConfigurationManager.AppSettings["servidorFTP"];
+            List<Digitalware.Apps.Utilities.TO.Gn_Adju.TOGnRadju> radju = daoRadju.GetRadju(emp_codi, pro_codi, consecutivo);
 
             try
-            {
-                List<Digitalware.Apps.Utilities.TO.Gn_Adju.TOGnRadju> radju = daoRadju.GetRadju(emp_codi, pro_codi, consecutivo);
+            {               
 
                 if (radju == null || !radju.Any())
                     throw new Exception("No hay adjuntos");
@@ -106,7 +110,7 @@ namespace RSELFANG.Controllers
                     List<DirectoryItem> filesExist = FTPManager.GetDirectoryInformation(directoryDefault);
                     if (filesExist != null && filesExist.Count > 0)
                     {
-                        DownloadFile(directoryDefault, download + adjunto.Adj_Nomb);                     
+                        DownloadFile(directoryDefault, download + adjunto.Adj_Nomb);
                     }
                 }
 
@@ -115,7 +119,25 @@ namespace RSELFANG.Controllers
             }
             catch (Exception ex)
             {
-                return new TOTransaction<List<Digitalware.Apps.Utilities.TO.TOGnAdjun>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+                try
+                {
+                    int rad_cont = radju.FirstOrDefault().Rad_Cont;
+                    adjfi = daoAdjF.GetAdjFi(emp_codi, rad_cont);
+
+                    if (adjfi.Count == 0)
+                        throw new Exception("No hay adjuntos");
+
+                    foreach (TO.TOGnAdjFi adjuntF in adjfi)
+                    {
+                        DownloadFileFromDb(adjuntF.adj_nomb, adjuntF.adj_file);
+                    }
+
+                    return new TOTransaction<List<Digitalware.Apps.Utilities.TO.TOGnAdjun>>() { objTransaction = adjun, retorno = 0, txtRetorno = "" };
+                }
+                catch (Exception exc)
+                {
+                    return new TOTransaction<List<Digitalware.Apps.Utilities.TO.TOGnAdjun>>() { objTransaction = null, retorno = 1, txtRetorno = exc.Message };
+                }              
             }
         }
 
@@ -152,6 +174,23 @@ namespace RSELFANG.Controllers
                 Console.WriteLine(e.Message);
             }
             return ResponseDescription;
+        }
+
+        private void DownloadFileFromDb(string adj_nomb, byte[] adj_file)
+        {
+            try
+            {
+                string download = HttpContext.Current.Server.MapPath("~/download/");
+                
+                using (var fs = new FileStream(download + adj_nomb, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(adj_file, 0, adj_file.Length);                    
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
     }
 }

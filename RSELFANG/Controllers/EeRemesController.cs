@@ -54,7 +54,7 @@ namespace RSELFANG.Controllers
         }
 
         [Route("api/EeRemes/loadParamEncuesta")]
-        public TOTransaction Get()
+        public TOTransaction<EeRemPa> Get()
         {
             BoEeRemes bo = new BoEeRemes();
             return bo.GetInfoParam();

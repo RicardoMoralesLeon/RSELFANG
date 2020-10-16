@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace RSELFANG.TO
 {
     public class TOGnAdjFi
@@ -10,5 +6,6 @@ namespace RSELFANG.TO
         public int adj_cont { get; set; }
         public byte[] adj_file { get; set; }
         public int rad_cont { get; set; }
+        public string adj_nomb { get; set; }
     }
 }

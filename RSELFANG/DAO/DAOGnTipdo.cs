@@ -14,7 +14,7 @@ namespace RSELFANG.DAO
         public List<GnTipdo> getListGnTipdo()
         {           
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("  SELECT * FROM GN_TIPDO  ");
+                sql.AppendLine("  SELECT * FROM GN_TIPDO WHERE TIP_CODI <> 0  ");
                 OTOContext pTOContext = new OTOContext();
                 var conection = DBFactory.GetDB(pTOContext);
                 List<GnTipdo> data = conection.ReadList(pTOContext, sql.ToString(), Make);

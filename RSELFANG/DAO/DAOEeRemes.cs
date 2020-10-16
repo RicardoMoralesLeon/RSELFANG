@@ -12,7 +12,7 @@ namespace RSELFANG.DAO
 {
     public class DAOEeRemes
     {
-        public Eeremes GetInfoFaclien(int emp_codi, string cli_coda, string redEnc)
+        public Eeremes GetInfoFaclien(int emp_codi, string cli_coda)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT TIP_ABRE, TIP_NOMB, CLI_CODA, CLI_NOCO, TER_MAIL, TER_CELU, DATEDIFF(YEAR, TER_FENA, GETDATE()) CLI_EDAD, ");
@@ -28,58 +28,100 @@ namespace RSELFANG.DAO
             sql.Append(" INNER JOIN GN_PARAM ON GN_PARAM.EMP_CODI = FA_CLIEN.EMP_CODI ");
             sql.Append(" WHERE FA_CLIEN.EMP_CODI = @EMP_CODI ");
             sql.Append(" AND FA_CLIEN.CLI_CODA = @CLI_CODA ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
+            return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
+        }
 
-            if (redEnc == "N")
-            {
-                sql.Append(" UNION ");
-                sql.Append(" SELECT TIP_ABRE,TIP_NOMB,TER_CODA CLI_CODA, TER_NOCO CLI_NOCO, TER_MAIL, TER_CELU,0 CLI_EDAD,  ");
-                sql.Append(" '' CLI_GENE,   ");
-                sql.Append(" TER_NTEL, '' AFI_CATE,''AFI_ESTA,   ");
-                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
-                sql.Append(" FROM GN_TERCE ");
-                sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = GN_TERCE.TIP_CODI   ");
-                sql.Append(" WHERE GN_TERCE.EMP_CODI = @EMP_CODI ");
-                sql.Append(" AND GN_TERCE.TER_CODA = @CLI_CODA  ");
-                sql.Append(" UNION  ");
-                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,RPA_CODI CLI_CODA, RPA_NOMB + ' ' + RPA_APEL CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
-                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
-                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
-                sql.Append(" FROM SO_RPAUI   ");
-                sql.Append(" WHERE SO_RPAUI.EMP_CODI = @EMP_CODI ");
-                sql.Append(" AND SO_RPAUI.RPA_CODI = @CLI_CODA   ");
-                sql.Append(" UNION  ");
-                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,DLI_IDIN CLI_CODA,DLI_NOCO CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
-                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
-                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
-                sql.Append(" FROM EC_LISEV ");
-                sql.Append(" WHERE EC_LISEV.EMP_CODI = @EMP_CODI ");
-                sql.Append(" AND EC_LISEV.DLI_IDIN = @CLI_CODA   ");
-                sql.Append(" UNION  ");
-                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,ASI_CODI CLI_CODA,ASI_NOMB + ' ' + ASI_APEL CLI_NOCO, ASI_MAIL TER_MAIL, ASI_TELE TER_CELU,0 CLI_EDAD,  ");
-                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
-                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
-                sql.Append(" FROM EE_ASISE ");
-                sql.Append(" WHERE EE_ASISE.EMP_CODI = @EMP_CODI ");
-                sql.Append(" AND EE_ASISE.ASI_CODI = @CLI_CODA    ");
-                sql.Append(" UNION  ");
-                sql.Append(" SELECT TIP_ABRE, TIP_NOMB, DET_CODI CLI_CODA, DET_NOMB + ' ' + DET_APE1 + ' ' + DET_APE2 CLI_NOCO,  ");
-                sql.Append("  DET_CORR TER_MAIL, DET_CELU TER_CELU,0 CLI_EDAD,  ");
-                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
-                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
-                sql.Append(" FROM AE_DETIN ");
-                sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = AE_DETIN.TIP_CODI   ");
-                sql.Append(" WHERE AE_DETIN.EMP_CODI = @EMP_CODI ");
-                sql.Append(" AND AE_DETIN.DET_CODI = @CLI_CODA  ");
-                sql.Append(" UNION  ");
-                sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,INV_CODI CLI_CODA,INV_NOMB + ' ' + INV_APEL CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
-                sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
-                sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
-                sql.Append(" FROM SO_INVIT ");
-                sql.Append(" WHERE SO_INVIT.EMP_CODI = @EMP_CODI ");
-                sql.Append(" AND SO_INVIT.INV_CODI = @CLI_CODA ");
+        public Eeremes GetInfoTerce(int emp_codi, string cli_coda)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT TIP_ABRE,TIP_NOMB,TER_CODA CLI_CODA, TER_NOCO CLI_NOCO, TER_MAIL, TER_CELU,0 CLI_EDAD,  ");
+            sql.Append(" '' CLI_GENE,   ");
+            sql.Append(" TER_NTEL, '' AFI_CATE,''AFI_ESTA,   ");
+            sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+            sql.Append(" FROM GN_TERCE ");
+            sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = GN_TERCE.TIP_CODI   ");
+            sql.Append(" WHERE GN_TERCE.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND GN_TERCE.TER_CODA = @CLI_CODA  ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
+            return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
+        }
 
-            }
+        public Eeremes GetInfoRpauni(int emp_codi, string cli_coda)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,RPA_CODI CLI_CODA, RPA_NOMB + ' ' + RPA_APEL CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
+            sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+            sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+            sql.Append(" FROM SO_RPAUI   ");
+            sql.Append(" WHERE SO_RPAUI.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND SO_RPAUI.RPA_CODI = @CLI_CODA   ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
+            return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
+        }
 
+        public Eeremes GetInfoDetin(int emp_codi, string cli_coda)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT TIP_ABRE, TIP_NOMB, DET_CODI CLI_CODA, DET_NOMB + ' ' + DET_APE1 + ' ' + DET_APE2 CLI_NOCO,  ");
+            sql.Append("  DET_CORR TER_MAIL, DET_CELU TER_CELU,0 CLI_EDAD,  ");
+            sql.Append(" CASE WHEN DET_GENE='F' THEN 'Femenino'  WHEN DET_GENE='M' THEN 'Masculino' ELSE '' END CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+            sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+            sql.Append(" FROM AE_DETIN ");
+            sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = AE_DETIN.TIP_CODI   ");
+            sql.Append(" WHERE AE_DETIN.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND AE_DETIN.DET_CODI = @CLI_CODA  ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
+            return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
+        }
+
+        public Eeremes GetInfoInvit(int emp_codi, string cli_coda)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,INV_CODI CLI_CODA,INV_NOMB + ' ' + INV_APEL CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
+            sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+            sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+            sql.Append(" FROM SO_INVIT ");
+            sql.Append(" WHERE SO_INVIT.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND SO_INVIT.INV_CODI = @CLI_CODA ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
+            return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
+        }
+
+        public Eeremes GetInfoLisev(int emp_codi, string cli_coda)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,DLI_IDIN CLI_CODA,DLI_NOCO CLI_NOCO, '' TER_MAIL, '' TER_CELU,0 CLI_EDAD,  ");
+            sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+            sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+            sql.Append(" FROM EC_LISEV ");
+            sql.Append(" WHERE EC_LISEV.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND EC_LISEV.DLI_IDIN = @CLI_CODA   ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));
+            return new DbConnection().Get<Eeremes>(sql.ToString(), sqlparams);
+        }
+
+        public Eeremes GetInfoAsise(int emp_codi, string cli_coda)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT '' TIP_ABRE,'' TIP_NOMB,ASI_CODI CLI_CODA,ASI_NOMB + ' ' + ASI_APEL CLI_NOCO, ASI_MAIL TER_MAIL, ASI_TELE TER_CELU,0 CLI_EDAD,  ");
+            sql.Append(" '' CLI_GENE, '' TER_NTEL, '' AFI_CATE,'' AFI_ESTA,   ");
+            sql.Append(" '' PAR_PTDA, 0 TER_AUDP   ");
+            sql.Append(" FROM EE_ASISE ");
+            sql.Append(" WHERE EE_ASISE.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND EE_ASISE.ASI_CODI = @CLI_CODA    ");
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("CLI_CODA", cli_coda));

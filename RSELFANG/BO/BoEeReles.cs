@@ -26,7 +26,12 @@ namespace RSELFANG.BO
                 if (result.Tables[0].Rows.Count == 0)
                     throw new Exception("No se encontró parametrización para la encuesta especificada.");
 
-                objReles.red_encu = ConfigurationManager.AppSettings["redEnc"].ToString();
+                string redEnc = ConfigurationManager.AppSettings["redEnc"];
+
+                if (string.IsNullOrEmpty(redEnc))
+                    redEnc = "S";
+
+                objReles.red_encu = redEnc;
                 objReles.rel_cont = Int32.Parse(result.Tables[0].Rows[0]["REL_CONT"].ToString());
                 objReles.rel_nomb = result.Tables[0].Rows[0]["REL_NOMB"].ToString();
                 objReles.par_rein = result.Tables[0].Rows[0]["PAR_REIN"].ToString();

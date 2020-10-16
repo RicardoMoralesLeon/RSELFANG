@@ -15,14 +15,46 @@ namespace RSELFANG.BO
 
             try
             {
-
                 string redEnc = ConfigurationManager.AppSettings["redEnc"];
 
                 if (string.IsNullOrEmpty(redEnc))
                     redEnc = "S";
 
                 Eeremes result = new Eeremes();
-                result = dao.GetInfoFaclien(emp_codi, cli_coda, redEnc);
+
+                if (redEnc == "S")
+                {
+                    result = dao.GetInfoFaclien(emp_codi, cli_coda);
+                }
+                else
+                {
+                    result = dao.GetInfoTerce(emp_codi, cli_coda);
+
+                    if (result == null)
+                    {
+                        result = dao.GetInfoRpauni(emp_codi, cli_coda);
+
+                        if (result == null)
+                        {
+                            result = dao.GetInfoDetin(emp_codi, cli_coda);
+
+                            if (result == null)
+                            {
+                                result = dao.GetInfoInvit(emp_codi, cli_coda);
+
+                                if (result == null)
+                                {
+                                    result = dao.GetInfoLisev(emp_codi, cli_coda);
+
+                                    if (result == null)
+                                    {
+                                        result = dao.GetInfoAsise(emp_codi, cli_coda);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }                               
 
                 if (result == null)
                     throw new Exception("Documento no encontrado.");
@@ -116,20 +148,30 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction GetInfoParam()
+        public TOTransaction<EeRemPa> GetInfoParam()
         {
             try
             {
+                EeRemPa eerempa = new EeRemPa();
+
                 string redEnc = ConfigurationManager.AppSettings["redEnc"];
 
                 if (string.IsNullOrEmpty(redEnc))
                     redEnc = "S";
 
-                return new TOTransaction() { retorno = 0, txtRetorno = redEnc };
+                string titEnc = ConfigurationManager.AppSettings["titRemes"];
+
+                if (string.IsNullOrEmpty(titEnc))
+                    titEnc = "";
+
+                eerempa.red_encu = redEnc;
+                eerempa.tit_reme = titEnc;
+
+                return new TOTransaction<EeRemPa>() { objTransaction = eerempa, retorno = 0, txtRetorno = "" };
             }
             catch (Exception ex)
             {
-                return new TOTransaction() { retorno = 1, txtRetorno = "S" };
+                return new TOTransaction<EeRemPa>() { objTransaction = null, retorno = 1, txtRetorno = ex.ToString() };
             }
         }
     }

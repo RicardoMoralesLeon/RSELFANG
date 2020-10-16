@@ -426,6 +426,7 @@
     <Compile Include="TO\EeReenc.cs" />
     <Compile Include="TO\EeReles.cs" />
     <Compile Include="TO\Eeremes.cs" />
+    <Compile Include="TO\EeRemPa.cs" />
     <Compile Include="TO\EeResem.cs" />
     <Compile Include="TO\EeResen.cs" />
     <Compile Include="TO\FaClien.cs" />

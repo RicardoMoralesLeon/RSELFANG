@@ -24,7 +24,7 @@ namespace RSELFANG.Controllers
         public TOTransaction<sfforpo> Post(SfFovis sffovis, bool upt = true, bool upt2 = true)
         {
             BOSfFovis bo = new BOSfFovis();
-            return bo.updateSfForpoRecursos(sffovis);
+            return bo.updateSfForpoRecursos(sffovis, true);
         }
     }
 }

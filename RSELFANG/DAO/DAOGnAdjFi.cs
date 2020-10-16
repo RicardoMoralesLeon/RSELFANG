@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Configuration;
 using Digitalware.Apps.Utilities.TO;
+using SevenFramework.DataBase;
 
 namespace RSELFANG.DAO
 {
@@ -21,20 +22,21 @@ namespace RSELFANG.DAO
             emp_codi = ConfigurationManager.AppSettings["emp_codi"].AsInt();
             usu_codi = ConfigurationManager.AppSettings["usu_codi"].AsString();
         }
-        public List<TOGnAdjFi> GetAdjFi(int emp_codi, int rad_cont)
+        public List<TO.TOGnAdjFi> GetAdjFi(int emp_codi, int rad_cont)
         {
-            DateTime date = DateTime.Now;
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT * ");
-            sql.Append(" FROM   GN_ADJFI ");
-            sql.Append("WHERE  EMP_CODI = @EMP_CODI AND RAD_CONT  = @RAD_CONT ");
-            List<Parameter> parametros = new List<Parameter>();
-            parametros.Add(new Parameter("@EMP_CODI ", emp_codi));
-            parametros.Add(new Parameter("@RAD_CONT", rad_cont));
-            OTOContext pTOContext = new OTOContext();
-            var conection = DBFactory.GetDB(pTOContext);
-            return conection.ReadList(pTOContext, sql.ToString(), Make, parametros.ToArray());
+            sql.Append(" SELECT GN_ADJUN.ADJ_CONT, RAD_LLAV,  ADJ_NOMB,  ADJ_FILE ");
+            sql.Append(" FROM GN_RADJU ");
+            sql.Append(" INNER JOIN GN_ADJUN ON GN_ADJUN.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJUN.EMP_CODI = GN_RADJU.EMP_CODI ");
+            sql.Append(" INNER JOIN GN_ADJFI ON GN_ADJFI.RAD_CONT = GN_RADJU.RAD_CONT AND GN_ADJFI.ADJ_CONT = GN_ADJUN.ADJ_CONT ");
+            sql.Append(" WHERE GN_RADJU.RAD_CONT = @RAD_CONT ");
+            sql.Append(" AND GN_RADJU.EMP_CODI = @EMP_CODI ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("RAD_CONT", rad_cont));
+            return new DbConnection().GetList<TO.TOGnAdjFi >(sql.ToString(), sqlparams);
         }
+
         public int insertGnAdjfi(TOGnAdjFi adjfi)
         {
             DateTime date = DateTime.Now;
@@ -58,7 +60,8 @@ namespace RSELFANG.DAO
         private static Func<IDataReader, TOGnAdjFi> Make = reader => new TOGnAdjFi
         {
             adj_cont = reader["ADJ_CONT"].AsInt(),
-            rad_cont = reader["RAD_CONT"].AsInt(),               
+            rad_cont = reader["RAD_CONT"].AsInt(), 
+            adj_file = reader["ADJ_FILE"].AsByte()
         };
     }
 }

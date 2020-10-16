@@ -100,11 +100,11 @@ namespace RSELFANG.BO
                             }
                         }
 
-                        msgError = InsertSfDfore(emp_codi, for_cont, sffovis.InfodforeA);
+                        msgError = InsertSfDfore(emp_codi, for_cont, sffovis.InfodforeA, sffovis.for_esta);
 
                         if (msgError == "")
                         {
-                           updateSfForpoRecursos(sffovis);
+                           updateSfForpoRecursos(sffovis, false);
                         }
                     }
                 }
@@ -168,9 +168,9 @@ namespace RSELFANG.BO
 
             try
             {
-                string txtError = "";                       
+                string txtError = "";
 
-                if (sfdfomh.afi_docu == null)
+                if (string.IsNullOrEmpty(sfdfomh.afi_docu))
                     return "";
 
                 object objSalida;
@@ -371,7 +371,7 @@ namespace RSELFANG.BO
                 if (txtError != null && txtError != "")
                     throw new Exception(txtError);
 
-                updateSfForpoRecursos(sffovis);
+                updateSfForpoRecursos(sffovis, false);
                           
                 salida.retorno = 0;
                 salida.txtRetorno = "";
@@ -593,26 +593,29 @@ namespace RSELFANG.BO
             return txtError;
         }
         
-        public TOTransaction<sfforpo> updateSfForpoRecursos(SfFovis sffovis)
+        public TOTransaction<sfforpo> updateSfForpoRecursos(SfFovis sffovis, bool login)
         {            
             TOTransaction<sfforpo> salida = new TOTransaction<sfforpo>();
             string txtError = "";
            
             try
             {
-                object varSali;                
-                object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
-                int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
+                if (login)
+                {
+                    object varSali;
+                    object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
+                    int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
 
-                if (retorno != 0)
-                    throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+                    if (retorno != 0)
+                        throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+                }                             
 
-                txtError = InsertSfDfore(sffovis.emp_codi, sffovis.for_cont, sffovis.InfodforeA);
+                txtError = InsertSfDfore(sffovis.emp_codi, sffovis.for_cont, sffovis.InfodforeA, sffovis.for_esta);
                                
                 if (txtError != null && txtError != "")
                     throw new Exception(txtError);
 
-                txtError = InsertSfDfore(sffovis.emp_codi, sffovis.for_cont, sffovis.InfodforeR);
+                txtError = InsertSfDfore(sffovis.emp_codi, sffovis.for_cont, sffovis.InfodforeR, sffovis.for_esta);
 
                 if (txtError != null && txtError != "")
                     throw new Exception(txtError);
@@ -629,7 +632,7 @@ namespace RSELFANG.BO
             return salida;
         }
 
-        private string InsertSfDfore(int emp_codi, int for_cont, List<SfDfore> sfdfore)
+        private string InsertSfDfore(int emp_codi, int for_cont, List<SfDfore> sfdfore, string for_esta)
         {  
             try
             {
@@ -645,6 +648,7 @@ namespace RSELFANG.BO
                         LEntrada.Add(for_cont);
                         LEntrada.Add(dfore.con_codi);
                         LEntrada.Add(dfore.dfo_sald);
+                        LEntrada.Add(for_esta);
 
                         if (ws.InsertarSFDFORE(LEntrada.ToArray(), out objSalida, out txtError) != 0)
                             throw new Exception(txtError);
@@ -663,6 +667,7 @@ namespace RSELFANG.BO
                         lentrada.Add(dfore.dfo_tipo);
                         lentrada.Add(dfore.con_cont);
                         lentrada.Add(dfore.dfo_sald);
+                        lentrada.Add(for_esta);
 
                         if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
                              throw new Exception("Error Actualizando Solicitud :" + txtError);
