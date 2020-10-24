@@ -12,7 +12,7 @@ namespace RSELFANG.Controllers
 {
     public class GnModulController : ApiController
     {
-       // GET: api/GnModul
+        //GET: api/GnModul
         public TOTransaction<Gn_Modul> GetGnModul(int mod_codi)
         {
             try

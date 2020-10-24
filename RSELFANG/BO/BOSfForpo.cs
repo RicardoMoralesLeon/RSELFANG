@@ -380,7 +380,7 @@ namespace RSELFANG.BO
                 {
                     List<SfDdfor> ddfor = new List<SfDdfor>();
                     ddfor = daoSfForpo.getInfoDdforForpo(emp_codi, for_cont, dfore.dfo_cont);
-
+                    
                     if (ddfor != null)
                         dfore.Infoddfor = ddfor;
                 }
@@ -432,7 +432,7 @@ namespace RSELFANG.BO
                 sffovis.postulante = daoSfForpo.getInfoAportante(emp_codi, afi_cont);
                 sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
                 sffovis.InfoGnmasal = daoSfForpo.GetInfoMasal(DateTime.Now.Year);
-                sffovis.infoHogar = daoSfForpo.GetInfoHogar(emp_codi, afi_cont);
+                // sffovis.infoHogar = daoSfForpo.GetInfoHogar(emp_codi, afi_cont);
                 sffovis.InfoEmpresa = daoSfForpo.getInfoEmpre(emp_codi, afi_cont);
 
                 if (sffovis.conyuge == null)

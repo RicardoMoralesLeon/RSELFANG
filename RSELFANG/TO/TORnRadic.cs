@@ -36,6 +36,18 @@ namespace RSELFANG.TO
         /// Condicion especial
         /// </summary>
         public List<GnItem> gnconde { get; set; }
+        /// <summary>
+        /// Clase de Trabajador
+        /// </summary>
+        public List<GnItem> clastra { get; set; }
+        /// <summary>
+        /// Tipo de Vinculación
+        /// </summary>
+        public List<GnItem> tipvinc { get; set; }
+        /// <summary>
+        /// Cargo
+        /// </summary>
+        public List<GnItem> cartrab { get; set; }
         ///// <summary>
         ///// Afiliados
         ///// </summary>

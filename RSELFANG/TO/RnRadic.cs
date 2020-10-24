@@ -5,45 +5,45 @@ namespace RSELFANG.TO
 {
     public class RnRadic
     {
-        public int cen_codi;        
-        public string ter_coda;
-        public string rad_obse;
-        public string rad_dire;
-        public string rad_emai;
-        public string rad_tdat;
-        public int emp_codi;
-        // public string usu_codi;
-        public int tia_cont;
-        public int tia_codi;
-        public string tia_nomb;
-        public int tip_coda;
-        public string tip_nomb;
-        public string apo_coda;
-        public string apo_razs;        
-        public int gru_cont;
-        public string gru_codi;
-        public string gru_nomb;
-        public int cra_cont;
-        public int cra_codi;
-        public string cra_nomb;
-        public string dsu_tele;
-        public int tip_codi;
-        public string tip_noma;
-        public string afi_docu;
-        public string afi_nom1;
-        public string afi_nom2;
-        public string afi_ape1;
-        public string afi_ape2;
-        public DateTime afi_fecn;
-        public string  afi_tele;
-        public string rad_pais;
-        public string rad_regi;
-        public string rad_depa;
-        public string rad_muni;
-        public string rad_loca;
-        public string rad_barr;
-        public int rad_nfol;
-        public List<RnDperc> rndperc;
-        public List<Rnradtd> radtdat;
+        public int cen_codi { get; set; }    
+        public string ter_coda{ get; set; } 
+        public string rad_obse{ get; set; } 
+        public string rad_dire{ get; set; } 
+        public string rad_emai{ get; set; } 
+        public string rad_tdat{ get; set; } 
+        public int emp_codi{ get; set; }         
+        public int tia_cont{ get; set; } 
+        public int tia_codi{ get; set; } 
+        public string tia_nomb{ get; set; } 
+        public int tip_coda{ get; set; } 
+        public string tip_nomb{ get; set; } 
+        public string apo_coda{ get; set; } 
+        public string apo_razs{ get; set; }         
+        public int gru_cont{ get; set; } 
+        public string gru_codi{ get; set; } 
+        public string gru_nomb{ get; set; } 
+        public int cra_cont{ get; set; } 
+        public int cra_codi{ get; set; } 
+        public string cra_nomb{ get; set; } 
+        public string dsu_tele{ get; set; } 
+        public int tip_codi{ get; set; } 
+        public string tip_noma{ get; set; } 
+        public string afi_docu{ get; set; } 
+        public string afi_nom1{ get; set; } 
+        public string afi_nom2{ get; set; } 
+        public string afi_ape1{ get; set; } 
+        public string afi_ape2{ get; set; } 
+        public DateTime afi_fecn{ get; set; } 
+        public string  afi_tele{ get; set; } 
+        public string rad_pais{ get; set; } 
+        public string rad_regi{ get; set; } 
+        public string rad_depa{ get; set; } 
+        public string rad_muni{ get; set; } 
+        public string rad_loca{ get; set; } 
+        public string rad_barr{ get; set; } 
+        public int rad_nfol{ get; set; } 
+        public List<RnDperc> rndperc{ get; set; } 
+        public List<Rnradtd> radtdat{ get; set; }
+        public List<RnAfili> rnafili { get; set; }
     }
 }

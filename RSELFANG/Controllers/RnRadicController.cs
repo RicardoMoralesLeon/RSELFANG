@@ -70,5 +70,13 @@ namespace RSELFANG.Controllers
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetInfoAfiliados(emp_codi);
         }
+
+        [Route("api/RnRadic/ArSucur")]
+        public TOTransaction<List<ArSucur>> get(int emp_codi, int apo_cont)
+        {
+            BoRnRadic bo = new BoRnRadic();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
+            return bo.GetInfoSucursal(emp_codi, apo_cont);
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace RSELFANG.BO
                 LEntrada.Add(sffovis.postulante.afi_docu);
                 LEntrada.Add(sffovis.postulante.for_cond);
                 LEntrada.Add(sffovis.postulante.ite_codi);
-                LEntrada.Add(0); // Item Tipo Postulante
+                LEntrada.Add(sffovis.postulante.ite_tipp); // Item Tipo Postulante
                 LEntrada.Add(sffovis.postulante.for_sala);
                 LEntrada.Add(sffovis.for_tdat);
 
@@ -79,6 +79,9 @@ namespace RSELFANG.BO
 
             try
             {
+                if (sffovis.for_cont == 0)
+                    sffovis.for_cont = for_cont;
+
                 msgError = InsertSfDfoih(emp_codi, for_cont, sffovis.infoHogar);
 
                 if (msgError == "")
@@ -100,11 +103,9 @@ namespace RSELFANG.BO
                             }
                         }
 
-                        msgError = InsertSfDfore(emp_codi, for_cont, sffovis.InfodforeA, sffovis.for_esta);
-
-                        if (msgError == "")
+                        if (msgError == "") // --> Insertar Informacion de recursos financieros
                         {
-                           updateSfForpoRecursos(sffovis, false);
+                            updateSfForpoRecursos(sffovis, false);
                         }
                     }
                 }
@@ -183,7 +184,7 @@ namespace RSELFANG.BO
                 LEntrada.Add(sfdfomh.afi_nom2);
                 LEntrada.Add(sfdfomh.afi_ape1);
                 LEntrada.Add(sfdfomh.afi_ape2);
-                LEntrada.Add(sfdfomh.afi_fecn);
+                LEntrada.Add(DateTime.Parse(sfdfomh.afi_fecn));
                 LEntrada.Add(sfdfomh.afi_esci);
                 LEntrada.Add(sfdfomh.afi_gene);
                 LEntrada.Add(sfdfomh.for_cond);
@@ -392,6 +393,9 @@ namespace RSELFANG.BO
             object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SSFFORPO", "", "", "", "", "", "N", "S", "" };
             int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
 
+            if (retorno != 0)
+                throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+
             List<object> lentrada = new List<object>();
             object p_salida = new object();
 
@@ -436,7 +440,7 @@ namespace RSELFANG.BO
             lentrada.Add(conyuge.afi_ape1);
             lentrada.Add(conyuge.afi_ape2);
             lentrada.Add(conyuge.afi_gene);
-            lentrada.Add(conyuge.afi_fecn);
+            lentrada.Add(DateTime.Parse(conyuge.afi_fecn));
             lentrada.Add(conyuge.ite_pare);
             lentrada.Add(conyuge.afi_esci);
             lentrada.Add(conyuge.for_cond);
@@ -484,7 +488,7 @@ namespace RSELFANG.BO
                 lentrada.Add(perc.afi_ape1);
                 lentrada.Add(perc.afi_ape2);
                 lentrada.Add(perc.afi_gene);
-                lentrada.Add(perc.afi_fecn);
+                lentrada.Add(DateTime.Parse(perc.afi_fecn));
                 lentrada.Add(perc.ite_pare);
                 lentrada.Add(perc.afi_esci);
                 lentrada.Add(perc.for_cond);
@@ -533,7 +537,7 @@ namespace RSELFANG.BO
                 lentrada.Add(perc.afi_ape1);
                 lentrada.Add(perc.afi_ape2);
                 lentrada.Add(perc.afi_gene);
-                lentrada.Add(perc.afi_fecn);
+                lentrada.Add(DateTime.Parse(perc.afi_fecn));
                 lentrada.Add(perc.ite_pare);
                 lentrada.Add(perc.afi_esci);
                 lentrada.Add(perc.for_cond);

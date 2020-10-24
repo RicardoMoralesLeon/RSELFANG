@@ -9,7 +9,7 @@ namespace RSELFANG.Controllers
     public class GnAcrolController : ApiController
     {
         [Route("api/GnAcrol/AcrolLoad")]
-        public TOTransaction<Gnmenu> Get(string reql, string filter ="")
+        public TOTransaction<Gnmenu> Get(string reql, string filter = "")
         {
             BOGnMenca bo = new BOGnMenca();
             return bo.GetGnMenca(reql, filter);

@@ -26,7 +26,7 @@ namespace RSELFANG.DAO
 		public Gn_Terce GetGnTerceByUser(int emp_codi, string usu_codi)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT GN_TERCE.TER_CODA, ");                      
+            sql.Append(" SELECT GN_TERCE.TER_CODA, ");
             sql.Append(" GN_TERCE.TER_NOCO ");
             sql.Append(" FROM   GN_ACROL ");
             sql.Append(" INNER JOIN GN_DACRO ON GN_ACROL.ACR_CONT = GN_DACRO.ACR_CONT ");

@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace RSELFANG.TO
 {
     public class Sfparam
@@ -7,5 +9,6 @@ namespace RSELFANG.TO
         public string par_ppdt { get; set; }
         public int ite_cont { get; set; }
         public double par_smvr { get; set; }
+        public DateTime dat_null { get; set; }
     }
 }

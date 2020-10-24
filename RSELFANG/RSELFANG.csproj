@@ -58,7 +58,7 @@
     <Reference Include="Digitalware.Apps.Utilities.Fa">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
@@ -409,6 +409,7 @@
     <Compile Include="tools\General.cs" />
     <Compile Include="tools\mailHandler.cs" />
     <Compile Include="TO\ArApovo.cs" />
+    <Compile Include="TO\ArSucur.cs" />
     <Compile Include="TO\ArTiapo.cs" />
     <Compile Include="TO\CtConsu.cs" />
     <Compile Include="TO\CtContr.cs" />
@@ -458,6 +459,7 @@
     <Compile Include="TO\PqTrazab.cs" />
     <Compile Include="TO\PqTrazabilidad.cs" />
     <Compile Include="TO\PqTrazabilidadPqr.cs" />
+    <Compile Include="TO\RnAfili.cs" />
     <Compile Include="TO\RnCraco.cs" />
     <Compile Include="TO\RnDdocu.cs" />
     <Compile Include="TO\RnDperc.cs" />
@@ -596,6 +598,15 @@
     </COMReference>
     <COMReference Include="SSfForpo">
       <Guid>{D27B9B57-42ED-45D2-B837-5ED2F0C70B71}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SSuAfili">
+      <Guid>{482A9396-68C8-4EF9-A978-4EAD22D6A884}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>

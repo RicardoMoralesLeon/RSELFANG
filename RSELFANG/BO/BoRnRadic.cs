@@ -33,6 +33,9 @@ namespace RSELFANG.BO
                 List<SuMpare> SuMpare = daoRadic.getListSumPare(emp_codi);
                 List<GnItem> gnprofe = boItems.GetGnItems(351);
                 List<GnItem> gnconde = boItems.GetGnItems(339);
+                List<GnItem> clastra = boItems.GetGnItems(334);
+                List<GnItem> tipvinc = boItems.GetGnItems(338);
+                List<GnItem> cartrab = boItems.GetGnItems(484);
 
                 result.artiapo = ArTiapo;
                 result.GnPaise = GnPaise;
@@ -42,6 +45,9 @@ namespace RSELFANG.BO
                 result.SuMpare = SuMpare;
                 result.gnprofe = gnprofe;
                 result.gnconde = gnconde;
+                result.clastra = clastra;
+                result.tipvinc = tipvinc;
+                result.cartrab = cartrab;
                 result.SRN000001 = daoRadic.getDigflag("SRN000001");
                 result.SRN000002 = daoRadic.getDigflag("SRN000002");
                 result.cen_codi = daoRadic.getInfoFudCe(emp_codi, usu_codi);
@@ -110,11 +116,21 @@ namespace RSELFANG.BO
             {
                 DAORnRadic daoradic = new DAORnRadic();
                 SRnRadic.SRnRadicDMR ws = new SRnRadic.SRnRadicDMR();
+                SSuAfili.SSuAfiliDMR wa = new SSuAfili.SSuAfiliDMR();
 
                 object varSali;
                 string txtError;
                 object[] varEntr = { usuario, Encrypta.EncriptarClave(password), alias, "SRNRADIC", "", "", "", "", "", "N", "S", "" };
                 int retorno = ws.ProgramLogin(varEntr, out varSali, out txtError);
+
+                if (retorno != 0)
+                    throw new Exception("Se produjo un error al autenticar el programa: SRNRADIC.");
+
+                object[] varEntrS = { usuario, Encrypta.EncriptarClave(password), alias, "SSUAFILI", "", "", "", "", "", "N", "S", "" };
+                int retornoS = wa.ProgramLogin(varEntr, out varSali, out txtError);
+
+                if (retornoS != 0)
+                    throw new Exception("Se produjo un error al autenticar el programa: SSUAFILI.");
 
                 int rad_cont = 0;
                 List<object> lentrada = new List<object>();
@@ -155,74 +171,126 @@ namespace RSELFANG.BO
 
                 if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
                     throw new Exception("Error Insertando Radicación :" + txtError);
+
                 var lsalida = (object[])p_salida;
                 rad_cont = int.Parse(lsalida[0].ToString());
-
-                if (txtError == null)
+                
+                foreach (RnDperc perc in rnradic.rndperc)
                 {
-                    foreach (RnDperc perc in rnradic.rndperc)
-                    {
-                        int dpe_cont = 0;
-                        lentrada = new List<object>();
-                        p_salida = new object();                    
+                    int dpe_cont = 0;
+                    lentrada = new List<object>();
+                    p_salida = new object();
 
-                        lentrada.Add("InsertarRnDperc");
-                        lentrada.Add(rnradic.emp_codi); // emp_codi
-                        lentrada.Add(rad_cont);         // rad_cont
-                        lentrada.Add(0);                // ite_codi
-                        lentrada.Add("N");               // ddo_esis
-                        lentrada.Add("N");               // ddo_recb
-                        lentrada.Add(".");               // ddo_obse
-                        lentrada.Add(perc.dpe_docu);    // dpe_docu
-                        lentrada.Add(perc.dpe_nom1);    // dpe_nom1
-                        lentrada.Add(perc.dpe_nom2);    // dpe_nom2
-                        lentrada.Add(perc.dpe_ape1);    // dpe_ape1
-                        lentrada.Add(perc.dpe_ape2);    // dpe_ape2
-                        lentrada.Add(perc.mpa_codi);    // mpa_codi
-                        lentrada.Add("N");              // ddo_atnf
-                        lentrada.Add(0);                // tip_codi
-                        lentrada.Add("");               // dpe_cony
-                        lentrada.Add("");               // dpe_trab
+                    lentrada.Add("InsertarRnDperc");
+                    lentrada.Add(rnradic.emp_codi); // emp_codi
+                    lentrada.Add(rad_cont);         // rad_cont
+                    lentrada.Add(0);                // ite_codi
+                    lentrada.Add("N");               // ddo_esis
+                    lentrada.Add("N");               // ddo_recb
+                    lentrada.Add(".");               // ddo_obse
+                    lentrada.Add(perc.dpe_docu);    // dpe_docu
+                    lentrada.Add(perc.dpe_nom1);    // dpe_nom1
+                    lentrada.Add(perc.dpe_nom2);    // dpe_nom2
+                    lentrada.Add(perc.dpe_ape1);    // dpe_ape1
+                    lentrada.Add(perc.dpe_ape2);    // dpe_ape2
+                    lentrada.Add(perc.mpa_codi);    // mpa_codi
+                    lentrada.Add("N");              // ddo_atnf
+                    lentrada.Add(0);                // tip_codi
+                    lentrada.Add("");               // dpe_cony
+                    lentrada.Add("");               // dpe_trab
+
+                    if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                        throw new Exception("Error Insertando grupo familiar :" + txtError);
+
+                    var lsalidas = (object[])p_salida;
+                    dpe_cont = int.Parse(lsalidas[0].ToString());
+
+                    foreach (RnDdocu ddocu in perc.lst_ddoc)
+                    {
+                        lentrada = new List<object>();
+                        p_salida = new object();
+
+                        string ddo_esis = ddocu.ddo_esis ? "S" : "N";
+                        string ddo_recb = ddocu.ddo_recb ? "S" : "N";
+
+                        lentrada.Add("InsertarDocumentosWeb");
+                        lentrada.Add(rnradic.emp_codi);  // emp_codi
+                        lentrada.Add(rad_cont);          // rad_cont
+                        lentrada.Add(ddocu.ite_cont);    // ite_cont
+                        lentrada.Add(dpe_cont);          // dpe_cont
+                        lentrada.Add(ddo_esis);          // ddo_esis
+                        lentrada.Add(ddo_recb);          // ddo_recb
+                        lentrada.Add(ddocu.ddo_obse);    // ddo_obse
 
                         if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
                             throw new Exception("Error Insertando grupo familiar :" + txtError);
 
-                        var lsalidas = (object[])p_salida;
-                        dpe_cont = int.Parse(lsalidas[0].ToString());
-
-                        foreach (RnDdocu ddocu in perc.lst_ddoc)
-                        {
-                            lentrada = new List<object>();
-                            p_salida = new object();
-
-                            string ddo_esis = ddocu.ddo_esis ? "S" : "N";
-                            string ddo_recb = ddocu.ddo_recb ? "S" : "N";
-
-                            lentrada.Add("InsertarDocumentosWeb");
-                            lentrada.Add(rnradic.emp_codi);  // emp_codi
-                            lentrada.Add(rad_cont);          // rad_cont
-                            lentrada.Add(ddocu.ite_cont);    // ite_cont
-                            lentrada.Add(dpe_cont);          // dpe_cont
-                            lentrada.Add(ddo_esis);          // ddo_esis
-                            lentrada.Add(ddo_recb);          // ddo_recb
-                            lentrada.Add(ddocu.ddo_obse);    // ddo_obse
-
-                            if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
-                                throw new Exception("Error Insertando grupo familiar :" + txtError);
-                        }                      
                     }
+                }
 
-                    if (txtError == null)
+                foreach (RnAfili afili in rnradic.rnafili)
+                {
+                    lentrada = new List<object>();
+                    p_salida = new object();
+                    lentrada.Add("InsertarAfiliadoWs");
+                    lentrada.Add(rnradic.emp_codi);
+                    lentrada.Add(rad_cont);
+                    lentrada.Add(DateTime.Now);
+                    lentrada.Add(afili.tip_codi);
+                    lentrada.Add(afili.afi_docu);
+                    lentrada.Add(afili.afi_feex);
+                    lentrada.Add(DateTime.Now);
+                    lentrada.Add(afili.afi_nom1);
+                    lentrada.Add(afili.afi_nom2);
+                    lentrada.Add(afili.afi_ape1);
+                    lentrada.Add(afili.afi_ape2);
+                    lentrada.Add(afili.afi_fecn);
+                    lentrada.Add(afili.afi_esci);
+                    lentrada.Add(afili.afi_cate);
+                    lentrada.Add(afili.afi_gene);
+                    lentrada.Add(afili.pro_cont);
+                    lentrada.Add(afili.ite_cont);
+                    lentrada.Add(afili.afi_cond);
+                    lentrada.Add(afili.pai_codi);
+                    lentrada.Add(afili.reg_codi);
+                    lentrada.Add(afili.dep_codi);
+                    lentrada.Add(afili.mun_codi);
+                    lentrada.Add(afili.loc_codi);
+                    lentrada.Add(afili.bar_codi);
+                    lentrada.Add(afili.afi_dire);
+                    lentrada.Add(afili.afi_mail);
+                    lentrada.Add(afili.afi_twit);
+                    lentrada.Add(afili.afi_wapp);
+                    lentrada.Add(afili.afi_face);
+                    lentrada.Add(afili.afi_tele);
+                    lentrada.Add(afili.afi_celu);
+                    lentrada.Add(afili.apo_cont);
+                    lentrada.Add(afili.apo_coda);
+                    lentrada.Add(afili.suc_cont);
+                    lentrada.Add(DateTime.Now);
+                    lentrada.Add(""); // --> Trayectoria Principal
+                    lentrada.Add(afili.tra_salb);
+                    lentrada.Add(afili.tia_cont); 
+                    lentrada.Add(afili.ite_clat);
+                    lentrada.Add(afili.ite_tipv);
+                    lentrada.Add(afili.tra_ubla);
+                    lentrada.Add(afili.car_codi);
+                    
+                    if (wa.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                        throw new Exception("Error En Afiliación Automática :" + txtError);
+                }
+
+                if (txtError == null)
+                {
+                    if (rnradic.radtdat != null)
                     {
-                        if (rnradic.radtdat != null)
+                        foreach (Rnradtd radtd in rnradic.radtdat)
                         {
-                            foreach (Rnradtd radtd in rnradic.radtdat)
-                            {
-                                daoradic.updateTratamiento(radtd, rnradic.emp_codi, rad_cont);
-                            }
+                            daoradic.updateTratamiento(radtd, rnradic.emp_codi, rad_cont);
                         }
                     }
                 }
+
 
                 string radnume = daoradic.getNumeroRadicado(rad_cont);
                 return new TOTransaction<RnRadicSalida>() { objTransaction = new RnRadicSalida() { rad_cont = rad_cont, msg = "", rad_nume = radnume }, retorno = 0, txtRetorno = "" };
@@ -275,6 +343,21 @@ namespace RSELFANG.BO
             catch (Exception ex)
             {
                 return new TOTransaction<List<SuAfili>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction<List<ArSucur>> GetInfoSucursal(int emp_codi, int apo_cont)
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+
+            try
+            {
+                List<ArSucur> ArSucur = daoRadic.getListArSucur(emp_codi, apo_cont);
+                return new TOTransaction<List<ArSucur>>() { objTransaction = ArSucur, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<List<ArSucur>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
     }

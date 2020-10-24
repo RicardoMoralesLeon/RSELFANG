@@ -19,7 +19,7 @@ namespace RSELFANG.TO
         public string afi_nom2 { get; set; }
         public string afi_ape1 { get; set; }
         public string afi_ape2 { get; set; }
-        public DateTime afi_fecn { get; set; }
+        public string afi_fecn { get; set; }
         public string afi_esci { get; set; }
         public string afi_cate { get; set; }
         public string afi_dire { get; set; }
@@ -212,6 +212,7 @@ namespace RSELFANG.TO
         {
             this.mod_cspm = "";
             this.dfo_lurb = "N";
+            this.dfo_fesc = DateTime.Now;
         }
     }
 

@@ -273,5 +273,23 @@ namespace RSELFANG.DAO
                 return "";
             return (string)result;
         }
+
+        public List<ArSucur> getListArSucur(int emp_codi, int apo_cont)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT AR_SUCUR.EMP_CODI, AR_SUCUR.SUC_CONT, AR_SUCUR.SUC_CODI, ");
+            sql.Append(" AR_SUCUR.SUC_DESC, AR_SUCUR.SUC_ESTD ");
+            sql.Append(" FROM AR_SUCUR, AR_APOVO ");
+            sql.Append(" WHERE AR_APOVO.EMP_CODI = AR_SUCUR.EMP_CODI ");
+            sql.Append(" AND AR_APOVO.APO_CONT = AR_SUCUR.APO_CONT ");
+            sql.Append(" AND AR_SUCUR.SUC_ESTD = 'A' ");
+            sql.Append(" AND AR_SUCUR.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND AR_APOVO.APO_CONT = @APO_CONT ");
+            sql.Append(" ORDER BY AR_SUCUR.SUC_CODI ");
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("APO_CONT", apo_cont));
+            return new DbConnection().GetList<ArSucur>(sql.ToString(), sqlparams);
+        }
     }
 }
