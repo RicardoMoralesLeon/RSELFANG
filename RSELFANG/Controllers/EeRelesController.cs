@@ -48,5 +48,12 @@ namespace RSELFANG.Controllers
             BoEeReles bo = new BoEeReles();
             return bo.GetInfoValidEeReles(rem_cont, rel_serv);
         }
+
+        [Route("api/EeReles/EeRelesValidPQ")]
+        public TOTransaction Get(int inp_cont, bool p = false)
+        {
+            BoEeReles bo = new BoEeReles();
+            return bo.GetInfoValidEeRelesPQ(inp_cont);
+        }
     }
 }

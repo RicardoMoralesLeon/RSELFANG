@@ -73,7 +73,7 @@ namespace RSELFANG.BO
 
                         foreach (DataRow drrr in result.Tables[0].Rows)
                         {
-                            if (drrr["DRS_CLAS"].ToString() == "M")
+                            if (drrr["DRS_CLAS"].ToString() == "M" || drrr["DRS_CLAS"].ToString() == "U")
                             {
                                 EeDdprc objDdprc = new EeDdprc();
                                 objDdprc.ddp_cont = Convert.ToInt32(drrr["DDP_CONT"].ToString());
@@ -195,6 +195,25 @@ namespace RSELFANG.BO
             try
             {
                 bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
+
+                if (enc)
+                    throw new Exception("La encuesta ya fue diligenciada");
+
+                return new TOTransaction() { retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction() { retorno = 1, txtRetorno = ex.Message };
+            }
+        }
+
+        public TOTransaction GetInfoValidEeRelesPQ(int inp_cont)
+        {
+            DAOEeReles daoEeReles = new DAOEeReles();
+
+            try
+            {
+                bool enc = daoEeReles.infoValidEerelesPQ(inp_cont);
 
                 if (enc)
                     throw new Exception("La encuesta ya fue diligenciada");

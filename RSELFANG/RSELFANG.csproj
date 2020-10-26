@@ -215,6 +215,7 @@
     <Compile Include="BO\BOCtConsu.cs" />
     <Compile Include="BO\BOCtPropo.cs" />
     <Compile Include="BO\BOEcCotiz.cs" />
+    <Compile Include="BO\BOEeConsu.cs" />
     <Compile Include="BO\BOEeMedsa.cs" />
     <Compile Include="BO\BoEeReles.cs" />
     <Compile Include="BO\BoEeRemes.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Controllers\CtPropoController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EcCotizController.cs" />
+    <Compile Include="Controllers\EeconsuController.cs" />
     <Compile Include="Controllers\EeMedsaController.cs" />
     <Compile Include="Controllers\EeRelesController.cs" />
     <Compile Include="Controllers\EeRemesController.cs" />
@@ -323,6 +325,7 @@
     <Compile Include="DAO\DAOEcDetan.cs" />
     <Compile Include="DAO\DAOEcDphij.cs" />
     <Compile Include="DAO\DAOEcLisev.cs" />
+    <Compile Include="DAO\DAOEeConsu.cs" />
     <Compile Include="DAO\DAOEeMedsa.cs" />
     <Compile Include="DAO\DAOEeReles.cs" />
     <Compile Include="DAO\DAOEeRemes.cs" />
@@ -420,6 +423,7 @@
     <Compile Include="TO\CtRevDoSalida.cs" />
     <Compile Include="TO\CtRevPrSalida.cs" />
     <Compile Include="TO\CtRevtd.cs" />
+    <Compile Include="TO\EeConsu.cs" />
     <Compile Include="TO\EeDdprc.cs" />
     <Compile Include="TO\EeDrele.cs" />
     <Compile Include="TO\EeDrsee.cs" />

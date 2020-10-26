@@ -40,7 +40,7 @@ namespace RSELFANG.DAO
             sql.Append(" 	AND REM_CONT = @REM_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
             sql.Append(" UNION  ");
-            sql.Append(" SELECT REL.EMP_CODI,REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,'M' DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,");
+            sql.Append(" SELECT REL.EMP_CODI,REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,DPR_CLAS DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,");
             sql.Append(" PRC.DDP_CONT,PRC.DRP_CONT,PRC.DPP_OPCI,PRC.DPP_ORDE DSP_ORDE,  0 RSE_CONT , 0 DRS_CONT, DRE_SECC, RES_VALO, RES_CONT  ");
             sql.Append(" FROM   EE_RELES REL  ");
             sql.Append("     INNER JOIN EE_DRELE ELE  ");
@@ -60,7 +60,7 @@ namespace RSELFANG.DAO
             sql.Append(" 	AND EE_RESEM.DDP_CONT = PRC.DDP_CONT");
             sql.Append(" 	AND REM_CONT = @REM_CONT ");
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
-            sql.Append(" ) A LEFT JOIN AE_PARAM ON AE_PARAM.EMP_CODI = A.EMP_CODI WHERE A.DRS_CLAS IN ('A','M','P')  ");
+            sql.Append(" ) A LEFT JOIN AE_PARAM ON AE_PARAM.EMP_CODI = A.EMP_CODI WHERE A.DRS_CLAS IN ('A','M','P','U')  ");
             sql.Append(" ORDER BY DRE_ORDE   ");
             sqlparams.Add(new SQLParams("REL_CONT", rel_cont));
             sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
@@ -265,6 +265,31 @@ namespace RSELFANG.DAO
             {
                 return true;
             }           
+        }
+
+        public bool infoValidEerelesPQ(int inp_cont)
+        {
+            StringBuilder sql = new StringBuilder();
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            DataSet ds = new DataSet();
+            sql.Append(" SELECT * ");
+            sql.Append(" FROM EE_RESEN");      ;
+            sql.Append(" WHERE EE_RESEN.INP_CONT = @INP_CONT");           
+            sql.Append(" UNION");
+            sql.Append(" SELECT * ");
+            sql.Append(" FROM EE_RESEM"); ;
+            sql.Append(" WHERE EE_RESEM.INP_CONT = @INP_CONT");
+            sqlparams.Add(new SQLParams("INP_CONT", inp_cont));            
+            ds = new DbConnection().GetDataSet(sql.ToString(), sqlparams);
+
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public List<EeResen> getInfoEeresen(int rem_cont, int emp_codi)
