@@ -78,5 +78,13 @@ namespace RSELFANG.Controllers
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
             return bo.GetInfoSucursal(emp_codi, apo_cont);
         }
+
+        [Route("api/RnRadic/RnRadicLoadAportante")]
+        public TOTransaction<ArApovo> Get(int emp_codi, string usu_codi, bool opt = false, string aopt2 ="")
+        {
+            BoRnRadic bo = new BoRnRadic();
+            emp_codi = new tools.General().GetEmpCodi(emp_codi);
+            return bo.GetInitialApovo(emp_codi, usu_codi);
+        }
     }
 }

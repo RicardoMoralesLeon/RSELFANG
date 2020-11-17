@@ -10,18 +10,18 @@ namespace RSELFANG.BO
 {
     public class BoEeReles
     {
-        public TOTransaction<EeReles> GetInfoDataEeReles(int rel_cont, int rem_cont,int rel_serv)
+        public TOTransaction<EeReles> GetInfoDataEeReles(int rel_cont, int rem_cont,int rel_serv, int inp_cont)
         {
             DAOEeReles daoEeReles = new DAOEeReles();
 
             try
             {
-                bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
+                bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv, inp_cont);
 
                 DataSet result = new DataSet();
                 EeReles objReles = new EeReles();
                 int countPreg = 0;
-                result = daoEeReles.getEeReles(rel_cont, rem_cont);
+                result = daoEeReles.getEeReles(rel_cont, rem_cont, inp_cont);
 
                 if (result.Tables[0].Rows.Count == 0)
                     throw new Exception("No se encontró parametrización para la encuesta especificada.");
@@ -67,8 +67,9 @@ namespace RSELFANG.BO
                         }
                         else
                         {
-                            if (!objDrele.Preguntas.Exists(x => x.drs_preg == objDrsee.drs_preg) && objDrele.dre_secc.Equals(objDrsee.sec_cont) && objDrsee.res_valo != "")
+                            if (!objDrele.Preguntas.Exists(x => x.drs_preg == objDrsee.drs_preg) && objDrele.dre_secc.Equals(objDrsee.sec_cont) && objDrsee.res_valo != "") {                                
                                 objDrele.Preguntas.Add(objDrsee);
+                            }                                
                         }
 
                         foreach (DataRow drrr in result.Tables[0].Rows)
@@ -194,7 +195,7 @@ namespace RSELFANG.BO
 
             try
             {
-                bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv);
+                bool enc = daoEeReles.infoValidEereles(rem_cont, rel_serv, 0);
 
                 if (enc)
                     throw new Exception("La encuesta ya fue diligenciada");

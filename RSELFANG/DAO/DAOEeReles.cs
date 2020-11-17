@@ -13,7 +13,7 @@ namespace RSELFANG.DAO
 {
     public class DAOEeReles
     {
-        public DataSet getEeReles(int rel_cont, int rem_cont)
+        public DataSet getEeReles(int rel_cont, int rem_cont, int inp_cont)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
@@ -37,7 +37,12 @@ namespace RSELFANG.DAO
             sql.Append(" 	LEFT JOIN EE_RESEN ON EE_RESEN.REL_CONT= ELE.REL_CONT");
             sql.Append(" 	AND EE_RESEN.RSE_CONT = EEN.RSE_CONT");
             sql.Append(" 	AND EE_RESEN.DRS_CONT = SEE.DRS_CONT");
-            sql.Append(" 	AND REM_CONT = @REM_CONT ");
+
+            if(inp_cont == 0)
+                sql.Append(" 	AND REM_CONT = @REM_CONT ");
+            else
+                sql.Append(" 	AND INP_CONT = @INP_CONT ");
+
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
             sql.Append(" UNION  ");
             sql.Append(" SELECT REL.EMP_CODI,REL.REL_CONT,REL_NOMB,SEC_NOMB,DRE_ORDE,DPR_PREG DRS_PREG,DPR_CLAS DRS_CLAS,RCS.SEC_CONT,DRS_ORDE,");
@@ -58,12 +63,18 @@ namespace RSELFANG.DAO
             sql.Append(" LEFT JOIN EE_RESEM ON EE_RESEM.REL_CONT= ELE.REL_CONT");
             sql.Append(" 	AND EE_RESEM.DRP_CONT = PRC.DRP_CONT");
             sql.Append(" 	AND EE_RESEM.DDP_CONT = PRC.DDP_CONT");
-            sql.Append(" 	AND REM_CONT = @REM_CONT ");
+
+            if (inp_cont == 0)
+                sql.Append(" 	AND REM_CONT = @REM_CONT ");
+            else
+                sql.Append(" 	AND INP_CONT = @INP_CONT ");
+
             sql.Append(" WHERE  ELE.REL_CONT = @REL_CONT");
             sql.Append(" ) A LEFT JOIN AE_PARAM ON AE_PARAM.EMP_CODI = A.EMP_CODI WHERE A.DRS_CLAS IN ('A','M','P','U')  ");
             sql.Append(" ORDER BY DRE_ORDE   ");
             sqlparams.Add(new SQLParams("REL_CONT", rel_cont));
             sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
+            sqlparams.Add(new SQLParams("INP_CONT", inp_cont));
             return new DbConnection().GetDataSet(sql.ToString(), sqlparams);
         }
 
@@ -237,23 +248,39 @@ namespace RSELFANG.DAO
             return  new DbConnection().Get<TOPqParam>(sql.ToString(), sqlparams);            
         }
 
-        public bool infoValidEereles(int rem_cont,int rel_serv)
+        public bool infoValidEereles(int rem_cont,int rel_serv, int inp_cont)
         {
             StringBuilder sql = new StringBuilder();
             List<SQLParams> sqlparams = new List<SQLParams>();
             DataSet ds = new DataSet();
-            sql.Append(" SELECT * ");
-            sql.Append(" FROM EE_RESEN");
-            sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT");
-            sql.Append(" WHERE EE_REMES.REM_CONT = @REM_CONT");
-            sql.Append(" AND ITE_SERV = @REL_SERV");
-            sql.Append(" UNION");
-            sql.Append(" SELECT *");
-            sql.Append(" FROM EE_RESEM");
-            sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEM.REM_CONT");
-            sql.Append(" WHERE EE_REMES.REM_CONT = @REM_CONT");
-            sql.Append(" AND ITE_SERV = @REL_SERV");
+
+            if (inp_cont != 0)
+            {
+                sql.Append(" SELECT * ");
+                sql.Append(" FROM EE_RESEN");                
+                sql.Append(" WHERE EE_RESEN.INP_CONT = @INP_CONT");                
+                sql.Append(" UNION");
+                sql.Append(" SELECT * ");
+                sql.Append(" FROM EE_RESEM");
+                sql.Append(" WHERE EE_RESEM.INP_CONT = @INP_CONT");
+            }
+            else
+            {
+                sql.Append(" SELECT * ");
+                sql.Append(" FROM EE_RESEN");
+                sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEN.REM_CONT");
+                sql.Append(" WHERE EE_REMES.REM_CONT = @REM_CONT");
+                sql.Append(" AND ITE_SERV = @REL_SERV");
+                sql.Append(" UNION");
+                sql.Append(" SELECT *");
+                sql.Append(" FROM EE_RESEM");
+                sql.Append(" INNER JOIN EE_REMES ON EE_REMES.REM_CONT = EE_RESEM.REM_CONT");
+                sql.Append(" WHERE EE_REMES.REM_CONT = @REM_CONT");
+                sql.Append(" AND ITE_SERV = @REL_SERV");
+            }
+
             sqlparams.Add(new SQLParams("REM_CONT", rem_cont));
+            sqlparams.Add(new SQLParams("INP_CONT", inp_cont));
             sqlparams.Add(new SQLParams("REL_SERV", rel_serv));            
             ds = new DbConnection().GetDataSet(sql.ToString(), sqlparams);
 

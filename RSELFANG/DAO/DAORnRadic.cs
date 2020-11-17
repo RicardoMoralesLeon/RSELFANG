@@ -291,5 +291,26 @@ namespace RSELFANG.DAO
             sqlparams.Add(new SQLParams("APO_CONT", apo_cont));
             return new DbConnection().GetList<ArSucur>(sql.ToString(), sqlparams);
         }
+
+        public ArApovo getArApovo(int emp_codi, string usu_codi)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT AR_TIAPO.TIA_CONT,AR_TIAPO.TIA_CODI,AR_TIAPO.TIA_NOMB, AR_APOVO.EMP_CODI, "); 
+            sql.Append(" AR_APOVO.APO_CONT,AR_APOVO.APO_CODA,AR_APOVO.APO_RAZS, AR_APOVO.APO_ESTD ");
+            sql.Append(" FROM SU_AFILI ");
+            sql.Append(" INNER JOIN SU_TRAYE ON SU_TRAYE.AFI_CONT = SU_AFILI.AFI_CONT ");
+            sql.Append(" AND SU_TRAYE.EMP_CODI = SU_AFILI.EMP_CODI ");
+            sql.Append(" INNER JOIN AR_APOVO ON AR_APOVO.APO_CONT = SU_TRAYE.APO_CONT ");
+            sql.Append(" AND AR_APOVO.EMP_CODI = SU_TRAYE.EMP_CODI ");
+            sql.Append(" INNER JOIN AR_TIAPO ON AR_TIAPO.EMP_CODI = AR_APOVO.EMP_CODI ");
+            sql.Append(" AND AR_TIAPO.TIA_CONT = AR_APOVO.TIA_CONT ");
+            sql.Append(" WHERE AFI_DOCU = @AFI_DOCU ");
+            sql.Append(" AND SU_TRAYE.TRA_ESTA = 'A' ");
+            sql.Append(" AND SU_AFILI.EMP_CODI = @EMP_CODI ");
+            List <SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("AFI_DOCU", usu_codi));
+            return new DbConnection().Get<ArApovo>(sql.ToString(), sqlparams);
+        }
     }
 }

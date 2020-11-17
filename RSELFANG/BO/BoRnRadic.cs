@@ -360,6 +360,21 @@ namespace RSELFANG.BO
                 return new TOTransaction<List<ArSucur>>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
             }
         }
+
+        public TOTransaction<ArApovo> GetInitialApovo(int emp_codi, string usu_codi)
+        {
+            DAORnRadic daoRadic = new DAORnRadic();
+           
+            try
+            {              
+                ArApovo ArApovo = daoRadic.getArApovo(emp_codi, usu_codi);                            
+                return new TOTransaction<ArApovo>() { objTransaction = ArApovo, retorno = 0, txtRetorno = "" };
+            }
+            catch (Exception ex)
+            {
+                return new TOTransaction<ArApovo>() { objTransaction = null, retorno = 1, txtRetorno = ex.Message };
+            }
+        }
     }
         
 }

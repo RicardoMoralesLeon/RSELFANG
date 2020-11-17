@@ -8,10 +8,10 @@ namespace RSELFANG.Controllers
     public class EeRelesController : ApiController
     {
         [Route("api/EeReles/EeRelesLoad")]
-        public TOTransaction<EeReles> Get(int rel_cont, int rem_cont, int rel_serv = 0,string opt = "")
+        public TOTransaction<EeReles> Get(int rel_cont, int rem_cont, int rel_serv = 0, int inp_cont= 0, string opt = "")
         {         
             BoEeReles bo = new BoEeReles();            
-            return bo.GetInfoDataEeReles(rel_cont, rem_cont, rel_serv);
+            return bo.GetInfoDataEeReles(rel_cont, rem_cont, rel_serv, inp_cont);
         }
 
         [Route("api/EeReles/LoadInfoPqr")]

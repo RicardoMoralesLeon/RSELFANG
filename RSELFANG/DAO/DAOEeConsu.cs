@@ -66,16 +66,16 @@ namespace RSELFANG.DAO
         public List<EeConsu> GetInfoEereles(int emp_codi, DateTime fini, DateTime ffin, int ite_cont, string cli_coda)
         {
             StringBuilder sql = new StringBuilder();
-            List<SQLParams> sqParams = new List<SQLParams>();
-            
+            List<SQLParams> sqParams = new List<SQLParams>();            
             sql.Append(" SELECT DISTINCT REM_CONT, REM_FECH,ITE_CONT, ITE_CODI, ITE_NOMB, FA_CLIEN.CLI_CODA, FA_CLIEN.CLI_NOCO, EE_REMES.EMP_CODI ");
             sql.Append(" FROM EE_REMES ");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = ITE_SERV ");
             sql.Append(" INNER JOIN FA_CLIEN ON FA_CLIEN.CLI_CODA = EE_REMES.CLI_CODA ");
             sql.Append(" AND FA_CLIEN.EMP_CODI = EE_REMES.EMP_CODI ");
             sql.Append(" WHERE EE_REMES.EMP_CODI = @EMP_CODI ");
-            sql.Append(" AND  CONVERT(DATE, EE_REMES.REM_FECH) >= @REM_FECI ");
-            sql.Append(" AND  CONVERT(DATE, EE_REMES.REM_FECH) <= @REM_FECF ");
+            sql.Append(" AND FA_CLIEN.CLI_ESTA = 'A' ");
+            sql.Append(" AND CONVERT(DATE, EE_REMES.REM_FECH) >= @REM_FECI ");
+            sql.Append(" AND CONVERT(DATE, EE_REMES.REM_FECH) <= @REM_FECF ");
 
             if (ite_cont != 0)
             {

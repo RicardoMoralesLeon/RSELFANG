@@ -58,7 +58,7 @@
     <Reference Include="Digitalware.Apps.Utilities.Fa">
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\Digitalware.Apps.Utilities.Fa.dll</HintPath>
     </Reference>
-    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=19.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DigitalWare.Apps.Utilities.Gn, Version=20.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\consultoria.digitalware.co\FTP\Seven\Desarrollo12.4\01. Ancestros\Dll.Net\DigitalWare.Apps.Utilities.Gn.dll</HintPath>
     </Reference>
@@ -250,6 +250,7 @@
     <Compile Include="BO\BOSfFovis.cs" />
     <Compile Include="BO\BOSoCoxcn.cs" />
     <Compile Include="BO\BoSucacer.cs" />
+    <Compile Include="BO\BOSuConap.cs" />
     <Compile Include="BO\BoSuconsu.cs" />
     <Compile Include="BO\BOWfCdocu.cs" />
     <Compile Include="BO\BOXbAuliq.cs" />
@@ -296,6 +297,8 @@
     <Compile Include="Controllers\PqInpqrController.cs" />
     <Compile Include="Controllers\PqrTransactionLoadController.cs" />
     <Compile Include="Controllers\RnRadicController.cs" />
+    <Compile Include="Controllers\SuConapController.cs" />
+    <Compile Include="Controllers\SuConapPrintController.cs" />
     <Compile Include="Controllers\SuConctController.cs" />
     <Compile Include="Controllers\SfConsuController.cs" />
     <Compile Include="Controllers\SfForpoController.cs" />
@@ -370,6 +373,7 @@
     <Compile Include="DAO\DAOSoDscfp.cs" />
     <Compile Include="DAO\DAOSoSbene.cs" />
     <Compile Include="DAO\DAOSucacer.cs" />
+    <Compile Include="DAO\DAOSuConap.cs" />
     <Compile Include="DAO\DAOSuConsu.cs" />
     <Compile Include="DAO\DAOTrazabilidad.cs" />
     <Compile Include="DAO\DAOTsParam.cs" />
@@ -412,6 +416,7 @@
     <Compile Include="tools\General.cs" />
     <Compile Include="tools\mailHandler.cs" />
     <Compile Include="TO\ArApovo.cs" />
+    <Compile Include="TO\ArRdevo.cs" />
     <Compile Include="TO\ArSucur.cs" />
     <Compile Include="TO\ArTiapo.cs" />
     <Compile Include="TO\CtConsu.cs" />
@@ -491,8 +496,10 @@
     <Compile Include="TO\TOPqParam.cs" />
     <Compile Include="TO\TORevPr.cs" />
     <Compile Include="TO\ToSucacer.cs" />
+    <Compile Include="TO\TOSuConap.cs" />
     <Compile Include="TO\TOSuconsu.cs" />
     <Compile Include="TO\ToSuDimco.cs" />
+    <Compile Include="TO\ToSuHgicm.cs" />
     <Compile Include="TO\TOTransacion.cs" />
     <Compile Include="TO\TOWfCdocu.cs" />
     <Compile Include="Models\TOXbAuliq.cs" />

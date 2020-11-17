@@ -6,6 +6,8 @@ namespace RSELFANG.TO
     public class tofiliatrab
     {
         public int afi_cont { get; set; }
+        public int tip_codi { get; set; }
+        public string tip_nomb { get; set; }
         public string tip_abre { get; set; }
         public string afi_docu { get; set; }
         public string afi_fecn { get; set; }
@@ -51,6 +53,7 @@ namespace RSELFANG.TO
 
     public class toRnRadic
     {
+        public int rad_cont { get; set; }
         public int rad_nume { get; set; }
         public string rad_fech { get; set; }
         public string cra_nomb { get; set; }
@@ -65,8 +68,15 @@ namespace RSELFANG.TO
         public int rpi_peri { get; set; }
         public string rpi_nura { get; set; }
         public string rpi_fchp { get; set; }
-        public double rpi_sapb { get; set; }
-        public string rde_esta { get; set; }
-        public double apo_valo { get; set; }
+        public double dri_sapb { get; set; }
+        public double rpi_devo { get; set; }
+        public double rpi_mora { get; set; }
+        public double tot_apor { get; set; }
+        public double dri_sibc { get; set; }
+        public string afi_noco { get; set; }
+        public string afi_nom1 { get; set; }
+        public string afi_nom2 { get; set; }
+        public string afi_ape1 { get; set; }
+        public string afi_ape2 { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace RSELFANG.BO
         public TOTransaction<sfforpo> InsertSfForpo(SfFovis sffovis)
         {
             sfforpo result = new sfforpo();
-          
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
             TOTransaction<sfforpo> salida = new TOTransaction<sfforpo>();
             string msgError="";
 
@@ -32,6 +32,9 @@ namespace RSELFANG.BO
 
                 if (ret != 0)
                     throw new Exception("Se produjo un error al autenticar el programa: SSFFORPO.");
+                
+                var sfparam = daoSfForpo.GetSfParam(sffovis.emp_codi);
+                sffovis.postulante.ite_tipp = sfparam.ite_codi;
 
                 object objSalida;
                 List<object> LEntrada = new List<object>();
@@ -166,6 +169,7 @@ namespace RSELFANG.BO
         private string InsertSfDfomh(int emp_codi, int _for_cont, InfoAportante sfdfomh, string dfo_tipo)
         {          
             int for_cont = _for_cont;
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             try
             {
@@ -173,6 +177,9 @@ namespace RSELFANG.BO
 
                 if (string.IsNullOrEmpty(sfdfomh.afi_docu))
                     return "";
+
+                var sfparam = daoSfForpo.GetSfParam(emp_codi);
+                sfdfomh.ite_tipp = sfparam.ite_cont;
 
                 object objSalida;
                 List<object> LEntrada = new List<object>();
@@ -225,18 +232,20 @@ namespace RSELFANG.BO
         }
 
         private string InsertSfDfomh(int emp_codi, int _for_cont, List<InfoAportante> sfdfomh, string dfo_tipo)
-        {
-          
+        {          
             int for_cont = _for_cont;
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             try
             {
                 string txtError = "";
-               
+                var sfparam = daoSfForpo.GetSfParam(emp_codi);
+                
                 foreach (InfoAportante perca in sfdfomh)
                 {
                     object objSalida;
                     List<object> LEntrada = new List<object>();
+                    perca.ite_tipp = sfparam.ite_cont;
                     LEntrada.Add(emp_codi);
                     LEntrada.Add(for_cont);
                     LEntrada.Add(dfo_tipo);
@@ -245,7 +254,7 @@ namespace RSELFANG.BO
                     LEntrada.Add(perca.afi_nom2);
                     LEntrada.Add(perca.afi_ape1);
                     LEntrada.Add(perca.afi_ape2);
-                    LEntrada.Add(perca.afi_fecn);
+                    LEntrada.Add(DateTime.Parse(perca.afi_fecn));
                     LEntrada.Add(perca.afi_esci);
                     LEntrada.Add(perca.afi_gene);
                     LEntrada.Add(perca.for_cond);
@@ -332,7 +341,7 @@ namespace RSELFANG.BO
                 
                 bool validInsertPerca = daosfforpo.validInsert("SF_DFOMH", sffovis.emp_codi, sffovis.for_cont, "AND DFO_TIPO = 'P'");
 
-                if (validInsertConyuge)
+                if (validInsertPerca)
                 {
                     txtError = InsertSfDfomh(sffovis.emp_codi, sffovis.for_cont, sffovis.InfoSfDfomhP, "P");
                 }
@@ -427,6 +436,9 @@ namespace RSELFANG.BO
             string txtError;                       
             List<object> lentrada = new List<object>();
             object p_salida = new object();
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
+            var sfparam = daoSfForpo.GetSfParam(emp_codi);
+            conyuge.ite_tipp = sfparam.ite_cont;
 
             lentrada.Add("ActualizarSfDfomh");
             lentrada.Add(emp_codi);
@@ -462,47 +474,59 @@ namespace RSELFANG.BO
         public string ActualizarSfDfomhP(List<InfoAportante> Infoperca, int emp_codi, int for_cont)
         {
             string txtError = "";
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             if (Infoperca.Count == 0)
                 return null;
 
+            var sfparam = daoSfForpo.GetSfParam(emp_codi);
+           
             foreach (InfoAportante perc in Infoperca)
             {
-                if (perc.afi_gene == "Masculino")
-                    perc.afi_gene = "M";
+                if (perc.dfo_cont == 0)
+                {
+                    InsertSfDfomh(emp_codi, for_cont, perc, "P");
+                }
                 else
-                    perc.afi_gene = "F";
+                {
+                    if (perc.afi_gene == "Masculino")
+                        perc.afi_gene = "M";
+                    else
+                        perc.afi_gene = "F";
 
-                List<object> lentrada = new List<object>();
-                object p_salida = new object();
+                    perc.ite_tipp = sfparam.ite_cont;
 
-                lentrada.Add("ActualizarSfDfomh");
-                lentrada.Add(emp_codi);
-                lentrada.Add(for_cont);
-                lentrada.Add(perc.dfo_cont);
-                lentrada.Add(perc.afi_cont);
-                lentrada.Add("P");
-                lentrada.Add(perc.afi_docu);
-                lentrada.Add(perc.afi_nom1);
-                lentrada.Add(perc.afi_nom2);
-                lentrada.Add(perc.afi_ape1);
-                lentrada.Add(perc.afi_ape2);
-                lentrada.Add(perc.afi_gene);
-                lentrada.Add(DateTime.Parse(perc.afi_fecn));
-                lentrada.Add(perc.ite_pare);
-                lentrada.Add(perc.afi_esci);
-                lentrada.Add(perc.for_cond);
-                lentrada.Add(perc.apo_cont);
-                lentrada.Add(perc.ite_tipp);
-                lentrada.Add(perc.ite_ocup);
-                lentrada.Add(perc.for_sala);
-                lentrada.Add(perc.for_ipil);
-                lentrada.Add(perc.apo_razs);
-                lentrada.Add(perc.ite_pare);
-                lentrada.Add(perc.tip_codi);
-                
-                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
-                    throw new Exception("Error Actualizando Solicitud :" + txtError);
+                    List<object> lentrada = new List<object>();
+                    object p_salida = new object();
+
+                    lentrada.Add("ActualizarSfDfomh");
+                    lentrada.Add(emp_codi);
+                    lentrada.Add(for_cont);
+                    lentrada.Add(perc.dfo_cont);
+                    lentrada.Add(perc.afi_cont);
+                    lentrada.Add("P");
+                    lentrada.Add(perc.afi_docu);
+                    lentrada.Add(perc.afi_nom1);
+                    lentrada.Add(perc.afi_nom2);
+                    lentrada.Add(perc.afi_ape1);
+                    lentrada.Add(perc.afi_ape2);
+                    lentrada.Add(perc.afi_gene);
+                    lentrada.Add(DateTime.Parse(perc.afi_fecn));
+                    lentrada.Add(perc.ite_pare);
+                    lentrada.Add(perc.afi_esci);
+                    lentrada.Add(perc.for_cond);
+                    lentrada.Add(perc.apo_cont);
+                    lentrada.Add(perc.ite_tipp);
+                    lentrada.Add(perc.ite_ocup);
+                    lentrada.Add(perc.for_sala);
+                    lentrada.Add(perc.for_ipil);
+                    lentrada.Add(perc.apo_razs);
+                    lentrada.Add(perc.ite_pare);
+                    lentrada.Add(perc.tip_codi);
+
+                    if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                        throw new Exception("Error Actualizando Solicitud :" + txtError);
+                }
             }           
 
             return txtError;
@@ -511,9 +535,12 @@ namespace RSELFANG.BO
         public string ActualizarSfDfomhO(List<InfoAportante> InfoOtraperca, int emp_codi, int for_cont)
         {
             string txtError = "";
+            DAOSfForpo daoSfForpo = new DAOSfForpo();
 
             if (InfoOtraperca.Count == 0)
                 return null;
+
+            var sfparam = daoSfForpo.GetSfParam(emp_codi);
 
             foreach (InfoAportante perc in InfoOtraperca)
             {
@@ -521,6 +548,8 @@ namespace RSELFANG.BO
                     perc.afi_gene = "M";
                 else
                     perc.afi_gene = "F";
+
+                perc.ite_tipp = sfparam.ite_cont;
 
                 List<object> lentrada = new List<object>();
                 object p_salida = new object();

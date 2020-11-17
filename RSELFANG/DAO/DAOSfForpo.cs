@@ -151,7 +151,7 @@ namespace RSELFANG.DAO
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT (CAST(DATEDIFF(DAY,AFI_FECN,GETDATE()) / 365.25 AS INT)) AFI_EDAD,SU_AFILI.TIP_CODI,SU_AFILI.AFI_DOCU,SU_AFILI.AFI_NOM1, ");
             sql.Append("        SU_AFILI.AFI_NOM2,SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2, ");
-            sql.Append("        SU_AFILI.AFI_FECN,SU_AFILI.AFI_ESCI,SU_AFILI.AFI_CATE, ");
+            sql.Append("         CONVERT(VARCHAR, AFI_FECN, 103) AFI_FECN,SU_AFILI.AFI_ESCI,SU_AFILI.AFI_CATE, ");
             sql.Append("        SU_AFILI.AFI_GENE,GN_TIPDO.TIP_NOMB,SU_AFILI.AFI_CONT, ");
             sql.Append("        SU_AFILI.AFI_COND,SU_AFILI.AFI_MAIL,SU_AFILI.AFI_TELE, ");
             sql.Append("        SU_AFILI.AFI_DIRE, ");
@@ -260,7 +260,7 @@ namespace RSELFANG.DAO
             sql.Append(" SF_DFOMH.DFO_ESCI AFI_ESCI,SF_DFOMH.DFO_COND FOR_COND,SF_DFOMH.APO_RAZS,  ");
             sql.Append(" SF_DFOMH.DFO_SALA FOR_SALA,SF_DFOMH.DFO_IPIL,SU_MPARE.MPA_CODI, SF_DFOMH.ITE_OCUP, SF_DFOMH.APO_CONT,  ");
             sql.Append(" SU_MPARE.MPA_NOMB,SF_DFOMH.ITE_PARE,ITEMS_PA.ITE_CODI ITE_CODI_PA, ITEMS_PA.ITE_NOMB ITE_NOMB_PA,");
-            sql.Append(" ITEMS_OC.ITE_CODI , ITEMS_OC.ITE_NOMB ");
+            sql.Append(" ITEMS_OC.ITE_CODI , ITEMS_OC.ITE_NOMB, SF_DFOMH.TIP_CODI ");
             sql.Append(" FROM SF_DFOMH  ");
             sql.Append(" LEFT OUTER JOIN SU_MPARE ON SF_DFOMH.EMP_CODI = SU_MPARE.EMP_CODI AND SF_DFOMH.MPA_CONT = SU_MPARE.MPA_CONT  ");
             sql.Append(" LEFT OUTER JOIN GN_ITEMS ITEMS_PA ON SF_DFOMH.ITE_PARE = ITEMS_PA.ITE_CONT, GN_ITEMS ITEMS_OC  ");
@@ -669,7 +669,7 @@ namespace RSELFANG.DAO
         public Sfparam GetSfParam(int emp_codi)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT PAR_JURA, PAR_PPDT, GN_ITEMS.ITE_CONT, SF_PARAM.PAR_SMVR ");
+            sql.Append(" SELECT PAR_JURA, PAR_PPDT, GN_ITEMS.ITE_CONT,GN_ITEMS.ITE_CODI, SF_PARAM.PAR_SMVR ");
             sql.Append(" FROM SF_PARAM");
             sql.Append(" INNER JOIN GN_ITEMS ON GN_ITEMS.ITE_CONT = SF_PARAM.ITE_CONT");
             sql.Append(" AND GN_ITEMS.TIT_CONT = 486");

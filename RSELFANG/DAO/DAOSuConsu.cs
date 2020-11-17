@@ -131,29 +131,71 @@ namespace RSELFANG.DAO
             return new DbConnection().GetList<toRnRadic>(sql.ToString(), sqlparams);
         }
 
-        public List<toArDpil> getInfoAportes(int emp_codi, int afi_cont, int rpi_peri, int rpi_perf)
+        public List<toArDpil> getInfoAportes(int emp_codi, int afi_cont, int rpi_peri, int rpi_perf, string apo_coda, string apo_razr)
         {
-            StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT DISTINCT AR_RPILA.APO_CODA,AR_RPILA.APO_RAZS,AR_RPILA.RPI_PERI,");
-            sql.Append(" AR_RPILA.RPI_NURA,AR_RPILA.RPI_FCHP,AR_RPILA.DRI_SAPB,'PRUEBAS' RDE_ESTA, 0 APO_VALO");
-            sql.Append(" FROM  AR_APOVO");
-            sql.Append(" INNER JOIN AR_RPILA ON AR_RPILA.APO_CONT = AR_APOVO.APO_CONT");
-            sql.Append(" AND AR_RPILA.EMP_CODI = AR_APOVO.EMP_CODI");
-            sql.Append(" INNER JOIN AR_DRPIL ON AR_DRPIL.RPI_CONT = AR_RPILA.RPI_CONT");
-            sql.Append(" AND AR_DRPIL.EMP_CODI = AR_RPILA.EMP_CODI");
-            sql.Append(" WHERE RPI_ESTA = 'A'");
-            sql.Append(" AND RPI_ESTC = 'C'");
-            sql.Append(" AND AR_DRPIL.AFI_CONT = @AFI_CONT");
-            sql.Append(" AND AR_DRPIL.EMP_CODI = @EMP_CODI");
-            sql.Append(" AND RPI_PERI >= @RPI_PERI");
-            sql.Append(" AND RPI_PERI <= @RPI_PERF");
-            sql.Append(" ORDER BY RPI_FCHP,APO_CODA, RPI_PERI");
             List<SQLParams> sqlparams = new List<SQLParams>();
+            StringBuilder sql = new StringBuilder();
+
+            sql.Append(" SELECT *, DRI_SAPB - RPI_DEVO TOT_APOR ");
+            sql.Append(" FROM ( ");
+            sql.Append(" SELECT DISTINCT AR_RPILA.APO_CODA,AR_RPILA.APO_RAZS,AR_RPILA.RPI_PERI,  ");
+            sql.Append(" AR_RPILA.RPI_NURA,AR_RPILA.RPI_FCHP,AR_RPILA.DRI_SAPB, ");
+            sql.Append(" CASE WHEN AR_RDEVO.RDE_ESTA = 'T' THEN SUM(AR_DRDEV.DRD_APOR)  ");
+            sql.Append(" 	 WHEN AR_RDEVO.RDE_ESTA = 'R' THEN SUM(AR_DRPIL.DRP_APOB - AR_DRDEV.DRD_APOR) ");
+            sql.Append(" 	 ELSE 0 END RPI_DEVO ");
+            sql.Append(" FROM  AR_APOVO  ");
+            sql.Append(" INNER JOIN AR_RPILA ON AR_RPILA.APO_CONT = AR_APOVO.APO_CONT AND AR_RPILA.EMP_CODI = AR_APOVO.EMP_CODI  ");
+            sql.Append(" INNER JOIN AR_DRPIL ON AR_DRPIL.RPI_CONT = AR_RPILA.RPI_CONT AND AR_DRPIL.EMP_CODI = AR_RPILA.EMP_CODI ");
+            sql.Append(" LEFT JOIN AR_RDEVO ON AR_RDEVO.RPI_CONT = AR_RPILA.RPI_CONT ");
+            sql.Append(" LEFT JOIN AR_DRDEV ON AR_DRDEV.RPI_CONT = AR_RPILA.RPI_CONT ");
+            sql.Append(" AND AR_DRDEV.DRP_CONT = AR_DRPIL.DRP_CONT ");
+            sql.Append(" WHERE RPI_ESTA = 'A' AND RPI_ESTC = 'C' ");
+            sql.Append(" AND AR_DRPIL.AFI_CONT =  @AFI_CONT AND AR_DRPIL.EMP_CODI = @EMP_CODI ");
+            sql.Append(" AND RPI_PERI >= @RPI_PERI AND RPI_PERI <= @RPI_PERF ");
+
+            if (!String.IsNullOrEmpty(apo_coda))
+            {
+                sql.Append(" AND AR_RPILA.APO_CODA  = @APO_CODA");
+                sqlparams.Add(new SQLParams("APO_CODA", apo_coda));
+            }
+
+            if (!String.IsNullOrEmpty(apo_razr))
+            {
+                sql.Append(" AND AR_RPILA.APO_RAZS LIKE '%" + apo_razr + "%'");
+            }
+
+            sql.Append(" GROUP BY  AR_RPILA.APO_CODA,AR_RPILA.APO_RAZS,AR_RPILA.RPI_PERI, ");
+            sql.Append(" AR_RPILA.RPI_NURA,AR_RPILA.RPI_FCHP,AR_RPILA.DRI_SAPB,AR_RDEVO.RDE_ESTA ");
+            sql.Append(" ) A ");
+            sql.Append(" ORDER BY RPI_FCHP,APO_CODA, RPI_PERI ");
+                             
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("AFI_CONT", afi_cont));
             sqlparams.Add(new SQLParams("RPI_PERI", rpi_peri));
             sqlparams.Add(new SQLParams("RPI_PERF", rpi_perf));
             return new DbConnection().GetList<toArDpil>(sql.ToString(), sqlparams);
         }
-     }
+
+        public List<ToSuHgicm> getInfoSubsidios(int emp_codi, int hgi_peri, int hgi_perf, string afi_docu)
+        {
+            List<SQLParams> sqlparams = new List<SQLParams>();
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT HGI_PERP, HGI_FECH, HGI_VALG, SU_AFILI.AFI_DOCU, SU_AFILI.AFI_NOM1,");
+            sql.Append(" SU_AFILI.AFI_NOM2, SU_AFILI.AFI_APE1, SU_AFILI.AFI_APE2 ");
+            sql.Append(" FROM SU_HGICM");
+            sql.Append(" INNER JOIN SU_AFILI ON SU_AFILI.AFI_CONT = SU_HGICM.AFI_PCAR");
+            sql.Append(" INNER JOIN SU_AFILI SU_AFILI_TRAB ON SU_AFILI_TRAB.AFI_CONT = SU_HGICM.AFI_CONT");
+            sql.Append(" AND SU_AFILI.EMP_CODI = SU_HGICM.EMP_CODI");
+            sql.Append(" WHERE SU_HGICM.EMP_CODI = @EMP_CODI");
+            sql.Append(" AND SU_AFILI_TRAB.AFI_DOCU = @AFI_DOCU ");
+            sql.Append(" AND SU_HGICM.HGI_ESTA NOT IN('N', 'I')");
+            sql.Append(" AND SU_HGICM.HGI_PERP >= @HGI_PERI ");
+            sql.Append(" AND SU_HGICM.HGI_PERP <= @HGI_PERF ");
+            sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
+            sqlparams.Add(new SQLParams("AFI_DOCU", afi_docu));
+            sqlparams.Add(new SQLParams("HGI_PERI", hgi_peri));
+            sqlparams.Add(new SQLParams("HGI_PERF", hgi_perf));
+            return new DbConnection().GetList<ToSuHgicm>(sql.ToString(), sqlparams);
+        }
+    }
 }

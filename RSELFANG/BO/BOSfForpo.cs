@@ -400,7 +400,10 @@ namespace RSELFANG.BO
                 }
 
                 if (sffovis.infoHogar == null)
-                    sffovis.infoHogar = new InfoDfoih();             
+                    sffovis.infoHogar = new InfoDfoih();
+
+                if (sffovis.conyuge == null)
+                    sffovis.conyuge = daoSfForpo.getInfoConyu(emp_codi, afi_cont);
 
                 if (sffovis.conyuge == null)
                     sffovis.conyuge  = new InfoAportante();
