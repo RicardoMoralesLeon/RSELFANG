@@ -28,7 +28,8 @@ namespace RSELFANG.Controllers
         {
             BOSuConap bo = new BOSuConap();
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
-            return bo.printReportAportesEmpresa(emp_codi, rad_feci, rad_fecf, apo_coda);
+            string emp_nomb = new tools.General().GetEmpNomb(emp_codi);
+            return bo.printReportAportesEmpresa(emp_codi, rad_feci, rad_fecf, apo_coda, emp_nomb);
         }
 
         [Route("api/SuConap/printReportAportesFiscal")]
@@ -36,7 +37,8 @@ namespace RSELFANG.Controllers
         {
             BOSuConap bo = new BOSuConap();
             emp_codi = new tools.General().GetEmpCodi(emp_codi);
-            return bo.printReportAportesFiscal(emp_codi, rpi_peri, apo_coda);
+            string emp_nomb = new tools.General().GetEmpNomb(emp_codi);
+            return bo.printReportAportesFiscal(emp_codi, rpi_peri, apo_coda, emp_nomb);
         }
 
         [Route("api/SuConap/printReportSubsidioEmpresa")]

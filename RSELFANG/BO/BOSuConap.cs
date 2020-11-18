@@ -325,12 +325,15 @@ namespace RSELFANG.BO
                 List<string> Params = new List<string>();
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
-                //Params.Add(hgi_peri.ToString());
-                //Params.Add(hgi_perf.ToString());
-                //sf.Append("{SU_AFILI.AFI_DOCU}='" + afi_docu + "'");
-                //sf.Append(" AND {SU_AFILI.EMP_CODI}=" + emp_codi);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}>=" + hgi_peri);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}<=" + hgi_perf);
+                Params.Add(rad_feci.ToString());
+                Params.Add(rad_fecf.ToString());
+                sf.Append("{AR_DRPIL.AFI_DOCU}='" + afi_docu + "'");
+                sf.Append(" AND {AR_DRPIL.TIP_CODI}=" + tip_codi);
+                sf.Append(" AND {AR_DRPIL.EMP_CODI}=" + emp_codi);
+                sf.Append(" AND {AR_RPILA.RPI_PERI}>=" + rad_feci);
+                sf.Append(" AND {AR_RPILA.RPI_PERI}<=" + rad_fecf);
+                sf.Append(" AND {AR_RPILA.RPI_ESTA}='A'");
+                sf.Append(" AND {AR_RPILA.RPI_ESTC}='C'");
                 url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                 return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
             }
@@ -359,12 +362,14 @@ namespace RSELFANG.BO
                 List<string> Params = new List<string>();
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
-                //Params.Add(hgi_peri.ToString());
-                //Params.Add(hgi_perf.ToString());
-                //sf.Append("{SU_AFILI.AFI_DOCU}='" + afi_docu + "'");
-                //sf.Append(" AND {SU_AFILI.EMP_CODI}=" + emp_codi);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}>=" + hgi_peri);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}<=" + hgi_perf);
+                sf.Append("{AR_APOVO.APO_CODA}='" + apo_coda + "'");
+                sf.Append(" AND {SU_AFILI.AFI_DOCU}='" + afi_docu + "'");
+                sf.Append(" AND {SU_AFILI.TIP_CODI}=" + tip_codi);
+                sf.Append(" AND {SU_HGICM.EMP_CODI}=" + emp_codi);
+                sf.Append(" AND {SU_HGICM.HGI_PERP}>=" + hgi_peri);
+                sf.Append(" AND {SU_HGICM.HGI_PERP}<=" + hgi_perf);
+                sf.Append(" AND {SU_HGICM.HGI_ESTA}<> 'N'");
+                sf.Append(" AND {SU_HGICM.HGI_ESTA}<> 'I'");
                 url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                 return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
             }
@@ -374,7 +379,7 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<string> printReportAportesEmpresa(int emp_codi, int rad_feci, int rad_fecf, string apo_coda)
+        public TOTransaction<string> printReportAportesEmpresa(int emp_codi, int rad_feci, int rad_fecf, string apo_coda, string emp_nomb)
         {
             try
             {
@@ -393,12 +398,15 @@ namespace RSELFANG.BO
                 List<string> Params = new List<string>();
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
-                //Params.Add(hgi_peri.ToString());
-                //Params.Add(hgi_perf.ToString());
-                //sf.Append("{SU_AFILI.AFI_DOCU}='" + afi_docu + "'");
-                //sf.Append(" AND {SU_AFILI.EMP_CODI}=" + emp_codi);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}>=" + hgi_peri);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}<=" + hgi_perf);
+                Params.Add(rad_feci.ToString());
+                Params.Add(rad_fecf.ToString());
+                Params.Add(emp_nomb);
+                sf.Append("{Comando.APO_CODA}='" + apo_coda + "'");
+                sf.Append(" AND {Comando.EMP_CODI}=" + emp_codi);
+                sf.Append(" AND {Comando.RPI_PERI}>=" + rad_feci);
+                sf.Append(" AND {Comando.RPI_PERI}<=" + rad_fecf);
+                sf.Append(" AND {Comando.RPI_ESTA}= 'A'");
+                sf.Append(" AND {Comando.RPI_ESTC}= 'C'");
                 url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                 return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
             }
@@ -408,7 +416,7 @@ namespace RSELFANG.BO
             }
         }
 
-        public TOTransaction<string> printReportAportesFiscal(int emp_codi, int rpi_peri, string apo_coda)
+        public TOTransaction<string> printReportAportesFiscal(int emp_codi, int rpi_peri, string apo_coda, string emp_nomb)
         {
             try
             {
@@ -427,12 +435,16 @@ namespace RSELFANG.BO
                 List<string> Params = new List<string>();
                 Params.Add(usu_codi);
                 Params.Add("dd/mm/yyyy");
-                //Params.Add(hgi_peri.ToString());
-                //Params.Add(hgi_perf.ToString());
-                //sf.Append("{SU_AFILI.AFI_DOCU}='" + afi_docu + "'");
-                //sf.Append(" AND {SU_AFILI.EMP_CODI}=" + emp_codi);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}>=" + hgi_peri);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}<=" + hgi_perf);
+                Params.Add(rpi_peri.ToString());
+                Params.Add(emp_nomb);
+
+                sf.Append("{Comando.APO_CODA}='" + apo_coda + "'");
+                sf.Append(" AND {Comando.EMP_CODI}=" + emp_codi);
+                sf.Append(" AND {Comando.RPI_ESTA}= 'A'");
+                sf.Append(" AND {Comando.RPI_ESTC}= 'C'");
+                sf.Append(" AND {Comando.RPI_PERI}>=" + rpi_peri + "01");
+                sf.Append(" AND {Comando.RPI_PERI}<=" + rpi_peri + "12");
+                
                 url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                 return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
             }
@@ -463,10 +475,12 @@ namespace RSELFANG.BO
                 Params.Add("dd/mm/yyyy");
                 Params.Add(hgi_peri.ToString());
                 Params.Add(hgi_perf.ToString());
-                //sf.Append("{SU_AFILI.AFI_DOCU}='" + afi_docu + "'");
-                //sf.Append(" AND {SU_AFILI.EMP_CODI}=" + emp_codi);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}>=" + hgi_peri);
-                //sf.Append(" AND {AR_RPILA.RPI_PERI}<=" + hgi_perf);
+                sf.Append("{AR_APOVO.APO_CODA}='" + apo_coda + "'");
+                sf.Append(" AND {SU_HGICM.EMP_CODI}=" + emp_codi);
+                sf.Append(" AND {SU_HGICM.HGI_PERP}>=" + hgi_peri);
+                sf.Append(" AND {SU_HGICM.HGI_PERP}<=" + hgi_perf);
+                sf.Append(" AND {SU_HGICM.HGI_ESTA}<> 'N'");
+                sf.Append(" AND {SU_HGICM.HGI_ESTA}<> 'I'");
                 url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                 return new TOTransaction<string>() { objTransaction = url, retorno = 0, txtRetorno = "" };
             }

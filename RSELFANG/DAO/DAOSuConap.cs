@@ -439,7 +439,7 @@ namespace RSELFANG.DAO
         {
             List<SQLParams> sqlparams = new List<SQLParams>();
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT HGI_PERP, SUM(HGI_VALG) HGI_VALG, ");
+            sql.Append(" SELECT HGI_PERP, HGI_VALG, ");
             sql.Append(" CASE WHEN SU_HGICM.HGI_ESTA IN('A','P') THEN 'Pagado' END HGI_ESTA, HGI_FECH, ");
             sql.Append(" COUNT(SU_HGICM.AFI_CONT) HGI_NUTR, COUNT(SU_HGICM.AFI_PCAR) HGI_NUBE ");
             sql.Append(" FROM SU_HGICM ");
@@ -455,7 +455,7 @@ namespace RSELFANG.DAO
             sql.Append(" AND SU_HGICM.EMP_CODI = @EMP_CODI ");
             sql.Append(" AND SU_HGICM.HGI_PERP >= @HGI_PERI ");
             sql.Append(" AND SU_HGICM.HGI_PERP <= @HGI_PERF ");
-            sql.Append(" GROUP BY HGI_PERP, HGI_FECH, GN_TIPDO.TIP_ABRE,HGI_ESTA ");
+            sql.Append(" GROUP BY HGI_PERP, HGI_FECH, GN_TIPDO.TIP_ABRE,HGI_ESTA,HGI_VALG ");
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             sqlparams.Add(new SQLParams("HGI_PERI", hgi_peri));
             sqlparams.Add(new SQLParams("HGI_PERF", hgi_perf));

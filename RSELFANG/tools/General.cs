@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DigitalWare.Apps.Utilities.Gn.TO;
+using RSELFANG.DAO;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -21,8 +23,14 @@ namespace RSELFANG.tools
             {
                 return emp_codi;
             }
+        }
 
-
+        public string GetEmpNomb(int emp_codi)
+        {
+            Gn_Empre empre = new Gn_Empre();
+            DAOGnEmpre dao = new DAOGnEmpre();
+            empre = dao.GetGnEmpre(emp_codi);
+            return empre.emp_nomb;
         }
     }
 }

@@ -341,6 +341,7 @@
     <Compile Include="DAO\DAOGnCtope.cs" />
     <Compile Include="DAO\DAOGnDepar.cs" />
     <Compile Include="DAO\DAOGnDiasn.cs" />
+    <Compile Include="DAO\DAOGnEmpre.cs" />
     <Compile Include="DAO\DAOGnFlag.cs" />
     <Compile Include="DAO\DAOGnInsta.cs" />
     <Compile Include="DAO\DAOGnItems.cs" />
