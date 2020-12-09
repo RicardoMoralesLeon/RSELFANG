@@ -19,7 +19,7 @@ namespace RSELFANG.DAO
             return new DbConnection().GetList<ArTiapo>(sql.ToString(), sqlparams);
         }
 
-        public List<ArApovo> getListArApovo()
+        public List<ArApovo> getListArApovo(string apo_coda = "")
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT TA.TIA_CONT,TA.TIA_CODI,TA.TIA_NOMB,TD.TIP_CODI,TD.TIP_NOMB, ");
@@ -28,8 +28,13 @@ namespace RSELFANG.DAO
             sql.Append(" INNER JOIN AR_TIAPO TA ON TA.EMP_CODI = AP.EMP_CODI ");
             sql.Append(" AND TA.TIA_CONT = AP.TIA_CONT ");
             sql.Append(" INNER JOIN GN_TIPDO TD ON TD.TIP_CODI = AP.TIP_CODI ");
+
+            if(apo_coda != "")
+                sql.Append(" WHERE AP.APO_CODA = @APO_CODA");
+
             sql.Append(" ORDER BY AP.APO_CODA,TA.TIA_NOMB ");
             List <SQLParams> sqlparams = new List<SQLParams>();
+            sqlparams.Add(new SQLParams("APO_CODA", apo_coda));
             return new DbConnection().GetList<ArApovo>(sql.ToString(), sqlparams);
         }
 

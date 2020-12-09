@@ -32,7 +32,7 @@ namespace RSELFANG.BO
                 var cliente = DAOFaClien.GetFaClien(emp_codi, cli_coda);
                 //consulto todos los históricos RIFINC, REGADS, XBRL
                 var historicos = new DAO_Xb_Exbrl().GetHistoricoInformacion(emp_codi, cliente.cli_codi);
-               //consulto parámetos de cartera
+                //consulto parámetos de cartera
                 var ParametrosCartera = new DAO_Xb_Pceca().GetXbPeca(emp_codi);
                 List<TOXbAuliq> liquidacionLista = new List<TOXbAuliq>();
                 //Consulto todas las cuentas por cobrar del cliente asociadas a los tipos de operacion (contribución, intereses, o multas y sanciones
@@ -50,7 +50,7 @@ namespace RSELFANG.BO
                             //var listFadina = new DAO_Fa_Dina().GetFaDdina(emp_codi, cliente.cli_codi, autliq.dcl_codd);
                             //if (listFadina == null)
                             //    throw new Exception(string.Format("No se encontró tipo de servicio para el detalle de cliente {0}", autliq.dcl_codd));
-                          //  var fadina = listFadina.FirstOrDefault();
+                            //  var fadina = listFadina.FirstOrDefault();
                             try
                             {
                                 //Cálculos para multas y sanciones
@@ -65,7 +65,7 @@ namespace RSELFANG.BO
                                     if (CxcInteresesPendientes != null && CxcInteresesPendientes.Any())
                                     {
                                         autliq.cxc_inan = CxcInteresesPendientes.Sum(c => c.cxc_sald);
-                                        fechaVencimiento = CxcInteresesPendientes.FirstOrDefault().cxc_fupa; 
+                                        fechaVencimiento = CxcInteresesPendientes.FirstOrDefault().cxc_fupa;
                                     }
                                     else
                                         fechaVencimiento = autliq.cxc_feve.Date;
@@ -79,12 +79,12 @@ namespace RSELFANG.BO
                                     decimal saldoCapital = autliq.cxc_sald;
                                     decimal interes = ParametrosCartera.pce_intm / 360;
 
-                                    if(DateTime.Now.Year == autliq.rcx_vige)
-                                    if (fechaPago <= fechaVencimiento.AddDays(diasGracia + cantidadDiasNoLaborales))
-                                        interes = 0;
+                                    if (DateTime.Now.Year == autliq.rcx_vige)
+                                        if (fechaPago <= fechaVencimiento.AddDays(diasGracia + cantidadDiasNoLaborales))
+                                            interes = 0;
 
                                     autliq.cxc_inmo = interes * numDias * saldoCapital / 100;
-                                    
+
                                     autliq.dpa_tari = xbpceca.pce_intm;
                                     autliq.par_fech = par_fech;
 
@@ -201,8 +201,8 @@ namespace RSELFANG.BO
                                             autliq.cxc_inan = CxcInteresesPendientes.Sum(c => c.cxc_sald);
                                         }
 
-                                        
-                                        if(autliq.cxc_sald < autliq.cxc_tota)
+
+                                        if (autliq.cxc_sald < autliq.cxc_tota)
                                         {
                                             autliq.par_fech = autliq.cxc_fupa;
                                         }
@@ -218,7 +218,7 @@ namespace RSELFANG.BO
 
                                     }
                                 }
-                           
+
                             }
                             catch (Exception ex)
                             {
@@ -228,8 +228,8 @@ namespace RSELFANG.BO
                             }
                             finally
                             {
-                                if(autliq.cxc_sald>0)
-                                liquidacionLista.Add(autliq);
+                                if (autliq.cxc_sald > 0)
+                                    liquidacionLista.Add(autliq);
                             }
 
                         };
@@ -260,15 +260,16 @@ namespace RSELFANG.BO
                             if (DetalleParametrosContribucion == null)
                                 throw new Exception(string.Format("No se encontraron parametros de contribución para el año {0} y grupo de información financiera {1}", historico.exb_anop, GrupoInformacionFinanciera.ite_nomb));
                             tOXbAuliqCxcContribucion.rcx_vige = ParametrosContribucion.par_anof;
-                            if (cuentasExistentes!= null && cuentasExistentes.Find(p => p.rcx_vige == ParametrosContribucion.par_anof && p.top_codi == xbpceca.top_coco) != null)
+                            if (cuentasExistentes != null && cuentasExistentes.Find(p => p.rcx_vige == ParametrosContribucion.par_anof && p.top_codi == xbpceca.top_coco) != null)
                                 throw new Exception(string.Format("Ya existe cuenta por cobrar para año {0}", ParametrosContribucion.par_anof));
                             //verifico que tampoco tenga cuentas al día 
                             var cuentasAldia = dAOCaCxcob.GetAuliquidacion(emp_codi, cliente.cli_codi, false);
-                            if (cuentasAldia != null) {
+                            if (cuentasAldia != null)
+                            {
                                 if (cuentasAldia.Find(c => c.rcx_vige == ParametrosContribucion.par_anof) != null)
                                     throw new Exception(string.Format("Ya existe cuenta al día para año {0}", ParametrosContribucion.par_anof));
                             }
-                                
+
                             string BaseGravType = string.Empty;
                             if (DetalleParametrosContribucion.FirstOrDefault().par_rega.ToUpper() == "S")
                                 BaseGravType = "REGADS";
@@ -292,7 +293,7 @@ namespace RSELFANG.BO
                                         if (regCont == 0)
                                             throw new Exception(string.Format("No se encontró informe regads cargado para el cliente {0} y año {1}", cliente.cli_coda, historico.exb_anop));
                                         tOXbAuliqCxcContribucion.cxc_sald = new DAO_Xb_Dgape().getTotalReportado(emp_codi, regCont);
-                                       
+
                                         //TODO:Se valida la fecha de vencimiento de la cxc que se va a generar
 
                                         //Tomar base de SXBREGAD
@@ -380,15 +381,15 @@ namespace RSELFANG.BO
                         }
                         finally
                         {
-                            if(tOXbAuliqCxcContribucion.error.IndexOf("Ya existe")<0)
-                            liquidacionLista.Add(tOXbAuliqCxcContribucion);
+                            if (tOXbAuliqCxcContribucion.error.IndexOf("Ya existe") < 0)
+                                liquidacionLista.Add(tOXbAuliqCxcContribucion);
                         }
 
 
                     }
                 }
 
-              if(liquidacionLista != null && liquidacionLista.Any())
+                if (liquidacionLista != null && liquidacionLista.Any())
                 {
                     liquidacionLista = liquidacionLista.OrderBy(t => t.rcx_vige).ToList();
                 }
@@ -872,7 +873,7 @@ namespace RSELFANG.BO
                     Params.Add(autoliquidacion.dep_nomb);
                     Params.Add(autoliquidacion.ite_nose);
                     Params.Add(autoliquidacion.ina_refe);
-                    Params.Add(autoliquidacion.cxc_info.cxc_sald.ToString());
+                    Params.Add(autoliquidacion.cxc_info.cxc_bgrav.ToString());
                     Params.Add(autoliquidacion.cxc_info.dpa_tari.ToString());
                     Params.Add(autoliquidacion.cxc_info.cxc_sald.ToString());
                     Params.Add(autoliquidacion.cxc_info.cxc_inmo.ToString());
@@ -919,6 +920,7 @@ namespace RSELFANG.BO
                     sf.Append(" AND {CA_CXCOB.TOP_CODI} = " + xbpceca.top_core.ToString());
                     sf.Append(" AND {CA_CXCOB.CLI_CODI} = " + client.cli_codi.ToString());
                     sf.Append(" AND {CA_CXCOB.CXC_ESTA} = 'A' ");
+                    sf.Append(" AND {CA_CXCOB.CXC_CONT} = " + autoliquidacion.cxc_info.cxc_cont.ToString());
                     url = GetURLReporte(reporte, Params, sf.ToString(), urlReporte);
                     return new TOTransaction<string>() { ObjTransaction = url, Retorno = 0, TxtError = "" };
                 }

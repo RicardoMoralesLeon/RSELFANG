@@ -14,8 +14,8 @@ namespace RSELFANG.BO
             try
             {
                 string usu_codi = ConfigurationManager.AppSettings["usu_codi"].ToString();
-                string reportPublic = ConfigurationManager.AppSettings["reportPublic"].ToString();
-                string dinamicReport = ConfigurationManager.AppSettings["dinamicReport"].ToString();
+                //string reportPublic = ConfigurationManager.AppSettings["reportPublic"].ToString();
+                //string dinamicReport = ConfigurationManager.AppSettings["dinamicReport"].ToString();
                 string sf = "";
 
                 string url = "";

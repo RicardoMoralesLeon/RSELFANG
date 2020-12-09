@@ -36,6 +36,7 @@ namespace RSELFANG.BO
                 List<GnItem> clastra = boItems.GetGnItems(334);
                 List<GnItem> tipvinc = boItems.GetGnItems(338);
                 List<GnItem> cartrab = boItems.GetGnItems(484);
+                List<ArApovo> ArApovoAfil = daoRadic.getListArApovo(usu_codi);
 
                 result.artiapo = ArTiapo;
                 result.GnPaise = GnPaise;
@@ -48,6 +49,7 @@ namespace RSELFANG.BO
                 result.clastra = clastra;
                 result.tipvinc = tipvinc;
                 result.cartrab = cartrab;
+                result.arapovoafil = ArApovoAfil;
                 result.SRN000001 = daoRadic.getDigflag("SRN000001");
                 result.SRN000002 = daoRadic.getDigflag("SRN000002");
                 result.cen_codi = daoRadic.getInfoFudCe(emp_codi, usu_codi);
@@ -279,6 +281,16 @@ namespace RSELFANG.BO
                     if (wa.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
                         throw new Exception("Error En Afiliación Automática :" + txtError);
                 }
+
+                lentrada = new List<object>();
+                p_salida = new object();
+
+                lentrada.Add("AplicarRnRadic");
+                lentrada.Add(rnradic.emp_codi);  // emp_codi
+                lentrada.Add(rad_cont);          // rad_cont
+         
+                if (ws.Generic(26, lentrada.ToArray(), out p_salida, out txtError) != 0)
+                    throw new Exception("Error Aplicando Radicación :" + txtError);
 
                 if (txtError == null)
                 {

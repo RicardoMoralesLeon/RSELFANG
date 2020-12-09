@@ -64,6 +64,10 @@ namespace RSELFANG.TO
         /// Centro de servicio
         /// </summary>
         public string cen_codi { get; set; }
+        /// <summary>
+        /// Lista Tipo Aportante afiliacion automatica
+        /// </summary>
+        public List<ArApovo> arapovoafil { get; set; }
 
     }
 }
