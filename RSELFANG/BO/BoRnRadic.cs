@@ -28,7 +28,17 @@ namespace RSELFANG.BO
                 List<GnPaise> GnPaise = boPaise.GetGnPaise();
                 List<GnTipdo> GnTipdo = daoGnTipDo.getListGnTipdo();
                 List<GnTipdo> GnTipdE = daoGnTipDo.getListGnTipdo();
-                List<ArApovo> ArApovo = daoRadic.getListArApovo();
+
+                string acr_apor = "";
+                acr_apor = daoRadic.isAport(usu_codi, emp_codi, "ACR_APOR");
+
+                List<ArApovo> ArApovo = new List<ArApovo>();
+
+                if (acr_apor == "S")
+                    ArApovo = daoRadic.getListArApovo(usu_codi);
+                else
+                   ArApovo = daoRadic.getListArApovo();
+
                 List<RnGrura> RnGrura = daoRadic.getListRnGrura(emp_codi);
                 List<SuMpare> SuMpare = daoRadic.getListSumPare(emp_codi);
                 List<GnItem> gnprofe = boItems.GetGnItems(351);
@@ -270,7 +280,7 @@ namespace RSELFANG.BO
                     lentrada.Add(afili.apo_coda);
                     lentrada.Add(afili.suc_cont);
                     lentrada.Add(DateTime.Now);
-                    lentrada.Add(""); // --> Trayectoria Principal
+                    lentrada.Add("S");
                     lentrada.Add(afili.tra_salb);
                     lentrada.Add(afili.tia_cont); 
                     lentrada.Add(afili.ite_clat);

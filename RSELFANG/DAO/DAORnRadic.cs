@@ -23,13 +23,16 @@ namespace RSELFANG.DAO
         {
             StringBuilder sql = new StringBuilder();
             sql.Append(" SELECT TA.TIA_CONT,TA.TIA_CODI,TA.TIA_NOMB,TD.TIP_CODI,TD.TIP_NOMB, ");
-            sql.Append(" AP.EMP_CODI, AP.APO_CONT,AP.APO_CODA,AP.APO_RAZS, AP.APO_ESTD");
+            sql.Append(" AP.EMP_CODI, AP.APO_CONT,AP.APO_CODA,AP.APO_RAZS, AP.APO_ESTD, AR_DSUCU.PAI_CODI RAD_PAIS, ");
+            sql.Append(" AR_DSUCU.REG_CODI RAD_REGI,AR_DSUCU.DEP_CODI RAD_DEPA,AR_DSUCU.MUN_CODI RAD_MUNI,AR_DSUCU.LOC_CODI RAD_LOCA,AR_DSUCU.BAR_CODI RAD_BARR");
             sql.Append(" FROM AR_APOVO AP ");
             sql.Append(" INNER JOIN AR_TIAPO TA ON TA.EMP_CODI = AP.EMP_CODI ");
             sql.Append(" AND TA.TIA_CONT = AP.TIA_CONT ");
             sql.Append(" INNER JOIN GN_TIPDO TD ON TD.TIP_CODI = AP.TIP_CODI ");
+            sql.Append(" LEFT JOIN AR_SUCUR ON AR_SUCUR.APO_CONT = AP.APO_CONT AND SUC_PRIC = 'S' ");
+            sql.Append(" LEFT JOIN AR_DSUCU ON AR_SUCUR.SUC_CONT = AR_DSUCU.SUC_CONT ");
 
-            if(apo_coda != "")
+            if (apo_coda != "")
                 sql.Append(" WHERE AP.APO_CODA = @APO_CODA");
 
             sql.Append(" ORDER BY AP.APO_CODA,TA.TIA_NOMB ");
@@ -90,19 +93,27 @@ namespace RSELFANG.DAO
         public List<SuAfili> getListSuAfili(int emp_codi)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append(" SELECT SU_TRAYE.AFI_CONT, SU_AFILI.TIP_CODI, GN_TIPDO.TIP_NOMB,  SU_AFILI.AFI_DOCU, ");
+
+            //sql.Append(" SELECT SU_TRAYE.AFI_CONT, SU_AFILI.TIP_CODI, GN_TIPDO.TIP_NOMB,  SU_AFILI.AFI_DOCU, ");
+            //sql.Append(" SU_AFILI.AFI_NOM1, SU_AFILI.AFI_NOM2, SU_AFILI.AFI_APE1, SU_AFILI.AFI_APE2, ");
+            //sql.Append(" SU_AFILI.AFI_FECN, SU_AFILI.AFI_TELE, SU_TRAYE.TRA_ESTA, SU_TRAYE.APO_CONT, ");
+            //sql.Append(" AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS, AR_APOVO.TIP_CODI TIP_CODA, ");
+            //sql.Append(" AR_APOVO.TIA_CONT, AR_APOVO.APO_ESTD, SU_TRAYE.TRA_FCHI,SU_TRAYE.TRA_PRIN, SU_TRAYE.TRA_FCHR, ");
+            //sql.Append(" AR_TIAPO.TIA_CODI,SU_TRAYE.TRA_CONT, AR_APOVO.APO_ORIG ");
+            //sql.Append(" FROM SU_AFILI, GN_TIPDO, SU_TRAYE ");
+            //sql.Append(" INNER JOIN AR_APOVO ON AR_APOVO.EMP_CODI = SU_TRAYE.EMP_CODI AND AR_APOVO.APO_CONT = SU_TRAYE.APO_CONT ");
+            //sql.Append(" INNER JOIN AR_TIAPO ON AR_APOVO.EMP_CODI = AR_TIAPO.EMP_CODI AND AR_APOVO.TIA_CONT = AR_TIAPO.TIA_CONT ");
+            //sql.Append(" WHERE SU_AFILI.TIP_CODI = GN_TIPDO.TIP_CODI ");
+            //sql.Append(" AND SU_TRAYE.EMP_CODI = SU_AFILI.EMP_CODI ");
+            //sql.Append(" AND SU_TRAYE.AFI_CONT = SU_AFILI.AFI_CONT ");
+            //sql.Append(" ORDER BY SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2,SU_AFILI.AFI_NOM1,SU_AFILI.AFI_NOM2, SU_TRAYE.TRA_FCHI DESC, SU_TRAYE.TRA_ESTA ");
+
+            sql.Append(" SELECT SU_AFILI.EMP_CODI,SU_AFILI.AFI_CONT, SU_AFILI.TIP_CODI, GN_TIPDO.TIP_NOMB,  SU_AFILI.AFI_DOCU, ");  
             sql.Append(" SU_AFILI.AFI_NOM1, SU_AFILI.AFI_NOM2, SU_AFILI.AFI_APE1, SU_AFILI.AFI_APE2, ");
-            sql.Append(" SU_AFILI.AFI_FECN, SU_AFILI.AFI_TELE, SU_TRAYE.TRA_ESTA, SU_TRAYE.APO_CONT, ");
-            sql.Append(" AR_APOVO.APO_CODA, AR_APOVO.APO_RAZS, AR_APOVO.TIP_CODI TIP_CODA, ");
-            sql.Append(" AR_APOVO.TIA_CONT, AR_APOVO.APO_ESTD, SU_TRAYE.TRA_FCHI,SU_TRAYE.TRA_PRIN, SU_TRAYE.TRA_FCHR, ");
-            sql.Append(" AR_TIAPO.TIA_CODI,SU_TRAYE.TRA_CONT, AR_APOVO.APO_ORIG ");
-            sql.Append(" FROM SU_AFILI, GN_TIPDO, SU_TRAYE ");
-            sql.Append(" INNER JOIN AR_APOVO ON AR_APOVO.EMP_CODI = SU_TRAYE.EMP_CODI AND AR_APOVO.APO_CONT = SU_TRAYE.APO_CONT ");
-            sql.Append(" INNER JOIN AR_TIAPO ON AR_APOVO.EMP_CODI = AR_TIAPO.EMP_CODI AND AR_APOVO.TIA_CONT = AR_TIAPO.TIA_CONT ");
-            sql.Append(" WHERE SU_AFILI.TIP_CODI = GN_TIPDO.TIP_CODI ");
-            sql.Append(" AND SU_TRAYE.EMP_CODI = SU_AFILI.EMP_CODI ");
-            sql.Append(" AND SU_TRAYE.AFI_CONT = SU_AFILI.AFI_CONT ");
-            sql.Append(" ORDER BY SU_AFILI.AFI_APE1,SU_AFILI.AFI_APE2,SU_AFILI.AFI_NOM1,SU_AFILI.AFI_NOM2, SU_TRAYE.TRA_FCHI DESC, SU_TRAYE.TRA_ESTA ");
+            sql.Append(" SU_AFILI.AFI_FECN, SU_AFILI.AFI_TELE ");
+            sql.Append(" FROM SU_AFILI ");
+            sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = SU_AFILI.TIP_CODI ");
+            sql.Append(" WHERE EMP_CODI = @EMP_CODI ");
             List<SQLParams> sqlparams = new List<SQLParams>();
             sqlparams.Add(new SQLParams("EMP_CODI", emp_codi));
             return new DbConnection().GetList<SuAfili>(sql.ToString(), sqlparams);
@@ -122,7 +133,7 @@ namespace RSELFANG.DAO
             sql.Append(" SU_AFILI.DEP_CODI,GN_DEPAR.DEP_NOMB, ");
             sql.Append(" SU_AFILI.MUN_CODI,GN_MUNIC.MUN_NOMB, ");
             sql.Append(" SU_AFILI.LOC_CODI,GN_LOCAL.LOC_NOMB, ");
-            sql.Append(" SU_AFILI.BAR_CODI,GN_BARRI.BAR_NOMB ");
+            sql.Append(" SU_AFILI.BAR_CODI,GN_BARRI.BAR_NOMB, AR_APOVO.APO_ORIG ");
             sql.Append(" FROM SU_AFILI ");
             sql.Append(" INNER JOIN GN_TIPDO ON GN_TIPDO.TIP_CODI = SU_AFILI.TIP_CODI ");
             sql.Append(" INNER JOIN SU_TRAYE ON SU_TRAYE.AFI_CONT = SU_AFILI.AFI_CONT ");

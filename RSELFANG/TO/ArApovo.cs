@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace RSELFANG.TO
 {
     public class ArApovo
@@ -16,5 +12,11 @@ namespace RSELFANG.TO
         public string APO_CODA { get; set; }
         public string APO_RAZS { get; set; }
         public string APO_ESTD { get; set; }        
+        public int RAD_PAIS { get; set; }
+        public int RAD_REGI { get; set; }
+        public int RAD_DEPA { get; set; }
+        public int RAD_MUNI { get; set; }
+        public int RAD_LOCA { get; set; }
+        public int RAD_BARR { get; set; }
     }
 }
