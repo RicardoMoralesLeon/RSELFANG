@@ -612,7 +612,7 @@ namespace RSELFANG.BO
                         scacxcob.mon_codi = gnParam.mon_codi;
                         scacxcob.cxc_feta = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
                         scacxcob.cxc_tasa = 1;
-                        scacxcob.cxc_desc = string.Format("Intereses Año Gravable {0}", parco.par_anop);
+                        scacxcob.cxc_desc = string.Format("Intereses Año Gravable {0}", parco.par_anof);
                         scacxcob.cxc_tipo = "D";
                         scacxcob.cxc_feve = int.Parse(autoliquidacion.par_fech.ToString("yyyyMMdd"));
                         scacxcob.cxc_gcte = 0;
